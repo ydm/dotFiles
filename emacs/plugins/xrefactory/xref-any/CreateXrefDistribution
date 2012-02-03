@@ -1,0 +1,54 @@
+#!/bin/sh
+rm -r -f ../xref
+mkdir ../xref
+cp -r doc/jexercise ../xref/jexercise
+cp -r doc/cexercise ../xref/cexercise
+#create a text version of manual pages
+#man doc/xref.man | sed -f doc/man2ascii.sed > doc/xref.txt
+#man doc/xrefrc.man | sed -f doc/man2ascii.sed > doc/xrefrc.txt
+cd src 
+make
+cd ..
+cp src/xref ../xref/
+# the following is a special case for cygwin platform
+if test -f src/xref.exe
+then
+  cp src/xref.exe ../xref/
+fi
+#create README files
+cat doc/INSTALL doc/readme doc/readme2 > ../xref/README
+cp doc/INSTALL ../xref/INSTALL
+cp doc/xrefsetup ../xref/
+cp doc/xrefinstall ../xref/
+cp doc/xref.man ../xref/
+#cp doc/xref.txt ../xref/
+cp doc/xrefrc.man ../xref/
+#cp doc/xrefrc.txt ../xref/
+cd env
+for d in *
+do
+	if test ${d} != "CVS" -a ${d} != "kawa" 
+	then
+		mkdir ../../xref/${d}
+		for f in `cat ${d}/Files`
+		do 
+			cp ${d}/${f} ../../xref/${d}/
+		done
+	fi
+done
+cd ..
+cp doc/LICENSE ../xref/LICENSE
+cd ../xref
+ln -s emacs xemacs
+chmod -R a+r ../xref
+
+
+
+
+
+
+
+
+
+
+
