@@ -1,8 +1,8 @@
 (require 'color-theme)
 (defun color-theme-yordan ()
   "My color theme. It rocks, k?
-     Created: 2011-August-30
-     Last update: 2011-August-30"
+   Created: 2011-August-30
+   Last update: 2011-August-30"
   (interactive)
   (color-theme-install
    '(color-theme-yordan
