@@ -45,7 +45,8 @@
 (global-set-key "\M-." 'etags-select-find-tag-at-point)
 
 ;; flymake minor mode
-(load "~/emacs/flymake-errnav-mode")
+;; TODO y: resolve conflicts with shell-previous-or-next-command
+;; (load "~/emacs/flymake-errnav-mode")
 
 ;; javascript: jslint and node.js
 (add-to-list 'load-path "~/emacs/plugins/lintnode")
