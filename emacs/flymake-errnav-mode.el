@@ -1,7 +1,7 @@
 (defvar flymake-errnav-mode
   (let ((map (make-sparse-keymap)))
-    (define-key map "\M-p" 'flymake-goto-prev-error)
-    (define-key map "\M-n" 'flymake-goto-next-error)
+    (define-key map (kbd "C-<home>") 'flymake-goto-prev-error)
+    (define-key map (kbd "C-<end>" ) 'flymake-goto-next-error)
     map)
   "Keymap for my flymake minor mode.")
 
