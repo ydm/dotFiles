@@ -1,4 +1,3 @@
-;; (bar-cursor-mode t)			       ; use bar for point (deb pkg)
 (defalias 'yes-or-no-p 'y-or-n-p)	       ; always y/n instead of yes/no
 (delete-selection-mode t)		       ; delete marked text on insert
 (global-linum-mode t)			       ; show line number
@@ -39,14 +38,14 @@
 ;; dbg
 (setq gdb-many-windows t)
 
-;; etags
+;; etags-select
 ;; Browse through multiple matching tags.
 ;; http://www.emacswiki.org/emacs/EtagsSelect
 (load "~/emacs/etags-select")
 (require 'etags-select)
 (global-set-key "\M-." 'etags-select-find-tag-at-point)
 
-;; flymake minor mode
+;; flymake errnav minor mode
 ;; C-<end> and C-<home> to navigate between errors
 (load "~/emacs/flymake-errnav-mode")
 ;; enable it along with flymake-mode
@@ -61,6 +60,17 @@
 	  (lambda ()
 	    (subword-mode 1)
 	    (flymake-mode 1)))
+
+;; org
+(setq load-path (cons "~/emacs/plugins/org/lisp" load-path))
+;; contrib?
+(setq load-path (cons "~/emacs/plugins/org/contrib/lisp" load-path))
+(require 'org-install)
+(add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode)) ; file association
+(global-set-key "\C-c1" 'org-store-link)                 ;keys
+(global-set-key "\C-cc" 'org-capture)
+(global-set-key "\C-ca" 'org-agenda)
+(global-set-key "\C-cb" 'org-iswitchb)
 
 ;; yasnippet
 (add-to-list 'load-path "~/emacs/plugins/yasnippet")
@@ -90,14 +100,3 @@
 
 ;; TODO
 ;; dired tips --> http://xahlee.org/emacs/emacs_dired_tips.html
-
-;; TODO
-;; etags --> Jump to standard library definitions.
-;; http://www.emacswiki.org/emacs/EtagsTable
-;; (load "~/emacs/etags-table")
-;; (require 'etags-table)
-;; (setq etags-table-search-up-depth 16)
-;; (setq etags-table-alist
-;;	 (list
-;;	  ;; '(".*\\.\\([ch]\\|hpp\\|cpp\\)" "/usr/include/TAGS")
-;;	  '(".*\\.\\([ch]\\)" "/usr/include/TAGS")))
