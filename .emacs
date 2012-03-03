@@ -28,6 +28,10 @@
 (global-set-key (kbd "C-x C-b") 'bs-show)	 ; fast buffer switch
 (global-set-key (kbd "C-c r")	'replace-regexp) ; as advised by emacs wiki
 
+;; bar cursor mode
+(load "~/emacs/bar-cursor")
+(bar-cursor-mode t)
+
 ;; colors
 ;; TODO: unresolved dependencies
 ;; (load "~/emacs/color-theme-yordan")
