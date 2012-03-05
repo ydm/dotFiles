@@ -27,6 +27,7 @@
 
 (global-set-key (kbd "C-x C-b") 'bs-show)	 ; fast buffer switch
 (global-set-key (kbd "C-c r")	'replace-regexp) ; as advised by emacs wiki
+(global-set-key (kbd "C-c e")   'eshell)         ; emacs shell
 
 ;; bar cursor mode
 (load "~/emacs/bar-cursor")
