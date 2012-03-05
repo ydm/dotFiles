@@ -1,5 +1,6 @@
 (defalias 'yes-or-no-p 'y-or-n-p)	       ; always y/n instead of yes/no
 (delete-selection-mode t)		       ; delete marked text on insert
+(global-hl-line-mode t)			       ; highlight current line
 (global-linum-mode t)			       ; show line number
 (icomplete-mode t)			       ; buffer completion mode
 (ido-mode t)				       ; switch fast between buffers
@@ -15,7 +16,6 @@
 (which-function-mode t)			       ; show current func in bar
 (windmove-default-keybindings)		       ; move trough windows w. sh/arws
 ;; (global-ede-mode t)			       ; + ide features
-;; (global-hl-line-mode t)		       ; highlight current line
 ;; (menu-bar-mode -1)			       ; hide menu bar
 ;; (show-ws-toggle-show-trailing-whitespace)   ; show trailing whitespace
 ;; (winner-mode t)			       ; track window manipulation
@@ -54,15 +54,15 @@
 (load "~/emacs/flymake-errnav-mode")
 ;; enable it along with flymake-mode
 (add-hook 'flymake-mode
-          (lambda ()
-            (flymake-errnav-mode)))
+	  (lambda ()
+	    (flymake-errnav-mode)))
 
 ;; javascript: jslint and node.js
 ;; (add-to-list 'load-path "~/emacs/plugins/lintnode")
 ;; (require 'flymake-jslint)
 (add-hook 'js-mode-hook
-          (lambda ()
-            (subword-mode 1)))
+	  (lambda ()
+	    (subword-mode 1)))
 
 ;; org
 (setq load-path (cons "~/emacs/plugins/org/lisp" load-path))
@@ -70,7 +70,7 @@
 (setq load-path (cons "~/emacs/plugins/org/contrib/lisp" load-path))
 (require 'org-install)
 (add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode)) ; file association
-(global-set-key "\C-c1" 'org-store-link)                 ;keys
+(global-set-key "\C-c1" 'org-store-link)		 ;keys
 (global-set-key "\C-cc" 'org-capture)
 (global-set-key "\C-ca" 'org-agenda)
 (global-set-key "\C-cb" 'org-iswitchb)
