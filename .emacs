@@ -75,6 +75,11 @@
 (global-set-key "\C-ca" 'org-agenda)
 (global-set-key "\C-cb" 'org-iswitchb)
 
+;; python
+(add-hook 'python-mode-hook
+          (lambda ()
+            (subword-mode 1)))
+
 ;; yasnippet
 (add-to-list 'load-path "~/emacs/plugins/yasnippet")
 (require 'yasnippet)
