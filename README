@@ -1,0 +1,12 @@
+My dotFiles.
+
+dotFiles
+|-- bin
+|   |-- jslint-browser          # shortcut to jslint with flags for browser js
+|   `-- switchxkbmap            # switch between keyboard layouts (bg / us)
+|-- emacs                       # emacs config
+|-- .xmonad                     # xmonad config
+`-- README                      # this file
+
+Emacs config depends on:
+jslint installed as node.js module
