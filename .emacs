@@ -1,5 +1,6 @@
 (defalias 'yes-or-no-p 'y-or-n-p)	       ; always y/n instead of yes/no
 (delete-selection-mode t)		       ; delete marked text on insert
+(flymake-mode -1)                              ; let it be off by default
 (global-hl-line-mode t)			       ; highlight current line
 (global-linum-mode t)			       ; show line number
 (icomplete-mode t)			       ; buffer completion mode
@@ -50,20 +51,20 @@
 (require 'etags-select)
 (global-set-key "\M-." 'etags-select-find-tag-at-point)
 
-;; flymake errnav minor mode
+;; flymake-cursor
+;; (load "~/emacs/flymake-cursor")
+
+;; flymake-errnav minor mode
 ;; C-<end> and C-<home> to navigate between errors
 (load "~/emacs/flymake-errnav-mode")
 ;; enable it along with flymake-mode
-(add-hook 'flymake-mode
-	  (lambda ()
-	    (flymake-errnav-mode)))
+(add-hook 'flymake-mode (lambda () (flymake-errnav-mode)))
 
-;; javascript: jslint and node.js
-;; (add-to-list 'load-path "~/emacs/plugins/lintnode")
-;; (require 'flymake-jslint)
-(add-hook 'js-mode-hook
-	  (lambda ()
-	    (subword-mode 1)))
+;; flymake for js using jslint
+(load "~/emacs/flymake-jslint")
+
+;; less-css
+(load "~/emacs/less-css-mode")
 
 ;; org
 (setq load-path (cons "~/emacs/plugins/org/lisp" load-path))
@@ -71,15 +72,15 @@
 (setq load-path (cons "~/emacs/plugins/org/contrib/lisp" load-path))
 (require 'org-install)
 (add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode)) ; file association
-(global-set-key "\C-c1" 'org-store-link)		 ;keys
+(global-set-key "\C-c1" 'org-store-link)
 (global-set-key "\C-cc" 'org-capture)
 (global-set-key "\C-ca" 'org-agenda)
 (global-set-key "\C-cb" 'org-iswitchb)
 
-;; python
-(add-hook 'python-mode-hook
-          (lambda ()
-            (subword-mode 1)))
+;; subword mode for some languages
+(add-hook 'java-mode-hook   (lambda () (subword-mode 1))) ; java
+(add-hook 'js-mode-hook     (lambda () (subword-mode 1))) ; js
+(add-hook 'python-mode-hook (lambda () (subword-mode 1))) ; python
 
 ;; yasnippet
 (add-to-list 'load-path "~/emacs/plugins/yasnippet")

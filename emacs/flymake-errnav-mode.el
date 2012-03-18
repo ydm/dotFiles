@@ -1,3 +1,4 @@
+;; y: This file was copied from http://www.emacswiki.org/emacs/FlyMake .
 (defvar flymake-errnav-mode
   (let ((map (make-sparse-keymap)))
     (define-key map (kbd "C-<home>") 'flymake-goto-prev-error)
