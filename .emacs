@@ -26,9 +26,9 @@
     (shell-command "xmodmap -e 'clear Lock' -e 'keycode 66 = F13'"))
 (global-set-key [f13] 'execute-extended-command) ; CapsLock = M-x
 
-(global-set-key (kbd "C-x C-b") 'bs-show)	 ; fast buffer switch
-(global-set-key (kbd "C-c r")	'replace-regexp) ; as advised by emacs wiki
 (global-set-key (kbd "C-c e")   'eshell)         ; emacs shell
+(global-set-key (kbd "C-c r")	'replace-regexp) ; as advised by emacs wiki
+(global-set-key (kbd "C-x C-b") 'bs-show)	 ; fast buffer switch
 
 ;; bar cursor mode
 (load "~/emacs/bar-cursor")
@@ -62,6 +62,13 @@
 
 ;; flymake for js using jslint
 (load "~/emacs/flymake-jslint")
+
+;; haskell-mode
+(load "~/emacs/plugins/haskell-mode/haskell-site-file")
+(add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
+(add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
+;;(add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
+;;(add-hook 'haskell-mode-hook 'turn-on-haskell-simple-indent)
 
 ;; less-css
 (load "~/emacs/less-css-mode")
