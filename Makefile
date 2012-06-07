@@ -13,10 +13,10 @@
 #	3) setup global git ignore
 #	4) get haskell-mode and yasnippet (plugins for Emacs)
 #	TODO: check if the ~/bin dir exists and create it if not
+#	TODO: -ln -s -T `pwd`/xmonad ~/.xmonad
 install:
 	-ln -s -T `pwd`/.emacs ~/.emacs
 	-ln -s -T `pwd`/emacs ~/emacs
-	-ln -s -T `pwd`/xmonad ~/.xmonad
 	-ln -s -T `pwd`/wannabin/elisplint ~/bin/elisplint
 	-ln -s -T `pwd`/wannabin/jslint-browser ~/bin/jslint-browser
 	-ln -s -T `pwd`/wannabin/switchxkbmap ~/bin/switchxkbmap
@@ -36,7 +36,6 @@ install:
 # created by install
 uninstall:
 	-rm -f ~/.emacs
-	-rm -fr ~/bin
 	-rm -fr ~/emacs
 	-git config --global --unset alias.st
 	-git config --global --unset color.branch
