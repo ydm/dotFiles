@@ -8,19 +8,20 @@
 
 # install actions:
 #	1) make links
-#	2) git config (user / aliases / colors)
+#	2) git config (user / aliases / colors / editor)
 #	3) setup global git ignore
 #	4) get haskell-mode and yasnippet (plugins for Emacs)
 install:
 	-ln -s -T `pwd`/.emacs ~/.emacs
 	-ln -s -T `pwd`/bin ~/bin
 	-ln -s -T `pwd`/emacs ~/emacs
-	-git config --global user.name "Йордан Миладинов"
-	-git config --global user.email "yordan@4web.bg"
+	-git config --global alias.st "status -s"
+	-git config --global color.branch auto
 	-git config --global color.diff auto
 	-git config --global color.status auto
-	-git config --global color.branch auto
-	-git config --global --add alias.st "status -s"
+	-git config --global core.editor "emacs"
+	-git config --global user.email "yordan@4web.bg"
+	-git config --global user.name "Йордан Миладинов"
 	-cp ./Emacs.gitignore ~/.global_ignore
 	-git config --global core.excludesfile ~/.global_ignore
 	-git clone https://github.com/haskell/haskell-mode.git ./emacs/plugins/haskell-mode
@@ -32,16 +33,20 @@ uninstall:
 	-rm -f ~/.emacs
 	-rm -fr ~/bin
 	-rm -fr ~/emacs
-	-git config --global --unset user.name
-	-git config --global --unset user.email
+	-git config --global --unset alias.st
+	-git config --global --unset color.branch
 	-git config --global --unset color.diff
 	-git config --global --unset color.status
-	-git config --global --unset color.branch
-	-git config --global --unset alias.st
+	-git config --global --unset core.editor
+	-git config --global --unset user.email
+	-git config --global --unset user.name
 	-rm -f ~/.global_ignore
 	-git config --global --unset core.excludesfile
+
+uninstall-emacs-plugins:
 	-rm -fr ./emacs/plugins/haskell-mode
 	-rm -fr ./emacs/plugins/yasnippet
 
 .PHONY: install
 .PHONY: uninstall
+.PHONY: uninstall-emacs-plugins
