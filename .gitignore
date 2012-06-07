@@ -1,2 +1,5 @@
-.~/
-emacs/.~/
+emacs/bin/emacs
+emacs/bin/firefox
+emacs/plugins/auto-complete*
+emacs/plugins/haskell-mode
+emacs/plugins/yasnippet
