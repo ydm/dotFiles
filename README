@@ -1,12 +1,21 @@
 My dotFiles.
 
-dotFiles
-|-- bin
-|   |-- jslint-browser          # shortcut to jslint with flags for browser js
-|   `-- switchxkbmap            # switch between keyboard layouts (bg / us)
-|-- emacs                       # emacs config
-|-- .xmonad                     # xmonad config
-`-- README                      # this file
+These include configurations for:
+        emacs
+        git (see ./Makefile)
+        xmonad
 
-Emacs config depends on:
-jslint installed as node.js module
+./Emacs.gitignore is retrieved from https://github.com/github/gitignore
+
+Emacs config includes .emacs, a lot of el files and these plugins:
+        yasnippet (retrieved from github)
+        haskell-mode (retrieved from github)
+        org-mode (included)
+        auto-complete (manually retrieved for now... TODO!)
+
+To install:
+        make install
+To uninstall:
+        make uninstall
+
+^_^
