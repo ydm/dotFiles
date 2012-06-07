@@ -16,6 +16,7 @@
 install:
 	-ln -s -T `pwd`/.emacs ~/.emacs
 	-ln -s -T `pwd`/emacs ~/emacs
+	-ln -s -T `pwd`/xmonad ~/.xmonad
 	-ln -s -T `pwd`/wannabin/elisplint ~/bin/elisplint
 	-ln -s -T `pwd`/wannabin/jslint-browser ~/bin/jslint-browser
 	-ln -s -T `pwd`/wannabin/switchxkbmap ~/bin/switchxkbmap
