@@ -7,14 +7,18 @@
 # Dependencies: git
 
 # install actions:
-#	1) make links
+#	1) make links and map wannabin/* to bin/*
+#	TODO: learn bash and create a script for this :)
 #	2) git config (user / aliases / colors / editor)
 #	3) setup global git ignore
 #	4) get haskell-mode and yasnippet (plugins for Emacs)
+#	TODO: check if the ~/bin dir exists and create it if not
 install:
 	-ln -s -T `pwd`/.emacs ~/.emacs
-	-ln -s -T `pwd`/bin ~/bin
 	-ln -s -T `pwd`/emacs ~/emacs
+	-ln -s -T `pwd`/wannabin/elisplint ~/bin/elisplint
+	-ln -s -T `pwd`/wannabin/jslint-browser ~/bin/jslint-browser
+	-ln -s -T `pwd`/wannabin/switchxkbmap ~/bin/switchxkbmap
 	-git config --global alias.st "status -s"
 	-git config --global color.branch auto
 	-git config --global color.diff auto
