@@ -20,6 +20,8 @@
 ;; (menu-bar-mode -1)			       ; hide menu bar
 ;; (show-ws-toggle-show-trailing-whitespace)   ; show trailing whitespace
 ;; (winner-mode t)			       ; track window manipulation
+;; (desktop-load-default)
+;; (desktop-save-mode 1)                       ; restore last emacs session
 
 ;; bindings
 (if (eq window-system 'x)
@@ -107,6 +109,9 @@
 (add-hook 'java-mode-hook   (lambda () (subword-mode 1))) ; java
 (add-hook 'js-mode-hook	    (lambda () (subword-mode 1))) ; js
 (add-hook 'python-mode-hook (lambda () (subword-mode 1))) ; python
+
+;; make my emacs blink on errors :}
+(setq visible-bell t)
 
 ;; yasnippet
 ;; (add-to-list 'load-path "~/emacs/plugins/yasnippet")
