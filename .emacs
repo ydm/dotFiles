@@ -2,9 +2,9 @@
 (delete-selection-mode t)		       ; delete marked text on insert
 (flymake-mode -1)			       ; let it be off by default
 (global-hl-line-mode t)			       ; highlight current line
-;; (global-linum-mode t)		       ; show line number
 (icomplete-mode t)			       ; buffer completion mode
 (ido-mode t)				       ; switch fast between buffers
+(menu-bar-mode 0)			       ; hide menu bar
 (put 'dired-find-alternate-file 'disabled nil) ; allow nav in dired buffer
 (recentf-mode t)			       ; list of recent files
 (setq backup-directory-alist '(("." . ".~")))  ; create backups in ./.~ dir
@@ -13,15 +13,15 @@
 (setq dired-recursive-deletes (quote top))     ; ask only once for rec del
 (setq-default indent-tabs-mode nil)	       ; use spaces instead of tabs
 (toggle-word-wrap t)			       ; break long lines on words
-(tool-bar-mode -1)			       ; hide tool bar
+(tool-bar-mode 0)			       ; hide tool bar
 (which-function-mode t)			       ; show current func in bar
 (windmove-default-keybindings)		       ; move trough windows w. sh/arws
-;; (global-ede-mode t)			       ; + ide features
-;; (menu-bar-mode -1)			       ; hide menu bar
-;; (show-ws-toggle-show-trailing-whitespace)   ; show trailing whitespace
-;; (winner-mode t)			       ; track window manipulation
 ;; (desktop-load-default)
 ;; (desktop-save-mode 1)                       ; restore last emacs session
+;; (global-ede-mode t)			       ; + ide features
+;; (global-linum-mode t)		       ; show line number
+;; (show-ws-toggle-show-trailing-whitespace)   ; show trailing whitespace
+;; (winner-mode t)			       ; track window manipulation
 
 ;; bindings
 (if (eq window-system 'x)
@@ -33,9 +33,9 @@
 (global-set-key (kbd "C-x C-b") 'bs-show)	 ; fast buffer switch
 
 ;; auto-comlpete
-(add-to-list 'load-path "~/emacs/plugins/auto-complete-bin/")
+(add-to-list 'load-path "~/emacs/plugins/auto-complete/")
 (require 'auto-complete-config)
-(add-to-list 'ac-dictionary-directories "~/emacs/plugins/auto-complete-bin//ac-dict")
+(add-to-list 'ac-dictionary-directories "~/emacs/plugins/auto-complete/ac-dict")
 (ac-config-default)
 
 ;; bar cursor mode
@@ -124,7 +124,9 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(ansi-color-names-vector ["#242424" "#e5786d" "#95e454" "#cae682" "#8ac6f2" "#333366" "#ccaa8f" "#f6f3e8"])
  '(column-number-mode t)
+ '(custom-enabled-themes (quote (adwaita)))
  '(inhibit-startup-screen t)
  '(scroll-bar-mode nil)
  '(show-paren-mode t)
