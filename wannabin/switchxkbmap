@@ -1,9 +1,7 @@
 #!/bin/bash
 
 if [ `setxkbmap -print | grep xkb_symbols | awk '{print $4}' | awk -F"+" '{print $2}'` = us ] ; then
-    echo "changing to BG...";
     setxkbmap -layout bg -variant bas_phonetic ;
 else
-    echo "Changing to US...";
     setxkbmap us ;
 fi
