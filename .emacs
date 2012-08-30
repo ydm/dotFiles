@@ -3,64 +3,58 @@
 (flymake-mode -1)			       ; let it be off by default
 (global-hl-line-mode t)			       ; highlight current line
 (icomplete-mode t)			       ; buffer completion mode
-(ido-mode t)				       ; switch fast between buffers
-(menu-bar-mode 0)			       ; hide menu bar
 (put 'dired-find-alternate-file 'disabled nil) ; allow nav in dired buffer
 (recentf-mode t)			       ; list of recent files
 (setq backup-directory-alist '(("." . ".~")))  ; create backups in ./.~ dir
 (setq dired-dwim-target t)		       ; 2 panels copy for dired
 (setq dired-recursive-copies (quote always))   ; do not ask for rec copies
 (setq dired-recursive-deletes (quote top))     ; ask only once for rec del
+(setq visible-bell t)                          ; make my emacs blink on err
 (setq-default indent-tabs-mode nil)	       ; use spaces instead of tabs
 (toggle-word-wrap t)			       ; break long lines on words
-(tool-bar-mode 0)			       ; hide tool bar
 (which-function-mode t)			       ; show current func in bar
 (windmove-default-keybindings)		       ; move trough windows w. sh/arws
 ;; (desktop-load-default)
 ;; (desktop-save-mode 1)                       ; restore last emacs session
 ;; (global-ede-mode t)			       ; + ide features
 ;; (global-linum-mode t)		       ; show line number
+;; (ido-mode t)				       ; switch fast between buffers
+;; (menu-bar-mode 0)			       ; hide menu bar
 ;; (show-ws-toggle-show-trailing-whitespace)   ; show trailing whitespace
 ;; (winner-mode t)			       ; track window manipulation
 
-;; bindings
-(if (eq window-system 'x)
-    (shell-command "xmodmap -e 'clear Lock' -e 'keycode 66 = F13'"))
-(global-set-key [f13] 'execute-extended-command) ; CapsLock = M-x
+;; vars & bindings
+(defvar my-emacs-directory "~/emacs/")
 
 (global-set-key (kbd "C-c e")	'eshell)	 ; emacs shell
 (global-set-key (kbd "C-c r")	'replace-regexp) ; as advised by emacs wiki
 (global-set-key (kbd "C-x C-b") 'bs-show)	 ; fast buffer switch
 
 ;; auto-comlpete
-(add-to-list 'load-path "~/emacs/plugins/auto-complete/")
+(add-to-list 'load-path (concat my-emacs-directory "plugins/auto-complete/"))
 (require 'auto-complete-config)
-(add-to-list 'ac-dictionary-directories "~/emacs/plugins/auto-complete/ac-dict")
+(add-to-list 'ac-dictionary-directories (concat my-emacs-directory "plugins/auto-complete/ac-dict"))
 (ac-config-default)
 
 ;; bar cursor mode
-(load "~/emacs/bar-cursor")
+(load (concat my-emacs-directory "bar-cursor"))
 (bar-cursor-mode t)
 
-;; colors
-;; TODO: unresolved dependencies
-;; (load "~/emacs/color-theme-yordan")
-;; (color-theme-yordan)
-;; (set-face-foreground 'region "white")
-;; (set-face-background 'region "light green")
+;; drupal
+(setq drupal-ide-load-path (concat user-emacs-directory "drupal/drupal-init.el"))
+(autoload 'drupal-ide drupal-ide-load-path "Start IDE for PHP & Drupal development" t)
 
-;; dbg
-(setq gdb-many-windows t)
+;; etags-select http://www.emacswiki.org/emacs/EtagsSelect
+(load (concat my-emacs-directory "etags-select"))
+(require 'etags-select)
+(global-set-key (kbd "C-M-.") 'etags-select-find-tag)
+(global-set-key (kbd "M-.")   'etags-select-find-tag-at-point)
 
-;; etags-select
-;; Browse through multiple matching tags.
-;; http://www.emacswiki.org/emacs/EtagsSelect
-;; (load "~/emacs/etags-select")
-;; (require 'etags-select)
-;; (global-set-key "\M-." 'etags-select-find-tag-at-point)
+;; flymake-cursor: (load (concat my-emacs-directory "flymake-cursor"))
 
-;; flymake-cursor
-;; (load "~/emacs/flymake-cursor")
+;; flymake-errnav minor mode: C-<end> and C-<home> to navigate between errors
+(load (concat my-emacs-directory "flymake-errnav-mode"))
+(add-hook 'flymake-mode (lambda () (flymake-errnav-mode)))
 
 ;; flymake for elisp
 (defun flymake-elisp-init ()
@@ -75,71 +69,65 @@
           ;; workaround for (eq buffer-file-name nil)
           (function (lambda () (if buffer-file-name (flymake-mode)))))
 
-;; flymake-errnav minor mode
-;; C-<end> and C-<home> to navigate between errors
-(load "~/emacs/flymake-errnav-mode")
-;; enable it along with flymake-mode
-(add-hook 'flymake-mode (lambda () (flymake-errnav-mode)))
-
 ;; flymake for js using jslint
-(load "~/emacs/flymake-jslint")
+(load (concat my-emacs-directory "flymake-jslint"))
+
+;; folding-mode
+(load (concat my-emacs-directory "folding"))
+;; (add-hook 'html-mode (lambda () (folding-mode)))
 
 ;; haskell-mode
-(load "~/emacs/plugins/haskell-mode/haskell-site-file")
+(load (concat my-emacs-directory "plugins/haskell-mode/haskell-site-file"))
 (add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
 (add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
 ;;(add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
 ;;(add-hook 'haskell-mode-hook 'turn-on-haskell-simple-indent)
 
 ;; less-css
-(load "~/emacs/less-css-mode")
+(load (concat my-emacs-directory "less-css-mode"))
 
-;; org
-(setq load-path (cons "~/emacs/plugins/org/lisp" load-path))
-;; contrib?
-(setq load-path (cons "~/emacs/plugins/org/contrib/lisp" load-path))
-(require 'org-install)
-(add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode)) ; file association
-(global-set-key "\C-c1" 'org-store-link)
-(global-set-key "\C-cc" 'org-capture)
-(global-set-key "\C-ca" 'org-agenda)
-(global-set-key "\C-cb" 'org-iswitchb)
+;; regtab
+(setq indent-tabs-mode nil)
+(load (concat my-emacs-directory "plugins/regtab/regtab"))
 
 ;; subword mode for some languages
 (add-hook 'java-mode-hook   (lambda () (subword-mode 1))) ; java
 (add-hook 'js-mode-hook	    (lambda () (subword-mode 1))) ; js
 (add-hook 'python-mode-hook (lambda () (subword-mode 1))) ; python
 
-;; make my emacs blink on errors :}
-(setq visible-bell t)
+;; TAGS
+;; C (there should be a file /usr/include/TAGS)
+(defvar c-tags-file "/usr/include")
+(defadvice c-mode (before load-tags-for-c-mode ())
+  (if (file-exists-p c-tags-file)
+      (visit-tags-table c-tags-file)))
 
+;; TODO:
+;; dbg TODO: http://www.emacswiki.org/emacs/DebuggingWithEmacs (setq gdb-many-windows t)
+;; dired tips --> http://xahlee.org/emacs/emacs_dired_tips.html
 ;; yasnippet
-;; (add-to-list 'load-path "~/emacs/plugins/yasnippet")
+;; (add-to-list 'load-path (concat my-emacs-directory "plugins/yasnippet"))
 ;; (require 'yasnippet)
 ;; (yas/global-mode 1)
 
-;; generated by emacs
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(ansi-color-names-vector ["#242424" "#e5786d" "#95e454" "#cae682" "#8ac6f2" "#333366" "#ccaa8f" "#f6f3e8"])
  '(column-number-mode t)
- '(custom-enabled-themes (quote (adwaita)))
+ '(custom-enabled-themes (quote (dichromacy)))
+ '(inhibit-default-init nil)
  '(inhibit-startup-screen t)
  '(scroll-bar-mode nil)
  '(show-paren-mode t)
+ '(tool-bar-mode t)
+ '(tool-bar-position (quote right))
  '(uniquify-buffer-name-style (quote forward) nil (uniquify))
- '(use-dialog-box nil)
- '(x-select-enable-clipboard t))
-
+ '(use-dialog-box nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
-
-;; TODO
-;; dired tips --> http://xahlee.org/emacs/emacs_dired_tips.html

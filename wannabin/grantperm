@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# Recursively grant a+rwx to directories and a+rw to files.
+
+# $1 --> top directory
+
+if [ "$#" -ne 1 ]
+then
+    echo 'usage: grantperm <directory>'
+    exit 1
+fi
+
+find $1 -type f -exec chmod a+rw {} \;
+find $1 -type d -exec chmod a+rwx {} \;

@@ -1,7 +1,14 @@
 #!/bin/bash
 
-if [ `setxkbmap -print | grep xkb_symbols | awk '{print $4}' | awk -F"+" '{print $2}'` = us ] ; then
-    setxkbmap -layout bg -variant bas_phonetic ;
+if [ `setxkbmap -print | grep xkb_symbols | awk '{print $4}' | awk -F"+" '{print $2}'` = us ]
+then
+    setxkbmap -layout bg -variant bas_phonetic
 else
-    setxkbmap us ;
+    setxkbmap us
+fi
+
+xmodmap=~/.xmodmap
+if [ -r $xmodmap ]
+then
+    xmodmap ~/.xmodmap
 fi
