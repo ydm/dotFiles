@@ -23,17 +23,25 @@
 ;; (show-ws-toggle-show-trailing-whitespace)   ; show trailing whitespace
 ;; (winner-mode t)			       ; track window manipulation
 
-;; vars & bindings
+;; config
+
+;; vars
 (defvar my-emacs-directory "~/emacs/")
 
+;; bindings
 (global-set-key (kbd "C-c e")	'eshell)	 ; emacs shell
 (global-set-key (kbd "C-c r")	'replace-regexp) ; as advised by emacs wiki
 (global-set-key (kbd "C-x C-b") 'bs-show)	 ; fast buffer switch
 
+;; subword mode for some languages
+(add-hook 'java-mode-hook   (lambda () (subword-mode 1))) ; java
+(add-hook 'js-mode-hook	    (lambda () (subword-mode 1))) ; js
+(add-hook 'python-mode-hook (lambda () (subword-mode 1))) ; python
+
 ;; auto-comlpete
-(add-to-list 'load-path (concat my-emacs-directory "plugins/auto-complete/"))
+(add-to-list 'load-path (concat my-emacs-directory "popup-el"))
+(add-to-list 'load-path "~/.emacs.d/")
 (require 'auto-complete-config)
-(add-to-list 'ac-dictionary-directories (concat my-emacs-directory "plugins/auto-complete/ac-dict"))
 (ac-config-default)
 
 ;; bar cursor mode
@@ -49,8 +57,6 @@
 (require 'etags-select)
 (global-set-key (kbd "C-M-.") 'etags-select-find-tag)
 (global-set-key (kbd "M-.")   'etags-select-find-tag-at-point)
-
-;; flymake-cursor: (load (concat my-emacs-directory "flymake-cursor"))
 
 ;; flymake-errnav minor mode: C-<end> and C-<home> to navigate between errors
 (load (concat my-emacs-directory "flymake-errnav-mode"))
@@ -76,27 +82,17 @@
 (load (concat my-emacs-directory "folding"))
 ;; (add-hook 'html-mode (lambda () (folding-mode)))
 
-;; haskell-mode
-(load (concat my-emacs-directory "plugins/haskell-mode/haskell-site-file"))
-(add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
-(add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
-;;(add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
-;;(add-hook 'haskell-mode-hook 'turn-on-haskell-simple-indent)
-
 ;; less-css
 (load (concat my-emacs-directory "less-css-mode"))
 
-;; regtab
-(setq indent-tabs-mode nil)
-(load (concat my-emacs-directory "plugins/regtab/regtab"))
-
-;; subword mode for some languages
-(add-hook 'java-mode-hook   (lambda () (subword-mode 1))) ; java
-(add-hook 'js-mode-hook	    (lambda () (subword-mode 1))) ; js
-(add-hook 'python-mode-hook (lambda () (subword-mode 1))) ; python
+;; yasnippet
+(setq yas-snippet-dirs '("~/.emacs.d/snippets"))
+(add-to-list 'load-path "~/.emacs.d/plugins/yasnippet")
+(require 'yasnippet)
+(yas-global-mode 1)
 
 ;; TAGS
-;; C (there should be a file /usr/include/TAGS)
+;; C (there should be a tags file called /usr/include/TAGS)
 (defvar c-tags-file "/usr/include")
 (defadvice c-mode (before load-tags-for-c-mode ())
   (if (file-exists-p c-tags-file)
@@ -105,10 +101,6 @@
 ;; TODO:
 ;; dbg TODO: http://www.emacswiki.org/emacs/DebuggingWithEmacs (setq gdb-many-windows t)
 ;; dired tips --> http://xahlee.org/emacs/emacs_dired_tips.html
-;; yasnippet
-;; (add-to-list 'load-path (concat my-emacs-directory "plugins/yasnippet"))
-;; (require 'yasnippet)
-;; (yas/global-mode 1)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.

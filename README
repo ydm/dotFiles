@@ -7,15 +7,26 @@ These include configurations for:
 
 ./Emacs.gitignore is retrieved from https://github.com/github/gitignore
 
-Emacs config includes .emacs, a lot of el files and these plugins:
-        yasnippet (retrieved from github)
-        haskell-mode (retrieved from github)
-        org-mode (included)
-        auto-complete (manually retrieved for now... TODO!)
+My Emacs config includes (beside .emacs):
+    these el files:
+        bar-cursor-mode ( http://www.northbound-train.com/emacs.html#MyPackages )
+        etags-select & etags-table ( http://emacswiki.org/emacs/EtagsTable )
+        less-css-mode ( http://www.emacswiki.org/emacs/LessCssMode )
+    these packages:
+        auto-complete ( http://cx4a.org/software/auto-complete/ )
+        drupal-ide ( http://drupal.org/project/emacs )
+        yasnippet ( http://emacswiki.org/emacs/Yasnippet )
+    and these elpas:
+        coffee-mode
+        minimap <3
+        nlinum
+        windresize
 
 To install:
-        make install
+        make install (that's broken actually... TODO)
 To uninstall:
         make uninstall
 
-^_^
+Dependencies:
+        git (make install needs it to download packages)
+        xmodmap (to map the Control key to Caps Lock)
