@@ -20,11 +20,13 @@ alias gst='git status'
 alias ....='cd ../../..'
 alias ...='cd ../../'
 alias ..='cd ..'
-alias c='cd'
 alias l='ls'
 alias la='ls -a'
 alias lal='ls -al'
 alias ll='ls -l'
+
+# arch
+alias upgrade='sudo pacman -Syu --noconfirm'
 
 # other
 alias t='tree -Ca -I ".git"'

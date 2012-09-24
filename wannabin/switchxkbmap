@@ -1,14 +1,18 @@
 #!/bin/bash
 
-if [ `setxkbmap -print | grep xkb_symbols | awk '{print $4}' | awk -F"+" '{print $2}'` = us ]
-then
-    setxkbmap -layout bg -variant bas_phonetic
-else
-    setxkbmap us
-fi
+switchxkbmap() {
+    setxkbmap -print | grep -Pe 'xkb_symbols.*?\+us\+' > /dev/null
+    if [ $? = 0 ]
+    then
+        # current layout is us, switch to bulgarian
+        setxkbmap -layout bg -variant bas_phonetic -option ctrl:nocaps
+    else
+        # switch to us
+        setxkbmap us -option ctrl:nocaps
+    fi
 
-xmodmap=~/.xmodmap
-if [ -r $xmodmap ]
-then
-    xmodmap ~/.xmodmap
-fi
+    # http://emacswiki.org/emacs/MovingTheCtrlKey
+    # setxkbmap -option ctrl:nocaps       # Make Caps Lock a Control key
+}
+
+switchxkbmap

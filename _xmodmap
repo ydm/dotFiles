@@ -1,3 +1,7 @@
+! Source: http://emacswiki.org/emacs/MovingTheCtrlKey#toc4
+! This file should be linked to ~/.xmodmap to be read by GNOME3.
+! http://blogs.gnome.org/sudaltsov/2010/10/13/xmodmap-and-gnome/
+
 !
 ! Swap Caps_Lock and Control_L
 !

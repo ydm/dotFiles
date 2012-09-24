@@ -3,6 +3,7 @@
 (flymake-mode -1)			       ; let it be off by default
 (global-hl-line-mode t)			       ; highlight current line
 (icomplete-mode t)			       ; buffer completion mode
+(ido-mode t)				       ; switch fast between buffers
 (put 'dired-find-alternate-file 'disabled nil) ; allow nav in dired buffer
 (recentf-mode t)			       ; list of recent files
 (setq backup-directory-alist '(("." . ".~")))  ; create backups in ./.~ dir
@@ -18,7 +19,6 @@
 ;; (desktop-save-mode 1)                       ; restore last emacs session
 ;; (global-ede-mode t)			       ; + ide features
 ;; (global-linum-mode t)		       ; show line number
-;; (ido-mode t)				       ; switch fast between buffers
 ;; (menu-bar-mode 0)			       ; hide menu bar
 ;; (show-ws-toggle-show-trailing-whitespace)   ; show trailing whitespace
 ;; (winner-mode t)			       ; track window manipulation
@@ -48,10 +48,6 @@
 (load (concat my-emacs-directory "bar-cursor"))
 (bar-cursor-mode t)
 
-;; drupal
-(setq drupal-ide-load-path (concat user-emacs-directory "drupal/drupal-init.el"))
-(autoload 'drupal-ide drupal-ide-load-path "Start IDE for PHP & Drupal development" t)
-
 ;; etags-select http://www.emacswiki.org/emacs/EtagsSelect
 (load (concat my-emacs-directory "etags-select"))
 (require 'etags-select)
@@ -63,17 +59,17 @@
 (add-hook 'flymake-mode (lambda () (flymake-errnav-mode)))
 
 ;; flymake for elisp
-(defun flymake-elisp-init ()
-  (let* ((temp-file   (flymake-init-create-temp-buffer-copy
-                       'flymake-create-temp-inplace))
-         (local-file  (file-relative-name
-                       temp-file
-                       (file-name-directory buffer-file-name))))
-    (list "elisplint" (list local-file))))
-(push '("\\.el$" flymake-elisp-init) flymake-allowed-file-name-masks)
-(add-hook 'emacs-lisp-mode-hook
-          ;; workaround for (eq buffer-file-name nil)
-          (function (lambda () (if buffer-file-name (flymake-mode)))))
+;; (defun flymake-elisp-init ()
+;;   (let* ((temp-file   (flymake-init-create-temp-buffer-copy
+;;                        'flymake-create-temp-inplace))
+;;          (local-file  (file-relative-name
+;;                        temp-file
+;;                        (file-name-directory buffer-file-name))))
+;;     (list "elisplint" (list local-file))))
+;; (push '("\\.el$" flymake-elisp-init) flymake-allowed-file-name-masks)
+;; (add-hook 'emacs-lisp-mode-hook
+;;           ;; workaround for (eq buffer-file-name nil)
+;;           (function (lambda () (if buffer-file-name (flymake-mode)))))
 
 ;; flymake for js using jslint
 (load (concat my-emacs-directory "flymake-jslint"))
@@ -85,6 +81,20 @@
 ;; less-css
 (load (concat my-emacs-directory "less-css-mode"))
 
+;; php-mode
+(load (concat my-emacs-directory "plugins/php-mode/php-mode"))
+(setq auto-mode-alist
+      (cons '("\\.php" . php-mode) auto-mode-alist))
+
+;; po-mode for gettext
+(load (concat my-emacs-directory "plugins/po/po-mode"))
+(setq auto-mode-alist
+      (cons '("\\.po\\'\\|\\.po\\." . po-mode) auto-mode-alist))
+(autoload 'po-mode "po-mode" "Major mode for translators to edit PO files" t)
+(modify-coding-system-alist 'file "\\.po\\'\\|\\.po\\."
+                            'po-find-file-coding-system)
+(autoload 'po-find-file-coding-system "po-mode")
+
 ;; yasnippet
 (setq yas-snippet-dirs '("~/.emacs.d/snippets"))
 (add-to-list 'load-path "~/.emacs.d/plugins/yasnippet")
@@ -92,11 +102,15 @@
 (yas-global-mode 1)
 
 ;; TAGS
-;; C (there should be a tags file called /usr/include/TAGS)
+;; If there is a file /usr/include/TAGS, load it with C
 (defvar c-tags-file "/usr/include")
 (defadvice c-mode (before load-tags-for-c-mode ())
   (if (file-exists-p c-tags-file)
       (visit-tags-table c-tags-file)))
+
+;; Tramp settings
+(add-to-list 'tramp-default-proxies-alist
+             '("4w\\'" "\\`root\\'" "/ssh:%h:"))
 
 ;; TODO:
 ;; dbg TODO: http://www.emacswiki.org/emacs/DebuggingWithEmacs (setq gdb-many-windows t)

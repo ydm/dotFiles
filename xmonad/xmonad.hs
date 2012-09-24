@@ -14,6 +14,9 @@ import System.Exit
 -- d: needed by the statusBar
 import XMonad.Hooks.DynamicLog
 
+-- d: java workaround
+import XMonad.Hooks.SetWMName
+
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
 
@@ -67,7 +70,7 @@ myWorkspaces    = ["1","2","3","4","5","6","7","8","9"]
 -- Border colors for unfocused and focused windows, respectively.
 --
 myNormalBorderColor  = "#dddddd"
-myFocusedBorderColor = "#ff0000"
+myFocusedBorderColor = "#00ff00"
 
 ------------------------------------------------------------------------
 -- Key bindings. Add, modify or remove key bindings here.
@@ -248,7 +251,11 @@ myEventHook = mempty
 -- Perform an arbitrary action on each internal state change or X event.
 -- See the 'XMonad.Hooks.DynamicLog' extension for examples.
 --
-myLogHook = return ()
+-- myLogHook = return ()
+-- This hack is necessary to make Java GUIs like NetBeans work.
+-- For more information see http://jjinux.blogspot.com/2009/11/linux-my-xmonad-setup.html
+-- and http://code.google.com/p/xmonad/issues/detail?id=177
+myLogHook = setWMName "LG3D"
 
 ------------------------------------------------------------------------
 -- Startup hook

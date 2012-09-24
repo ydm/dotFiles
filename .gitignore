@@ -1,8 +1,4 @@
-emacs/bin/emacs
-emacs/bin/firefox
-emacs/plugins/auto-complete*
-emacs/plugins/haskell-mode
-emacs/plugins/yasnippet
+emacs/plugins/php-mode
 xmonad/xmonad-i386-linux
 xmonad/xmonad.errors
 xmonad/xmonad.hi
