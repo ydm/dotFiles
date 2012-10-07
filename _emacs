@@ -87,7 +87,7 @@
       (cons '("\\.php" . php-mode) auto-mode-alist))
 
 ;; po-mode for gettext
-(load (concat my-emacs-directory "plugins/po/po-mode"))
+(load (concat my-emacs-directory "plugins/po-mode/po-mode"))
 (setq auto-mode-alist
       (cons '("\\.po\\'\\|\\.po\\." . po-mode) auto-mode-alist))
 (autoload 'po-mode "po-mode" "Major mode for translators to edit PO files" t)
@@ -95,8 +95,16 @@
                             'po-find-file-coding-system)
 (autoload 'po-find-file-coding-system "po-mode")
 
+;; yaml
+;; (add-to-list 'load-path (concat my-emacs-directory "plugins/yaml-mode"))
+;; (require 'yaml-mode)
+(load (concat my-emacs-directory "plugins/yaml-mode/yaml-mode"))
+(add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
+
 ;; yasnippet
-(setq yas-snippet-dirs '("~/.emacs.d/snippets"))
+(setq yas-snippet-dirs
+      '("~/.emacs.d/plugins/yasnippet/snippets"
+        "~/.emacs.d/snippets"))
 (add-to-list 'load-path "~/.emacs.d/plugins/yasnippet")
 (require 'yasnippet)
 (yas-global-mode 1)
@@ -109,6 +117,7 @@
       (visit-tags-table c-tags-file)))
 
 ;; Tramp settings
+(require 'tramp)
 (add-to-list 'tramp-default-proxies-alist
              '("4w\\'" "\\`root\\'" "/ssh:%h:"))
 
@@ -127,7 +136,6 @@
  '(inhibit-startup-screen t)
  '(scroll-bar-mode nil)
  '(show-paren-mode t)
- '(tool-bar-mode t)
  '(tool-bar-position (quote right))
  '(uniquify-buffer-name-style (quote forward) nil (uniquify))
  '(use-dialog-box nil))
@@ -136,4 +144,4 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(default ((t (:family "Inconsolata" :foundry "unknown" :slant normal :weight normal :height 128 :width normal)))))

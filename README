@@ -1,3 +1,9 @@
+tt.. this stuff is outdated
+TODO:
+        1) Write install script
+        2) Write update script (git pull / svn / etc... for all dependencies)
+        3) Write uninstall script
+
 My dotFiles.
 
 These include configurations for:
