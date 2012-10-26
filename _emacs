@@ -35,7 +35,7 @@
 
 ;; subword mode for some languages
 (add-hook 'java-mode-hook   (lambda () (subword-mode 1))) ; java
-(add-hook 'js-mode-hook	    (lambda () (subword-mode 1))) ; js
+(add-hook 'js2-mode-hook	    (lambda () (subword-mode 1))) ; js
 (add-hook 'python-mode-hook (lambda () (subword-mode 1))) ; python
 
 ;; auto-comlpete
@@ -48,6 +48,10 @@
 (load (concat my-emacs-directory "bar-cursor"))
 (bar-cursor-mode t)
 
+;; TODO: remove this...
+;; (load (concat my-emacs-directory "plugins/django-mode/django-html-mode"))
+;; (load (concat my-emacs-directory "plugins/django-mode/django-mode"))
+
 ;; etags-select http://www.emacswiki.org/emacs/EtagsSelect
 (load (concat my-emacs-directory "etags-select"))
 (require 'etags-select)
@@ -58,21 +62,9 @@
 (load (concat my-emacs-directory "flymake-errnav-mode"))
 (add-hook 'flymake-mode (lambda () (flymake-errnav-mode)))
 
-;; flymake for elisp
-;; (defun flymake-elisp-init ()
-;;   (let* ((temp-file   (flymake-init-create-temp-buffer-copy
-;;                        'flymake-create-temp-inplace))
-;;          (local-file  (file-relative-name
-;;                        temp-file
-;;                        (file-name-directory buffer-file-name))))
-;;     (list "elisplint" (list local-file))))
-;; (push '("\\.el$" flymake-elisp-init) flymake-allowed-file-name-masks)
-;; (add-hook 'emacs-lisp-mode-hook
-;;           ;; workaround for (eq buffer-file-name nil)
-;;           (function (lambda () (if buffer-file-name (flymake-mode)))))
-
 ;; flymake for js using jslint
 (load (concat my-emacs-directory "flymake-jslint"))
+(add-hook 'js2-mode-hook (lambda () (flymake-mode 1)))
 
 ;; folding-mode
 (load (concat my-emacs-directory "folding"))
@@ -95,16 +87,18 @@
                             'po-find-file-coding-system)
 (autoload 'po-find-file-coding-system "po-mode")
 
+;; pony-mode for django
+(load (concat my-emacs-directory "plugins/pony-mode/src/pony-mode"))
+
 ;; yaml
-;; (add-to-list 'load-path (concat my-emacs-directory "plugins/yaml-mode"))
-;; (require 'yaml-mode)
 (load (concat my-emacs-directory "plugins/yaml-mode/yaml-mode"))
 (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
 
 ;; yasnippet
 (setq yas-snippet-dirs
-      '("~/.emacs.d/plugins/yasnippet/snippets"
-        "~/.emacs.d/snippets"))
+      `("~/.emacs.d/plugins/yasnippet/snippets"
+        "~/.emacs.d/snippets"
+        ,(concat my-emacs-directory "plugins/pony-mode/src/snippets")))
 (add-to-list 'load-path "~/.emacs.d/plugins/yasnippet")
 (require 'yasnippet)
 (yas-global-mode 1)
