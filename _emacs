@@ -1,6 +1,5 @@
 (defalias 'yes-or-no-p 'y-or-n-p)	       ; always y/n instead of yes/no
 (delete-selection-mode t)		       ; delete marked text on insert
-(flymake-mode -1)			       ; let it be off by default
 (global-hl-line-mode t)			       ; highlight current line
 (icomplete-mode t)			       ; buffer completion mode
 (ido-mode t)				       ; switch fast between buffers
@@ -14,14 +13,18 @@
 (setq-default indent-tabs-mode nil)	       ; use spaces instead of tabs
 (toggle-word-wrap t)			       ; break long lines on words
 (which-function-mode t)			       ; show current func in bar
-(windmove-default-keybindings)		       ; move trough windows w. sh/arws
 ;; (desktop-load-default)
 ;; (desktop-save-mode 1)                       ; restore last emacs session
+;; (flymake-mode -1)			       ; let it be off by default
 ;; (global-ede-mode t)			       ; + ide features
 ;; (global-linum-mode t)		       ; show line number
 ;; (menu-bar-mode 0)			       ; hide menu bar
 ;; (show-ws-toggle-show-trailing-whitespace)   ; show trailing whitespace
+;; (windmove-default-keybindings)	       ; move trough windows w. sh/arws
 ;; (winner-mode t)			       ; track window manipulation
+
+;; testing
+(setq redisplay-dont-pause t)
 
 ;; config
 
@@ -29,9 +32,13 @@
 (defvar my-emacs-directory "~/emacs/")
 
 ;; bindings
-(global-set-key (kbd "C-c e")	'eshell)	 ; emacs shell
+(global-set-key (kbd "C-c e")	'shell)          ; shell
 (global-set-key (kbd "C-c r")	'replace-regexp) ; as advised by emacs wiki
 (global-set-key (kbd "C-x C-b") 'bs-show)	 ; fast buffer switch
+(global-set-key (kbd "C-M-p")                    ; jump 5 lines up
+                (lambda () (interactive) (previous-line 5)))
+(global-set-key (kbd "C-M-n")                    ; jump 5 lines down
+                (lambda () (interactive) (next-line 5)))
 
 ;; subword mode for some languages
 (add-hook 'java-mode-hook   (lambda () (subword-mode 1))) ; java
@@ -66,9 +73,8 @@
 (load (concat my-emacs-directory "flymake-jslint"))
 (add-hook 'js2-mode-hook (lambda () (flymake-mode 1)))
 
-;; folding-mode
-(load (concat my-emacs-directory "folding"))
-;; (add-hook 'html-mode (lambda () (folding-mode)))
+;; hide/show minor mode for various languages
+(add-hook 'python-mode (lambda () (hs-minor-mode)))
 
 ;; less-css
 (load (concat my-emacs-directory "less-css-mode"))
@@ -87,8 +93,8 @@
                             'po-find-file-coding-system)
 (autoload 'po-find-file-coding-system "po-mode")
 
-;; pony-mode for django
-(load (concat my-emacs-directory "plugins/pony-mode/src/pony-mode"))
+;; pony-mode for django (it's shit...)
+;; (load (concat my-emacs-directory "plugins/pony-mode/src/pony-mode"))
 
 ;; yaml
 (load (concat my-emacs-directory "plugins/yaml-mode/yaml-mode"))
@@ -126,8 +132,11 @@
  ;; If there is more than one, they won't work right.
  '(column-number-mode t)
  '(custom-enabled-themes (quote (dichromacy)))
+ '(default-input-method "bulgarian-alt-phonetic")
+ '(ido-enable-flex-matching t)
  '(inhibit-default-init nil)
  '(inhibit-startup-screen t)
+ '(less-css-compile-at-save t)
  '(scroll-bar-mode nil)
  '(show-paren-mode t)
  '(tool-bar-position (quote right))
@@ -139,3 +148,18 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(default ((t (:family "Inconsolata" :foundry "unknown" :slant normal :weight normal :height 128 :width normal)))))
+
+;; TODO
+;; Helper for compilation. Close the compilation window if
+;; there was no error at all. (emacs wiki)
+(defun compilation-exit-autoclose (status code msg)
+  ;; If M-x compile exists with a 0
+  (when (and (eq status 'exit) (zerop code))
+    ;; then bury the *compilation* buffer, so that C-x b doesn't go there
+    (bury-buffer)
+    ;; and delete the *compilation* window
+    (set-window-buffer (get-buffer-window (get-buffer "*compilation*")) (other-buffer)))
+  ;; Always return the anticipated result of compilation-exit-message-function
+  (cons msg code))
+;; Specify my function (maybe I should have done a lambda function)
+(setq compilation-exit-message-function 'compilation-exit-autoclose)
