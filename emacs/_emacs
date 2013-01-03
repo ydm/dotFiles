@@ -52,103 +52,25 @@
 (global-set-key (kbd "M-P") 'backward-list)
 (global-set-key (kbd "M-x") 'ido-execute-extended-command)
 
-;; +--------+
-;; | errnav |
-;; +--------+
-(load "~/pos-tip")
-
-(defun errnav-get-errors ()
-  (defun filter (o)
-    (and (overlay-get o 'flymake-overlay) (overlay-get o 'help-echo)))
-  (remove nil (mapcar 'filter (overlays-at (point)))))
-
-(defun errnav-display-errors ()
-  (interactive)
-  (let ((e (mapconcat 'identity (errnav-get-errors) "\n")))
-    ;; (tooltip-show e t)))
-    (pos-tip-show e '("black" . "lightyellow"))))
-
-(defadvice flymake-goto-next-error (after errnav-next-advice activate compile)
-  (errnav-display-errors))
-
-(defadvice flymake-goto-prev-error (after errnav-prev-advice activate compile)
-  (errnav-display-errors))
-
-(defvar errnav-mode-keymap
-  (let ((map (make-sparse-keymap)))
-    (define-key map (kbd "C-<home>") 'flymake-goto-prev-error)
-    (define-key map (kbd "C-<end>" ) 'flymake-goto-next-error)
-    map))
-
-(define-minor-mode errnav-mode
-  "Simple minor mode which adds the following key bindings for moving
-to the next and previous flymake errors:
-
-C-<home> Go to previous error.
-C-<end> Go to next error."
-  :keymap errnav-mode-keymap)
-
-(add-hook 'flymake-mode-hook 'errnav-mode)
-
-;; +---------+
-;; | flymake |
-;; +---------+
-(when (load "flymake")
-  (defun flymake-jslint-init ()
-    (let* ((temp-file (flymake-init-create-temp-buffer-copy
-                       'flymake-create-temp-inplace))
-           (local-file (file-relative-name
-                        temp-file
-                        (file-name-directory buffer-file-name))))
-      (list "jslint" (list local-file))))
-
-  ;; TODO
-  (add-to-list 'flymake-err-line-patterns
-	       '("Error:\\([[:digit:]]+\\):\\([[:digit:]]+\\):\\(.*\\)$" nil 1 2 3))
-
-  (add-to-list 'flymake-allowed-file-name-masks
-               '("\\.js\\'" flymake-jslint-init)))
-
-(when (load "flymake")
-  (defun flymake-pylint-init ()
-    (let* ((temp-file (flymake-init-create-temp-buffer-copy
-		       'flymake-create-temp-inplace))
-           (local-file (file-relative-name
-                        temp-file
-                        (file-name-directory buffer-file-name))))
-      (list "epylint" (list local-file))))
-
-  (add-to-list 'flymake-allowed-file-name-masks
-               '("\\.py\\'" flymake-pylint-init)))
-
-(add-hook 'css-mode-hook 'rainbow-mode)
-
 ;; +-----------------------+
 ;; | automatic minor modes |
 ;; +-----------------------+
-(defvar *subword-modes* '(js-mode-hook))
-(dolist (el *subword-modes*) (add-hook el 'subword-mode))
-
 (defvar *flymake-modes* '(js-mode-hook))
 (dolist (el *flymake-modes*) (add-hook el 'flymake-mode))
 
-;; +----+
-;; | tt |
-;; +----+
-(defun delete-buffer-file ()
-  "Delete the file behind the current buffer and kill the buffer
-afterwards."
-  (interactive)
-  (delete-file (buffer-file-name))
-  (kill-buffer))
+(defvar *rainbow-modes* '(css-mode-hook))
+(dolist (el *rainbow-modes*) (add-hook el 'rainbow-mode))
 
-(defun rename-buffer-file (new)
-  (interactive "sNew filename: ")
-  (let ((old (buffer-file-name)))
-    (rename-file old new)
-    (find-alternate-file new)))
+(defvar *subword-modes* '(js-mode-hook))
+(dolist (el *subword-modes*) (add-hook el 'subword-mode))
 
-(defun string-startswith (s1 s2)
-  (if (or (not (stringp s1)) (not (stringp s2)) (string< s1 s2))
-      nil
-    (string= (substring s1 0 (length s2)) s2)))
+;; +------+
+;; | Load |
+;; +------+
+(defvar *emacs-dir* "~/dotFiles/emacs")
+(add-to-list 'load-path *emacs-dir*)
+
+(load "errnav")
+(add-hook 'flymake-mode-hook 'errnav-mode)
+(load "flymake-adjustments")
+(load "interactives")
