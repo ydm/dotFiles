@@ -1,14 +1,16 @@
-# thanks to https://github.com/bitprophet/dotfiles/
+# -*- mode: Shell-script -*-
+# a lot of thanks to https://github.com/bitprophet/dotfiles/
 
 # colors
 alias grep='grep --color=auto'
-# alias ls='ls --color=auto'
+alias ls='ls --color=auto'
 
 # sys
 alias res='sudo reboot'
 alias bye='sudo shutdown -h 0'
 
 # edit
+# TODO: can I use a root@localhost proxy for this?
 alias semacs='sudo emacs'
 
 # git

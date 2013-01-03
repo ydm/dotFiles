@@ -1,5 +1,6 @@
-tt.. this stuff is outdated
-TODO:
+tt.. I'm currently sorting and rewriting my dotFiles
+
+TOP TODOS:
         1) Write install script
         2) Write update script (git pull / svn / etc... for all dependencies)
         3) Write uninstall script
@@ -8,25 +9,23 @@ My dotFiles.
 
 These include configurations for:
         emacs
-        git (see ./Makefile)
         xmonad
+
+	outdated:
+        git (see ./Makefile)
 
 ./Emacs.gitignore is retrieved from https://github.com/github/gitignore
 
-My Emacs config includes (beside .emacs):
-    these el files:
-        bar-cursor-mode ( http://www.northbound-train.com/emacs.html#MyPackages )
-        etags-select & etags-table ( http://emacswiki.org/emacs/EtagsTable )
-        less-css-mode ( http://www.emacswiki.org/emacs/LessCssMode )
-    these packages:
-        auto-complete ( http://cx4a.org/software/auto-complete/ )
-        drupal-ide ( http://drupal.org/project/emacs )
-        yasnippet ( http://emacswiki.org/emacs/Yasnippet )
-    and these elpas:
-        coffee-mode
-        minimap <3
-        nlinum
-        windresize
+My Emacs config is made up of:
+    .emacs
+    less-css-mode from https://github.com/purcell/less-css-mode.git
+
+    coffee-mode (elpa)
+    rainbow-mode (elpa)
+
+    TODO:
+    autocomplete: http://cx4a.org/software/auto-complete/
+    yasnippet: elpa
 
 To install:
         make install (that's broken actually... TODO)

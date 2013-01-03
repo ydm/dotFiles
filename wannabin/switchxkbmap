@@ -1,6 +1,6 @@
 #!/bin/bash
 
-switchxkbmap() {
+switchxkbmap () {
     setxkbmap -print | grep -Pe 'xkb_symbols.*?\+us\+' > /dev/null
     if [ $? = 0 ]
     then

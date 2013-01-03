@@ -1,3 +1,5 @@
+# -*- mode: Shell-script -*-
+
 # make less colorize source code using source-highlight; lesspipe
 # should be installed and there should be an executable file called
 # ~/.lessfilter

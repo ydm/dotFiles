@@ -1,0 +1,16 @@
+# -*- mode: Shell-script -*-
+#
+# Append this file to your ~/.bashrc or simply add:
+# source ~/dotFiles/bash/source-me
+#
+
+# prompt
+PS1='[\u@\h \w]\$ '
+
+# source all dotFiles that start with _bash
+for f in $HOME/dotFiles/bash/_bash_*; do
+    source $f
+done
+
+# add wannabin to PATH
+export PATH=$PATH:$HOME/dotFiles/wannabin

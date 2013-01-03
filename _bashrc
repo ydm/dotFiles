@@ -1,4 +1,0 @@
-# todo? :)
-for f in `ls $HOME/dotFiles/_bash_*`; do
-    source $f
-done
