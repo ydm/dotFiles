@@ -1,0 +1,5 @@
+[[ -f ~/.Xresources ]] && xrdb -merge ~/.Xresources
+xmonad
+
+# set map initially?
+# setxkbmap us -option ctrl:nocaps

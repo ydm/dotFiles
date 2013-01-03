@@ -4,6 +4,7 @@ dot_dir=$HOME/dotFiles
 bash_dir=$dot_dir/bash
 emacs_dir=$dot_dir/emacs
 git_dir=$dot_dir/git
+X_dir=$dot_dir/X
 xmonad_dir=$dot_dir/xmonad
 
 msg_installing () {
@@ -19,12 +20,13 @@ install_bash () {
     echo "
 # include settings from my dotFiles
 source $bash_dir/source-me" >> ~/.bashrc
+    ln -s -T $bash_dir/_lessfilter $HOME/.lessfilter
     msg_done
 }
 
 install_emacs () {
     msg_installing 'emacs'
-    ln -s -T $emacs_dir/.emacs $HOME/.emacs
+    ln -s -T $emacs_dir/_emacs $HOME/.emacs
     msg_done
 }
 
@@ -42,6 +44,13 @@ install_git () {
     msg_done
 }
 
+install_X () {
+    msg_installing 'X'
+    ln -s -T $X_dir/_Xresources ~/.Xresources
+    ln -s -T $X_dir/_xinitrc ~/.xinitrc
+    msg_done
+}
+
 install_xmonad () {
     ln -s -T $xmonad_dir $HOME/.xmonad
 }
@@ -49,4 +58,5 @@ install_xmonad () {
 install_bash
 install_emacs
 install_git
+install_X
 install_xmonad

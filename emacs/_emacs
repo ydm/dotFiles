@@ -1,0 +1,154 @@
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(default ((t (:family "Inconsolata LGC" :foundry "unknown" :slant normal :weight normal :height 113 :width normal)))))
+
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(backup-directory-alist (quote (("." . ".~"))))
+ '(bs-attributes-list (quote (("" 1 1 left bs--get-marked-string) ("M" 1 1 left bs--get-modified-string) ("R" 2 2 left bs--get-readonly-string) ("Buffer" bs--get-name-length 10 left bs--get-name) ("" 1 1 left " ") ("Mode" 12 12 right bs--get-mode-name) ("" 2 2 left "  "))))
+ '(column-number-mode t)
+ '(default-input-method "bulgarian-alt-phonetic")
+ '(desktop-save-mode t)
+ '(dired-dwim-target t)
+ '(dired-recursive-copies (quote always))
+ '(electric-indent-mode t)
+ '(electric-pair-mode t)
+ '(global-hl-line-mode t)
+ '(ido-mode (quote both) nil (ido))
+ '(inhibit-startup-screen t)
+ '(ispell-dictionary "english")
+ '(line-move-visual nil)
+ '(python-mode-hook (quote (flymake-mode subword-mode)))
+ '(scroll-bar-mode nil)
+ '(scroll-conservatively 101)
+ '(show-paren-mode t)
+ '(tool-bar-position (quote right))
+ '(tool-bar-style (quote image))
+ '(which-function-mode t)
+ '(x-gtk-use-system-tooltips nil))
+
+(defalias 'yes-or-no-p 'y-or-n-p)	       ; always y/n instead of yes/no
+(put 'dired-find-alternate-file 'disabled nil) ; allow nav in dired buffer
+
+;; +------+
+;; | Keys |
+;; +------+
+(defun ido-execute-extended-command ()
+  (interactive)
+  (let* ((choices (all-completions "" obarray 'commandp))
+	 (choice (ido-completing-read "[ido] M-x " choices)))
+    (call-interactively (intern choice))))
+
+(global-set-key (kbd "C-M-n") (lambda () (interactive) (next-line 5)))
+(global-set-key (kbd "C-M-p") (lambda () (interactive) (previous-line 5)))
+(global-set-key (kbd "C-x C-b") 'bs-show)
+(global-set-key (kbd "M-N") 'forward-list)
+(global-set-key (kbd "M-P") 'backward-list)
+(global-set-key (kbd "M-x") 'ido-execute-extended-command)
+
+;; +--------+
+;; | errnav |
+;; +--------+
+(load "~/pos-tip")
+
+(defun errnav-get-errors ()
+  (defun filter (o)
+    (and (overlay-get o 'flymake-overlay) (overlay-get o 'help-echo)))
+  (remove nil (mapcar 'filter (overlays-at (point)))))
+
+(defun errnav-display-errors ()
+  (interactive)
+  (let ((e (mapconcat 'identity (errnav-get-errors) "\n")))
+    ;; (tooltip-show e t)))
+    (pos-tip-show e '("black" . "lightyellow"))))
+
+(defadvice flymake-goto-next-error (after errnav-next-advice activate compile)
+  (errnav-display-errors))
+
+(defadvice flymake-goto-prev-error (after errnav-prev-advice activate compile)
+  (errnav-display-errors))
+
+(defvar errnav-mode-keymap
+  (let ((map (make-sparse-keymap)))
+    (define-key map (kbd "C-<home>") 'flymake-goto-prev-error)
+    (define-key map (kbd "C-<end>" ) 'flymake-goto-next-error)
+    map))
+
+(define-minor-mode errnav-mode
+  "Simple minor mode which adds the following key bindings for moving
+to the next and previous flymake errors:
+
+C-<home> Go to previous error.
+C-<end> Go to next error."
+  :keymap errnav-mode-keymap)
+
+(add-hook 'flymake-mode-hook 'errnav-mode)
+
+;; +---------+
+;; | flymake |
+;; +---------+
+(when (load "flymake")
+  (defun flymake-jslint-init ()
+    (let* ((temp-file (flymake-init-create-temp-buffer-copy
+                       'flymake-create-temp-inplace))
+           (local-file (file-relative-name
+                        temp-file
+                        (file-name-directory buffer-file-name))))
+      (list "jslint" (list local-file))))
+
+  ;; TODO
+  (add-to-list 'flymake-err-line-patterns
+	       '("Error:\\([[:digit:]]+\\):\\([[:digit:]]+\\):\\(.*\\)$" nil 1 2 3))
+
+  (add-to-list 'flymake-allowed-file-name-masks
+               '("\\.js\\'" flymake-jslint-init)))
+
+(when (load "flymake")
+  (defun flymake-pylint-init ()
+    (let* ((temp-file (flymake-init-create-temp-buffer-copy
+		       'flymake-create-temp-inplace))
+           (local-file (file-relative-name
+                        temp-file
+                        (file-name-directory buffer-file-name))))
+      (list "epylint" (list local-file))))
+
+  (add-to-list 'flymake-allowed-file-name-masks
+               '("\\.py\\'" flymake-pylint-init)))
+
+(add-hook 'css-mode-hook 'rainbow-mode)
+
+;; +-----------------------+
+;; | automatic minor modes |
+;; +-----------------------+
+(defvar *subword-modes* '(js-mode-hook))
+(dolist (el *subword-modes*) (add-hook el 'subword-mode))
+
+(defvar *flymake-modes* '(js-mode-hook))
+(dolist (el *flymake-modes*) (add-hook el 'flymake-mode))
+
+;; +----+
+;; | tt |
+;; +----+
+(defun delete-buffer-file ()
+  "Delete the file behind the current buffer and kill the buffer
+afterwards."
+  (interactive)
+  (delete-file (buffer-file-name))
+  (kill-buffer))
+
+(defun rename-buffer-file (new)
+  (interactive "sNew filename: ")
+  (let ((old (buffer-file-name)))
+    (rename-file old new)
+    (find-alternate-file new)))
+
+(defun string-startswith (s1 s2)
+  (if (or (not (stringp s1)) (not (stringp s2)) (string< s1 s2))
+      nil
+    (string= (substring s1 0 (length s2)) s2)))

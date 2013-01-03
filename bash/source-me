@@ -8,7 +8,7 @@
 PS1='[\u@\h \w]\$ '
 
 # source all dotFiles that start with _bash
-for f in $HOME/dotFiles/bash/_bash_*; do
+for f in $HOME/dotFiles/bash/bash_*; do
     source $f
 done
 

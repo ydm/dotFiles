@@ -3,5 +3,6 @@
 # make less colorize source code using source-highlight; lesspipe
 # should be installed and there should be an executable file called
 # ~/.lessfilter
+
 export LESS="-R"
 eval "$(lesspipe.sh)"
