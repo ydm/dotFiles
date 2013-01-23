@@ -25,3 +25,5 @@
 
   (add-to-list 'flymake-allowed-file-name-masks
                '("\\.py\\'" flymake-pylint-init)))
+
+(provide 'flymake-adjustments)

@@ -1,5 +1,4 @@
-(message "%s" load-path)
-(load "pos-tip")
+(autoload 'pos-tip-show "lib/pos-tip")
 
 (defun errnav-get-errors ()
   (defun filter (o)
@@ -31,3 +30,5 @@ to the next and previous flymake errors:
 C-<home> Go to previous error.
 C-<end> Go to next error."
   :keymap errnav-mode-keymap)
+
+;; (provide 'errnav)

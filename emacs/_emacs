@@ -1,3 +1,5 @@
+(require 'uniquify)
+
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -10,34 +12,54 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(abbrev-file-name "~/dotFiles/emacs/abbrev_defs")
+ '(ansi-color-names-vector ["#242424" "#e5786d" "#95e454" "#cae682" "#8ac6f2" "#333366" "#ccaa8f" "#f6f3e8"])
  '(backup-directory-alist (quote (("." . ".~"))))
  '(bs-attributes-list (quote (("" 1 1 left bs--get-marked-string) ("M" 1 1 left bs--get-modified-string) ("R" 2 2 left bs--get-readonly-string) ("Buffer" bs--get-name-length 10 left bs--get-name) ("" 1 1 left " ") ("Mode" 12 12 right bs--get-mode-name) ("" 2 2 left "  "))))
+ '(bs-default-sort-name "by mode")
  '(column-number-mode t)
+ '(custom-enabled-themes (quote (tsdh-light)))
  '(default-input-method "bulgarian-alt-phonetic")
  '(desktop-save-mode t)
  '(dired-dwim-target t)
  '(dired-recursive-copies (quote always))
- '(electric-indent-mode t)
- '(electric-pair-mode t)
  '(global-hl-line-mode t)
  '(ido-mode (quote both) nil (ido))
+ '(indent-tabs-mode nil)
  '(inhibit-startup-screen t)
  '(ispell-dictionary "english")
+ '(less-css-compile-at-save t)
  '(line-move-visual nil)
- '(python-mode-hook (quote (flymake-mode subword-mode)))
+ '(python-mode-hook (quote (subword-mode)))
  '(scroll-bar-mode nil)
  '(scroll-conservatively 101)
  '(show-paren-mode t)
  '(tool-bar-position (quote right))
  '(tool-bar-style (quote image))
- '(which-function-mode t)
+ '(uniquify-buffer-name-style (quote post-forward) nil (uniquify))
  '(x-gtk-use-system-tooltips nil))
 
 (defalias 'yes-or-no-p 'y-or-n-p)	       ; always y/n instead of yes/no
 (put 'dired-find-alternate-file 'disabled nil) ; allow nav in dired buffer
 
 ;; +------+
-;; | Keys |
+;; | libs |
+;; +------+
+(defvar *emacs-dir* "~/dotFiles/emacs")
+(defvar *emacs-lib-dir* (concat (file-name-as-directory *emacs-dir*) "lib"))
+
+(add-to-list 'load-path *emacs-dir*)
+(add-to-list 'load-path *emacs-lib-dir*)
+
+(require 'flymake-adjustments)
+(require 'interactives)
+(require 'less-css)
+
+(autoload 'errnav-mode "errnav")
+(autoload 'yaml-mode "yaml-mode")
+
+;; +------+
+;; | keys |
 ;; +------+
 (defun ido-execute-extended-command ()
   (interactive)
@@ -52,25 +74,68 @@
 (global-set-key (kbd "M-P") 'backward-list)
 (global-set-key (kbd "M-x") 'ido-execute-extended-command)
 
+;; jump between windows
+(global-unset-key (kbd "C-x o"))
+(global-set-key (kbd "C-s-p") (lambda () (interactive) (other-window -1)))
+(global-set-key (kbd "C-s-n") (lambda () (interactive) (other-window 1)))
+
 ;; +-----------------------+
 ;; | automatic minor modes |
 ;; +-----------------------+
-(defvar *flymake-modes* '(js-mode-hook))
-(dolist (el *flymake-modes*) (add-hook el 'flymake-mode))
+(defvar *automatic-minor-modes*
+  '((errnav-mode (flymake-mode-hook))
+    (flymake-mode (js-mode-hook))
+    (rainbow-mode (css-mode-hook))
+    (subword-mode (js-mode-hook))))
 
-(defvar *rainbow-modes* '(css-mode-hook))
-(dolist (el *rainbow-modes*) (add-hook el 'rainbow-mode))
+(dolist (el *automatic-minor-modes*)
+  (let ((mode (car el)))
+    (dolist (hook (cadr el))
+      (add-hook hook mode))))
 
-(defvar *subword-modes* '(js-mode-hook))
-(dolist (el *subword-modes*) (add-hook el 'subword-mode))
+;; yaml-mode association
+(add-to-list 'auto-mode-alist '("\\.yaml$" . yaml-mode))
+(add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
 
-;; +------+
-;; | Load |
-;; +------+
-(defvar *emacs-dir* "~/dotFiles/emacs")
-(add-to-list 'load-path *emacs-dir*)
+;; global abbrevs
+(setq-default abbrev-mode t)
 
-(load "errnav")
-(add-hook 'flymake-mode-hook 'errnav-mode)
-(load "flymake-adjustments")
-(load "interactives")
+;; +---------+
+;; | advices |
+;; +---------+
+
+;; apply ansi color to the shell output buffer
+(defadvice display-message-or-buffer (before apply-ansi-color activate)
+  (let ((buffer (ad-get-arg 0)))
+    (and (bufferp buffer)
+         (string= (buffer-name buffer) "*Shell Command Output*")
+         (apply-ansi-color-current-buffer buffer))))
+
+;; clean up the buffer list when displaying the selection window
+(defadvice bs-show (before kill-system-buffers-before-bs-show)
+  (kill-system-buffers))
+
+;; make directory when after visiting a file
+(defadvice ido-find-file (after mkdir-after-find-file)
+  (let ((dir (file-name-directory (buffer-file-name))))
+    (unless (file-exists-p dir)
+      (make-directory dir t))))
+(ad-activate 'ido-find-file)
+
+;; +-------------+
+;; | adjustments |
+;; +-------------+
+
+;; automatically close buffer after successful compilation
+(defun autoclose-compilation (status code msg)
+  (when (and (eq status 'exit) (zerop code))
+    (set-window-buffer (get-buffer-window) (other-buffer)))
+  (cons msg code))
+(setq compilation-exit-message-function 'autoclose-compilation)
+
+;; redefine dired-up-directory to reuse buffer
+(add-hook 'dired-mode-hook
+          (lambda ()
+            (define-key dired-mode-map (kbd "^")
+              (lambda () (interactive)
+                (find-alternate-file "..")))))
