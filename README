@@ -1,24 +1,26 @@
+deps:
+
+
 tt.. I'm currently sorting and rewriting my dotFiles
 
 TOP TODOS:
-        1) Write install script
         2) Write update script (git pull / svn / etc... for all dependencies)
         3) Write uninstall script
 
 My dotFiles.
 
 These include configurations for:
+        bash
         emacs
         xmonad
-
-	outdated:
-        git (see ./Makefile)
+        git
 
 ./Emacs.gitignore is retrieved from https://github.com/github/gitignore
 
 My Emacs config is made up of:
     .emacs
     less-css-mode from https://github.com/purcell/less-css-mode.git
+    yaml-mode (TODO: link)
 
     coffee-mode (elpa)
     rainbow-mode (elpa)
@@ -28,10 +30,11 @@ My Emacs config is made up of:
     yasnippet: elpa
 
 To install:
-        make install (that's broken actually... TODO)
+        make install # TODO: make it overwrite current settings optionally
+
 To uninstall:
-        make uninstall
+        make uninstall # doesn't work yet
 
 Dependencies:
-        git (make install needs it to download packages)
-        xmodmap (to map the Control key to Caps Lock)
+        GNU source-highlight
+        Inconsolata LGC (font)

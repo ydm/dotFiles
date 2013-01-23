@@ -3,6 +3,7 @@
 # TODO? :}
 
 uninstall_bash () {
+    echo qwe
 }
 
 uninstall_emacs () {
@@ -21,3 +22,11 @@ uninstall_git () {
     rm -f ~/.global_ignore
     git config --global --unset core.excludesfile
 }
+
+# TODO
+rm ~/.Xresources
+rm ~/.lesspipe
+rm ~/.xinitrc
+rm ~/.xmonad
+
+uninstall_emacs
