@@ -17,6 +17,8 @@
  '(backup-directory-alist (quote (("." . ".~"))))
  '(bs-attributes-list (quote (("" 1 1 left bs--get-marked-string) ("M" 1 1 left bs--get-modified-string) ("R" 2 2 left bs--get-readonly-string) ("Buffer" bs--get-name-length 10 left bs--get-name) ("" 1 1 left " ") ("Mode" 12 12 right bs--get-mode-name) ("" 2 2 left "  "))))
  '(bs-default-sort-name "by mode")
+ '(coffee-mode-hook (quote (subword-mode)))
+ '(coffee-tab-width 2)
  '(column-number-mode t)
  '(custom-enabled-themes (quote (tsdh-light)))
  '(default-input-method "bulgarian-alt-phonetic")
@@ -32,7 +34,6 @@
  '(line-move-visual nil)
  '(python-mode-hook (quote (subword-mode)))
  '(scroll-bar-mode nil)
- '(scroll-conservatively 101)
  '(show-paren-mode t)
  '(tool-bar-position (quote right))
  '(tool-bar-style (quote image))
@@ -128,8 +129,12 @@
 
 ;; automatically close buffer after successful compilation
 (defun autoclose-compilation (status code msg)
-  (when (and (eq status 'exit) (zerop code))
-    (set-window-buffer (get-buffer-window) (other-buffer)))
+  (if (and (eq status 'exit) (zerop code))
+      (set-window-buffer (get-buffer-window) (other-buffer))
+    (progn
+      (setq buffer-read-only nil)
+      (apply-ansi-color-current-buffer)
+      (setq buffer-read-only t)))
   (cons msg code))
 (setq compilation-exit-message-function 'autoclose-compilation)
 
