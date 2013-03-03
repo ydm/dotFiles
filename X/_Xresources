@@ -1,13 +1,13 @@
 ! xterm ----------------------------------------------------------------------
 
-xterm*faceName:           inconsolata:normal:pixelsize=16
+xterm*faceName:           inconsolatalgc:normal:pixelsize=15
 xterm*metaSendsEscape:    true
 xterm*utf8:               2
 
-!xterm*background: #000000
+xterm*background: #ffffff
+xterm*foreground: #000000
+!xterm*background: #49AFCD
 !xterm*foreground: #ffffff
-xterm*background: #49AFCD
-xterm*foreground: #ffffff
 
 !xterm*font:              -*-dina-medium-r-*-*-16-*-*-*-*-*-*-*
 !xterm*dynamicColors:      true

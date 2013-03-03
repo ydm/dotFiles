@@ -19,10 +19,13 @@ def main():
             "R0904",  # Too many public methods
             "R0201",  # Method could be a function
             ])
+    # yeah...
+    ignore = ''
 
     cmd = "pylint --output-format parseable --include-ids y --reports n \
 --disable-msg=%s %s" % (ignore, sys.argv[1])
 
+    # shell=True?!...
     p = Popen(cmd, shell=True, bufsize=-1, stdin=PIPE, stdout=PIPE,
               stderr=PIPE, close_fds=True)
 
