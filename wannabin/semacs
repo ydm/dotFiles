@@ -1,0 +1,10 @@
+#!/bin/bash
+# mode: shell-script-mode
+
+echo $0, $1, $2, $3
+
+if [[ $1 == ./* ]] ; then
+    emacs /sudo:root@localhost:`pwd`/$1
+else
+    emacs /sudo:root@localhost:$1
+fi
