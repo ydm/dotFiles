@@ -1,3 +1,6 @@
+;; +--------+
+;; | JSLint |
+;; +--------+
 (when (load "flymake")
   (defun flymake-jslint-init ()
     (let* ((temp-file (flymake-init-create-temp-buffer-copy
@@ -14,6 +17,9 @@
   (add-to-list 'flymake-allowed-file-name-masks
                '("\\.js\\'" flymake-jslint-init)))
 
+;; +--------+
+;; | PyLint |
+;; +--------+
 (when (load "flymake")
   (defun flymake-pylint-init ()
     (let* ((temp-file (flymake-init-create-temp-buffer-copy
@@ -25,5 +31,16 @@
 
   (add-to-list 'flymake-allowed-file-name-masks
                '("\\.py\\'" flymake-pylint-init)))
+
+;; I use this piece of code to display errors when I use emacs inside
+;; a virtual console.
+(defun fma-message-errors ()
+  (interactive)
+  (let* ((line-no            (flymake-current-line-no))
+	 (line-err-info-list (nth 0 (flymake-find-err-info
+                                     flymake-err-info line-no)))
+         (menu-data          (flymake-make-err-menu-data
+                              line-no line-err-info-list)))
+    (message "%s" (caaadr menu-data))))
 
 (provide 'flymake-adjustments)
