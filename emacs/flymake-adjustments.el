@@ -32,8 +32,11 @@
   (add-to-list 'flymake-allowed-file-name-masks
                '("\\.py\\'" flymake-pylint-init)))
 
-;; I use this piece of code to display errors when I use emacs inside
-;; a virtual console.
+;; Helper for virtual consoles that displays error message at the
+;; bottom of the screen
+
+;; TODO: 'cl is needed for caaadr
+(require 'cl)
 (defun fma-message-errors ()
   (interactive)
   (let* ((line-no            (flymake-current-line-no))
