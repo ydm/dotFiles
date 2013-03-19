@@ -23,7 +23,7 @@ git/Emacs.gitignore is retrieved from https://github.com/github/gitignore
 Describe other configurations and dependencies: X, bash, fonts, xmonad
 
 ####To install
-`$ make install` # this currently overrides config files
+`$ make install` # this currently overrides config files  
                  #+TODO: stash/pop current config
 
 ####To uninstall
@@ -37,6 +37,6 @@ Describe other configurations and dependencies: X, bash, fonts, xmonad
   * aspell and aspell-en (Spellchecking in Emacs)
   * xorg-xrdb (see X/xinitrc)
 
-####TODOS
+####TODO
 * Write update script (git pull / svn co / etc. for all dependencies)
 * Improve (un)install scripts
