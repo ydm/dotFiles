@@ -23,8 +23,8 @@ git/Emacs.gitignore is retrieved from https://github.com/github/gitignore
 Describe other configurations and dependencies: X, bash, fonts, xmonad
 
 ####To install
-`$ make install` # this currently overrides config files  
-                 #+TODO: stash/pop current config
+`$ make install # this currently overrides config files  
+                #+TODO: stash/pop current config`
 
 ####To uninstall
 `make uninstall`
