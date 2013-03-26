@@ -5,6 +5,10 @@
 alias grep='grep --color=auto'
 alias ls='ls --color=auto'
 
+# editing
+alias e=emacs
+alias se=semacs
+
 # sys
 alias res='sudo reboot'
 alias bye='sudo shutdown -h 0'
