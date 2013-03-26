@@ -11,9 +11,10 @@ These include configuration for
 ###Emacs
 My config is placed in emacs/ and is made up of
 * _emacs
-* pkg/less-css-mode/less-css-mode from https://github.com/purcell/less-css-mode.git
-* coffee-mode (elpa)
-* rainbow-mode (elpa)
+* A lot of packages
+  * See /pkg
+* These ELPAs
+  * coffee-mode (elpa)
 * TODO: [autocomplete](http://cx4a.org/software/auto-complete/)
 * TODO: yasnippet
 
@@ -35,6 +36,7 @@ Describe other configurations and dependencies: X, bash, fonts, xmonad
 * Software:
   * GNU source-highlight (for colorizing in less)
   * aspell and aspell-en (Spellchecking in Emacs)
+  * pylint (flymake-mode for python2)
   * xorg-xrdb (see X/xinitrc)
 
 ####TODO
