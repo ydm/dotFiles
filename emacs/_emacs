@@ -10,7 +10,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(abbrev-file-name "~/dotFiles/emacs/abbrev_defs")
+ '(abbrev-file-name "~/dotFiles/emacs/abbrev/abbrev_defs")
  '(backup-directory-alist (quote (("." . ".~"))))
  '(bs-attributes-list (quote (("" 1 1 left bs--get-marked-string) ("M" 1 1 left bs--get-modified-string) ("R" 2 2 left bs--get-readonly-string) ("Buffer" bs--get-name-length 10 left bs--get-name) ("" 1 1 left " ") ("Mode" 12 12 right bs--get-mode-name) ("" 2 2 left "  "))))
  '(bs-default-sort-name "by mode")
@@ -28,130 +28,98 @@
  '(ispell-dictionary "english")
  '(less-css-compile-at-save t)
  '(line-move-visual nil)
- '(python-mode-hook (quote (subword-mode)))
+ '(python-mode-hook (quote (subword-mode)) t)
+ '(rcirc-default-nick "yordan")
+ '(rcirc-server-alist (quote (("irc.freenode.net" :channels ("#gnu" "#python")))))
  '(scroll-bar-mode nil)
  '(show-paren-mode t)
  '(tool-bar-position (quote right))
  '(tool-bar-style (quote image))
  '(uniquify-buffer-name-style (quote post-forward) nil (uniquify))
+ '(which-function-mode t)
  '(x-gtk-use-system-tooltips nil))
 
 ;; +----------------+
 ;; | Personal stuff |
 ;; +----------------+
-(custom-set-variables
- '(rcirc-default-nick "yordan")
- '(rcirc-server-alist (quote (("irc.freenode.net" :channels ("#gnu" "#python"))))))
+
 
 (defalias 'yes-or-no-p 'y-or-n-p)       ; always y/n instead of yes/no
 (put 'dired-find-alternate-file 'disabled nil) ; allow nav in dired buffer
 
-;; +--------------------+
-;; | Config directories |
-;; +--------------------+
-(defvar *emacs-dir* "~/dotFiles/emacs")
-(defvar *emacs-lib-dir* (concat (file-name-as-directory *emacs-dir*) "lib"))
+;; +---------------------------+
+;; | Library & package helpers |
+;; +---------------------------+
+(defun y/file (path file)
+  (if (symbolp file)
+      (setq file (symbol-name file)))
+  (concat (file-name-as-directory path) file))
 
-;; +----------------+
-;; | Sensitive data |
-;; +----------------+
-(load (concat (file-name-as-directory *emacs-dir*) "sensitive"))
+(defun y/dir (path dir)
+  (file-name-as-directory (y/file path dir)))
+
+(defun y/autoload-pkg (pkg)
+  (add-to-list 'load-path (y/dir *emacs-pkg-dir* pkg))
+  (autoload pkg (symbol-name pkg)))
+
+(defun y/require-pkg (pkg)
+  (add-to-list 'load-path (y/dir *emacs-pkg-dir* pkg))
+  (require pkg))
+
+(defvar *emacs-dir* (y/dir "~/dotFiles" "emacs"))
+(defvar *emacs-init-dir* (y/dir *emacs-dir* "init"))
+(defvar *emacs-init-lib-dir* (y/dir *emacs-init-dir* "lib"))
+(defvar *emacs-pkg-dir* (y/dir *emacs-dir* "pkg"))
+
+(defun y/pkgdir (dir)
+  (y/dir *emacs-pkg-dir* dir))
+
+;; +---------------+
+;; | Load packages |
+;; +---------------+
+(y/autoload-pkg 'ace-jump-mode)
+(y/autoload-pkg 'errnav-minor-mode)
+(y/autoload-pkg 'smex)
+(y/require-pkg 'less-css-mode)
+(y/require-pkg 'yaml-mode)
+(y/require-pkg 'unbound)
+
+(add-to-list 'load-path (y/pkgdir "expand-region.el"))
+(require 'expand-region)
+
+(add-to-list 'load-path (y/pkgdir "multiple-cursors.el"))
+(require 'multiple-cursors)
+
+;; +-------------------+
+;; | Load init scripts |
+;; +-------------------+
+(add-to-list 'load-path *emacs-init-dir*)
+(add-to-list 'load-path *emacs-init-lib-dir*)
+
+(require 'init-compilation)
+(require 'init-dired)
+(require 'init-flymake)
+(require 'init-interactives)
+(require 'init-keys)
+(require 'init-modes)
+(require 'init-shell)
 
 ;; +------+
-;; | Libs |
+;; | Misc |
 ;; +------+
-(add-to-list 'load-path *emacs-dir*)
-(add-to-list 'load-path *emacs-lib-dir*)
 
-(require 'flymake-adjustments)
-(require 'interactives)
-(require 'less-css)
-
-(autoload 'errnav-mode "errnav")
-(autoload 'yaml-mode "yaml-mode")
-
-;; +------+
-;; | Keys |
-;; +------+
-(defun ido-execute-extended-command ()
-  (interactive)
-  (let* ((choices (all-completions "" obarray 'commandp))
-	 (choice (ido-completing-read "[ido] M-x " choices)))
-    (call-interactively (intern choice))))
-
-(global-set-key (kbd "C-M-n") (lambda () (interactive) (next-line 5)))
-(global-set-key (kbd "C-M-p") (lambda () (interactive) (previous-line 5)))
-(global-set-key (kbd "C-x C-b") 'bs-show)
-(global-set-key (kbd "M-N") 'forward-list)
-(global-set-key (kbd "M-P") 'backward-list)
-(global-set-key (kbd "M-x") 'ido-execute-extended-command)
-
-;; jump between windows
-;; (global-unset-key (kbd "C-x o"))
-(global-set-key (kbd "C-s-p") (lambda () (interactive) (other-window -1)))
-(global-set-key (kbd "C-s-n") (lambda () (interactive) (other-window 1)))
-
-;; +-----------------------+
-;; | Automatic minor modes |
-;; +-----------------------+
-(defvar *automatic-minor-modes*
-  '((errnav-mode (flymake-mode-hook))
-    (flymake-mode (js-mode-hook))
-    (rainbow-mode (css-mode-hook))
-    (subword-mode (js-mode-hook))))
-
-(dolist (el *automatic-minor-modes*)
-  (let ((mode (car el)))
-    (dolist (hook (cadr el))
-      (add-hook hook mode))))
-
-;; yaml-mode association
-(add-to-list 'auto-mode-alist '("\\.yaml$" . yaml-mode))
-(add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
-
-;; global abbrevs
-(setq-default abbrev-mode t)
-
-;; +--------+
-;; | Advice |
-;; +--------+
-
-;; apply ansi color to the shell output buffer
+;; Apply ansi color to the shell output buffer
 (defadvice display-message-or-buffer (before apply-ansi-color activate)
   (let ((buffer (ad-get-arg 0)))
     (and (bufferp buffer)
          (string= (buffer-name buffer) "*Shell Command Output*")
          (apply-ansi-color-current-buffer buffer))))
 
-;; clean up the buffer list when displaying the selection window
+;; Clean up the buffer list when displaying the BS selection window
 (defadvice bs-show (before kill-system-buffers-before-bs-show)
   (kill-system-buffers))
 
-;; make directory when after visiting a file
-(defadvice ido-find-file (after mkdir-after-find-file)
-  (let ((dir (file-name-directory (buffer-file-name))))
-    (unless (file-exists-p dir)
-      (make-directory dir t))))
-(ad-activate 'ido-find-file)
-
-;; +-------------+
-;; | Adjustments |
-;; +-------------+
-
-;; automatically close buffer after successful compilation
-(defun autoclose-compilation (status code msg)
-  (if (and (eq status 'exit) (zerop code))
-      (set-window-buffer (get-buffer-window) (other-buffer))
-    (progn
-      (setq buffer-read-only nil)
-      (apply-ansi-color-current-buffer)
-      (setq buffer-read-only t)))
-  (cons msg code))
-(setq compilation-exit-message-function 'autoclose-compilation)
-
-;; redefine dired-up-directory to reuse buffer
-(add-hook 'dired-mode-hook
-          (lambda ()
-            (define-key dired-mode-map (kbd "^")
-              (lambda () (interactive)
-                (find-alternate-file "..")))))
+;; +----------------+
+;; | Sensitive data |
+;; +----------------+
+(load (y/file *emacs-dir* "sensitive"))
