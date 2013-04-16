@@ -1,24 +1,25 @@
 # -*- mode: Shell-script -*-
-# a lot of thanks to https://github.com/bitprophet/dotfiles/
+# A lot of thanks to https://github.com/bitprophet/dotfiles/
 
-# colors
+# Colors
 alias grep='grep --color=auto'
 alias ls='ls --color=auto'
 
-# editing
-alias e=emacs
-alias se=semacs
+# Editing
+alias e='emacsclient -c'
 
-# sys
+# Sys
 alias res='sudo reboot'
 alias bye='sudo shutdown -h 0'
 
-# git
+# Git
 alias gl="git log --pretty=tformat:'%h %Cblue%cr%Creset %cn %Cgreen%s%Creset'"
 alias glg="git log --graph --pretty=format:'%Cblue%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative"
 alias gst='git status'
+alias gpull='git pull origin master'
+alias gpush='git push origin master'
 
-# navigation
+# Navigation
 alias ....='cd ../../..'
 alias ...='cd ../../'
 alias ..='cd ..'
@@ -27,8 +28,8 @@ alias la='ls -a'
 alias lal='ls -al'
 alias ll='ls -l'
 
-# arch
+# Arch
 alias upgrade='sudo pacman -Syu --noconfirm'
 
-# other
+# Other
 alias t='tree -Ca -I ".git"'
