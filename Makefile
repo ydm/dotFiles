@@ -1,10 +1,11 @@
-# install actions:
-#	TODO: -ln -s -T `pwd`/xmonad ~/.xmonad
-install:
-	./install/install.sh
+INSTALL = ./install/install.sh
+UNINSTALL = ./install/uninstall.sh
 
-# TODO
+install:
+	$(INSTALL)
+
 uninstall:
+	$(UNINSTALL)
 
 # TODO
 update:
