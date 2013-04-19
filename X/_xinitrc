@@ -2,8 +2,8 @@
 # [[ -f ~/.fehbg ]] && sh ~/.fehbg
 
 # Set map initially
-# setxkbmap us -option ctrl:nocaps
-setxkbmap dvorak -option ctrl:nocaps
+setxkbmap us -option ctrl:nocaps
+# setxkbmap dvorak -option ctrl:nocaps
 
 # Lunch the awesome window manager ;)
 exec awesome
