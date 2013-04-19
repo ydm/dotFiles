@@ -1,9 +1,0 @@
-40,42c40,43
-<                     log(pad + ' ' + ((colorize) ? color.yellow(e.reason) : e.reason));
-<                     log('    ' + (e.evidence || '').replace(/^\s+|\s+$/, "") +
-<                             ((colorize) ? color.grey(line) : line));
----
->                     // log(pad + ' ' + ((colorize) ? color.yellow(e.reason) : e.reason));
->                     // log('    ' + (e.evidence || '').replace(/^\s+|\s+$/, "") +
->                     //         ((colorize) ? color.grey(line) : line));
->                     log('Error:' + e.line + ':' + e.character + ':' + e.reason);
