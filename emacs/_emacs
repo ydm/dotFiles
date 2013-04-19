@@ -1,51 +1,5 @@
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(default ((t (:family "Inconsolata LGC" :foundry "unknown" :slant normal :weight normal :height 113 :width normal)))))
-
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(abbrev-file-name "~/dotFiles/emacs/abbrev/abbrev_defs")
- '(backup-directory-alist (quote (("." . ".~"))))
- '(bs-attributes-list (quote (("" 1 1 left bs--get-marked-string) ("M" 1 1 left bs--get-modified-string) ("R" 2 2 left bs--get-readonly-string) ("Buffer" bs--get-name-length 10 left bs--get-name) ("" 1 1 left " ") ("Mode" 12 12 right bs--get-mode-name) ("" 2 2 left "  "))))
- '(bs-default-sort-name "by mode")
- '(coffee-mode-hook (quote (subword-mode)))
- '(coffee-tab-width 2)
- '(column-number-mode t)
- '(default-input-method "bulgarian-alt-phonetic")
- '(desktop-save-mode t)
- '(dired-dwim-target t)
- '(dired-recursive-copies (quote always))
- '(global-hl-line-mode t)
- '(ido-mode (quote both) nil (ido))
- '(indent-tabs-mode nil)
- '(inhibit-startup-screen t)
- '(ispell-dictionary "english")
- '(less-css-compile-at-save t)
- '(line-move-visual nil)
- '(python-mode-hook (quote (subword-mode)) t)
- '(rcirc-default-nick "yordan")
- '(rcirc-server-alist (quote (("irc.freenode.net" :channels ("#gnu" "#python")))))
- '(scroll-bar-mode nil)
- '(show-paren-mode t)
- '(tool-bar-position (quote right))
- '(tool-bar-style (quote image))
- '(uniquify-buffer-name-style (quote post-forward) nil (uniquify))
- '(which-function-mode t)
- '(x-gtk-use-system-tooltips nil))
-
-;; +----------------+
-;; | Personal stuff |
-;; +----------------+
-
-
-(defalias 'yes-or-no-p 'y-or-n-p)       ; always y/n instead of yes/no
-(put 'dired-find-alternate-file 'disabled nil) ; allow nav in dired buffer
+;; -*- coding: utf-8 -*-
+;; -*- mode: emacs-lisp -*-
 
 ;; +---------------------------+
 ;; | Library & package helpers |
@@ -70,6 +24,7 @@
 (defvar *emacs-init-dir* (y/dir *emacs-dir* "init"))
 (defvar *emacs-init-lib-dir* (y/dir *emacs-init-dir* "lib"))
 (defvar *emacs-pkg-dir* (y/dir *emacs-dir* "pkg"))
+(defvar *emacs-themes-dir* (y/dir *emacs-dir* "themes"))
 
 (defun y/pkgdir (dir)
   (y/dir *emacs-pkg-dir* dir))
@@ -104,9 +59,21 @@
 (require 'init-modes)
 (require 'init-shell)
 
+;; +--------+
+;; | Themes |
+;; +--------+
+(add-to-list 'custom-theme-load-path
+             (y/dir *emacs-themes-dir* "emacs-color-theme-solarized"))
+;; (load-theme 'solarized-dark t)
+
+(add-to-list 'load-path
+             (y/dir *emacs-themes-dir* "tomorrow-theme/GNU Emacs"))
+(require 'color-theme-tomorrow)
+
 ;; +------+
 ;; | Misc |
 ;; +------+
+(defalias 'yes-or-no-p 'y-or-n-p)       ; always y/n instead of yes/no
 
 ;; Apply ansi color to the shell output buffer
 (defadvice display-message-or-buffer (before apply-ansi-color activate)
@@ -123,3 +90,53 @@
 ;; | Sensitive data |
 ;; +----------------+
 (load (y/file *emacs-dir* "sensitive"))
+
+;; +-----------+
+;; | Customize |
+;; +-----------+
+
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(default ((t (:family "Inconsolata LGC" :foundry "unknown" :slant normal :weight normal :height 113 :width normal)))))
+
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(abbrev-file-name "~/dotFiles/emacs/abbrev/abbrev_defs")
+ '(background-mode light)
+ '(backup-directory-alist (quote (("." . ".~"))))
+ '(bs-attributes-list (quote (("" 1 1 left bs--get-marked-string) ("M" 1 1 left bs--get-modified-string) ("R" 2 2 left bs--get-readonly-string) ("Buffer" bs--get-name-length 10 left bs--get-name) ("" 1 1 left " ") ("Mode" 12 12 right bs--get-mode-name) ("" 2 2 left "  "))))
+ '(bs-default-sort-name "by mode")
+ '(calendar-week-start-day 1)
+ '(coffee-mode-hook (quote (subword-mode)))
+ '(coffee-tab-width 2)
+ '(column-number-mode t)
+ '(custom-enabled-themes (quote (tomorrow-day)))
+ '(custom-safe-themes t)
+ '(default-input-method "bulgarian-alt-phonetic")
+ '(dired-dwim-target t)
+ '(dired-recursive-copies (quote always))
+ '(display-time-mode t)
+ '(electric-pair-mode t)
+ '(global-hl-line-mode t)
+ '(ido-mode (quote both) nil (ido))
+ '(indent-tabs-mode nil)
+ '(inhibit-startup-screen t)
+ '(ispell-dictionary "english")
+ '(less-css-compile-at-save t)
+ '(line-move-visual nil)
+ '(python-mode-hook (quote (subword-mode)) t)
+ '(rcirc-default-nick "yordan")
+ '(rcirc-server-alist (quote (("irc.freenode.net" :port 7000 :channels ("#4web" "#bgdev" "#emacs" "#gnu") :encryption tls))))
+ '(scroll-bar-mode nil)
+ '(show-paren-mode t)
+ '(tool-bar-position (quote right))
+ '(tool-bar-style (quote image))
+ '(uniquify-buffer-name-style (quote post-forward) nil (uniquify))
+ '(which-function-mode t)
+ '(x-gtk-use-system-tooltips nil))
