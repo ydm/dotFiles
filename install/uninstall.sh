@@ -3,15 +3,17 @@
 # TODO? :}
 
 uninstall_bash () {
-    echo qwe
+    echo yeah...
 }
 
 uninstall_emacs () {
     rm -f ~/.emacs
+    rm -fr ~/.emacs.d
 }
 
 uninstall_git () {
     git config --global --unset alias.st
+    git config --global --unset alias.co
     git config --global --unset color.branch
     git config --global --unset color.diff
     git config --global --unset color.status
@@ -25,8 +27,8 @@ uninstall_git () {
 
 # TODO
 rm ~/.Xresources
-rm ~/.lesspipe
+rm ~/.lessfilter
 rm ~/.xinitrc
-rm ~/.xmonad
+rm ~/.config/awesome
 
 uninstall_emacs

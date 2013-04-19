@@ -3,9 +3,9 @@ My dotFiles
 
 These include configuration for
 * X
+* awesome
 * bash
 * emacs
-* xmonad
 * git
 
 ###Emacs
@@ -36,7 +36,7 @@ Describe other configurations and dependencies: X, bash, fonts, xmonad
 * Software:
   * GNU source-highlight (for colorizing in less)
   * aspell and aspell-en (Spellchecking in Emacs)
-  * pylint (flymake-mode for python2)
+  * pyflakes
   * xorg-xrdb (see X/xinitrc)
 
 ####TODO

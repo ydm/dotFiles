@@ -5,7 +5,7 @@ bash_dir=$dot_dir/bash
 emacs_dir=$dot_dir/emacs
 git_dir=$dot_dir/git
 X_dir=$dot_dir/X
-xmonad_dir=$dot_dir/xmonad
+awesome_dir=$dot_dir/awesome
 
 msg_installing () {
     echo -n "Installing settings for $1... "
@@ -33,6 +33,7 @@ install_emacs () {
 install_git () {
     msg_installing 'git'
     git config --global alias.st 'status -s'
+    git config --global alias.co 'commit'
     git config --global color.branch auto
     git config --global color.diff auto
     git config --global color.status auto
@@ -51,12 +52,12 @@ install_X () {
     msg_done
 }
 
-install_xmonad () {
-    ln -s -T $xmonad_dir $HOME/.xmonad
+install_awesome () {
+    ln -s -T $awesome_dir $HOME/.config/awesome
 }
 
 install_bash
 install_emacs
 install_git
 install_X
-install_xmonad
+install_awesome
