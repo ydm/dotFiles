@@ -16,11 +16,11 @@
 
 ;; External commands
 (global-set-key (kbd "C-c i") 'ido-goto-symbol)
-(global-set-key (kbd "s-a") 'ace-jump-mode)
-(global-set-key (kbd "s-e") 'er/expand-region)
 (global-set-key (kbd "s-,") 'mc/mark-previous-like-this)
 (global-set-key (kbd "s-.") 'mc/mark-next-like-this)
+(global-set-key (kbd "s-<") 'mc/edit-lines)
 (global-set-key (kbd "s->") 'mc/mark-all-like-this)
-;; (global-set-key (kbd "C-c m m") 'mc/edit-lines)
+(global-set-key (kbd "s-a") 'ace-jump-mode)
+(global-set-key (kbd "s-e") 'er/expand-region)
 
 (provide 'init-keys)

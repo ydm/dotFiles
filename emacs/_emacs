@@ -1,55 +1,47 @@
 ;; -*- mode: emacs-lisp; -*-
 ;; -*- coding: utf-8; -*-
 
-;; +---------------------------+
-;; | Library & package helpers |
-;; +---------------------------+
-(defun y/file (path file)
-  (if (symbolp file)
-      (setq file (symbol-name file)))
-  (concat (file-name-as-directory path) file))
+;; +----------+
+;; | Packages |
+;; +----------+
+(require 'package)
+(add-to-list 'package-archives
+             '("marmalade" . "http://marmalade-repo.org/packages/"))
+(package-initialize t)
+(unless package-archive-contents
+  (package-refresh-contents))
 
-(defun y/dir (path dir)
-  (file-name-as-directory (y/file path dir)))
+(defvar *my-packages*
+  '(ace-jump-mode
+    coffee-mode
+    expand-region
+    less-css-mode
+    multiple-cursors
+    smex))
 
-(defun y/autoload-pkg (pkg)
-  (add-to-list 'load-path (y/dir *emacs-pkg-dir* pkg))
-  (autoload pkg (symbol-name pkg)))
+(defun y/install-package (name)
+  "Install a package if it's not already installed."
+  (unless (package-installed-p name)
+    (package-install name)))
+(mapcar 'y/install-package *my-packages*)
 
-(defun y/require-pkg (pkg)
-  (add-to-list 'load-path (y/dir *emacs-pkg-dir* pkg))
-  (require pkg))
+;; +------------------------+
+;; | Manually load packages |
+;; +------------------------+
+(add-to-list 'load-path "~/dotFiles/emacs/pkg/errnav-minor-mode/")
+(autoload 'errnav-minor-mode "errnav-minor-mode")
 
-(defvar *emacs-dir* (y/dir "~/dotFiles" "emacs"))
-(defvar *emacs-init-dir* (y/dir *emacs-dir* "init"))
-(defvar *emacs-init-lib-dir* (y/dir *emacs-init-dir* "lib"))
-(defvar *emacs-pkg-dir* (y/dir *emacs-dir* "pkg"))
-(defvar *emacs-themes-dir* (y/dir *emacs-dir* "themes"))
+(add-to-list 'load-path "~/dotFiles/emacs/pkg/yaml-mode/")
+(autoload 'yaml-mode "yaml-mode")
 
-(defun y/pkgdir (dir)
-  (y/dir *emacs-pkg-dir* dir))
+(add-to-list 'load-path "~/dotFiles/emacs/pkg/unbound/")
+(require 'unbound)
 
-;; +---------------+
-;; | Load packages |
-;; +---------------+
-(y/autoload-pkg 'ace-jump-mode)
-(y/autoload-pkg 'errnav-minor-mode)
-(y/autoload-pkg 'smex)
-(y/require-pkg 'less-css-mode)
-(y/require-pkg 'yaml-mode)
-(y/require-pkg 'unbound)
-
-(add-to-list 'load-path (y/pkgdir "expand-region.el"))
-(require 'expand-region)
-
-(add-to-list 'load-path (y/pkgdir "multiple-cursors.el"))
-(require 'multiple-cursors)
-
-;; +-------------------+
-;; | Load init scripts |
-;; +-------------------+
-(add-to-list 'load-path *emacs-init-dir*)
-(add-to-list 'load-path *emacs-init-lib-dir*)
+;; +--------------+
+;; | Init scripts |
+;; +--------------+
+(add-to-list 'load-path "~/dotFiles/emacs/init/")
+(add-to-list 'load-path "~/dotFiles/emacs/init/lib/")
 
 (require 'init-compilation)
 (require 'init-dired)
@@ -62,13 +54,11 @@
 ;; +--------+
 ;; | Themes |
 ;; +--------+
+(require 'custom)
 (add-to-list 'custom-theme-load-path
-             (y/dir *emacs-themes-dir* "emacs-color-theme-solarized"))
-;; (load-theme 'solarized-dark t)
-
-(add-to-list 'load-path
-             (y/dir *emacs-themes-dir* "tomorrow-theme/GNU Emacs"))
-(require 'color-theme-tomorrow)
+	     "~/dotFiles/emacs/themes/emacs-color-theme-solarized/")
+(add-to-list 'custom-theme-load-path
+             "~/dotFiles/emacs/themes/tomorrow-theme/GNU Emacs")
 
 ;; +------+
 ;; | Misc |
@@ -89,12 +79,11 @@
 ;; +----------------+
 ;; | Sensitive data |
 ;; +----------------+
-(load (y/file *emacs-dir* "sensitive"))
+;; (load (y/file *emacs-dir* "sensitive"))
 
 ;; +-----------+
 ;; | Customize |
 ;; +-----------+
-
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -116,7 +105,7 @@
  '(coffee-mode-hook (quote (subword-mode)))
  '(coffee-tab-width 2)
  '(column-number-mode t)
- '(custom-enabled-themes (quote (tomorrow-day)))
+ '(custom-enabled-themes (quote (tomorrow-night-bright)))
  '(custom-safe-themes t)
  '(default-input-method "bulgarian-alt-phonetic")
  '(dired-dwim-target t)

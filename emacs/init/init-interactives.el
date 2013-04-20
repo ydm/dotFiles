@@ -9,7 +9,7 @@
   (unless wanted (setq wanted '("*Messages*" "*scratch*")))
   (defun wantedp (b)
     (or (member (buffer-name b) wanted) (get-buffer-process b)))
-  (require 'cl)
+  (require 'cl)                         ; TODO: use the new cl library
   (remove-if 'wantedp (buffer-list)))
 
 ;; +----------+
