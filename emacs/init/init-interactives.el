@@ -22,6 +22,16 @@
   (with-current-buffer buffer
     (ansi-color-apply-on-region (point-min) (point-max))))
 
+(defun beautify ()
+  "Run beautifier (which comes as a node package) on current file."
+  (interactive)
+  (let* ((file (buffer-file-name))
+         (temp-file (format "%s_beautify" file)))
+    (shell-command (format "beautifier %s > %s" file temp-file))
+    (delete-file file)
+    (rename-file temp-file file)
+    (find-alternate-file file)))
+
 (defun kill-system-buffers ()
   (interactive)
   (dolist (b (unwanted-buffers))
