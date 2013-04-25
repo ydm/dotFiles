@@ -22,11 +22,13 @@
   (with-current-buffer buffer
     (ansi-color-apply-on-region (point-min) (point-max))))
 
+;; TODO: Check if file ends in .js.
 (defun beautify ()
   "Run beautifier (which comes as a node package) on current file."
   (interactive)
   (let* ((file (buffer-file-name))
          (temp-file (format "%s_beautify" file)))
+    (save-buffer)
     (shell-command (format "beautifier %s > %s" file temp-file))
     (delete-file file)
     (rename-file temp-file file)
