@@ -47,4 +47,10 @@ afterwards."
     (rename-file old new)
     (find-alternate-file new)))
 
+(defun y/open-line ()
+  (interactive)
+  (move-beginning-of-line nil)
+  (open-line 1)
+  (indent-for-tab-command))
+
 (provide 'init-interactives)

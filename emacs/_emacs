@@ -49,6 +49,7 @@
 (require 'init-interactives)
 (require 'init-keys)
 (require 'init-modes)
+(require 'init-rcirc)
 (require 'init-shell)
 
 ;; +--------+
@@ -57,12 +58,64 @@
 (require 'custom)
 (add-to-list 'custom-theme-load-path
 	     "~/dotFiles/emacs/themes/emacs-color-theme-solarized/")
+
+;; tomorrow-theme also requires some files to be find-able trough the
+;; load-path
 (add-to-list 'custom-theme-load-path
              "~/dotFiles/emacs/themes/tomorrow-theme/GNU Emacs")
+(add-to-list 'load-path
+             "~/dotFiles/emacs/themes/tomorrow-theme/GNU Emacs")
+
+(defvar y/day-theme 'solarized-light)
+(defvar y/night-theme 'tomorrow-night-bright)
+(defvar y/day-theme-at '(8 0))
+(defvar y/night-theme-at '(20 0))
+
+(defun y/time-tuple-to-minutes (tup) (+ (* (car tup) 60) (cadr tup)))
+(defun y/now-in-minutes () (+ (* 60 (nth 2 (decode-time)))
+                              (nth 1 (decode-time))))
+(defvar y/day-theme-at-minutes (y/time-tuple-to-minutes y/day-theme-at))
+(defvar y/night-theme-at-minutes (y/time-tuple-to-minutes y/night-theme-at))
+
+(defun y/load-theme-by-daytime ()
+  (let* ((current-theme (car custom-enabled-themes))
+         (now (y/now-in-minutes))
+         (new-theme (if (and (>= now y/day-theme-at-minutes)
+                             (<  now y/night-theme-at-minutes))
+                        y/day-theme
+                      y/night-theme)))
+    (unless (eq current-theme new-theme)
+      (disable-theme current-theme)
+      (load-theme new-theme t))))
+(run-at-time 0 300 #'y/load-theme-by-daytime)
+
+;; night time should always be gt day time
+;; (defun y/load-theme-task ()
+;;   (y/load-theme-by-daytime)
+;;   (run-at-time y/interval nil #'y/load-theme-task))
+
+;; (progn
+;;   (let* ((now (y/now-in-minutes))
+;;          (time-day   (- now y/day-theme-at-minutes))
+;;          (time-night (- now y/night-theme-at-minutes))
+;;          (time (if (< time-night 0)
+;;                    (+ time-day (* 60 24))
+;;                  time-night))
+;;          (seconds (* time 60)))
+;;     (run-at-time seconds y/interval #'y/load-theme-by-daytime)))
+
+;; ;; Load theme initially
+;; (y/load-theme-by-daytime)
 
 ;; +------+
 ;; | Misc |
 ;; +------+
+(add-hook 'before-save-hook
+          (lambda ()
+            ;; TODO: I should start using a markdown-mode instead of
+            ;; fundamental-mode to edit md files
+            (unless (eq major-mode 'fundamental-mode)
+              (delete-trailing-whitespace))))
 (defalias 'yes-or-no-p 'y-or-n-p)       ; always y/n instead of yes/no
 
 ;; Apply ansi color to the shell output buffer
@@ -75,6 +128,21 @@
 ;; Clean up the buffer list when displaying the BS selection window
 (defadvice bs-show (before kill-system-buffers-before-bs-show)
   (kill-system-buffers))
+
+;; +---------------------+
+;; | Run Emacs as server |
+;; +---------------------+
+;; https://github.com/magnars/.emacs.d/blob/master/init.el
+(require 'server)
+(unless (server-running-p)
+  (server-start))
+
+;; +------+
+;; | Helm |
+;; +------+
+;; (add-to-list 'load-path "~/dotFiles/emacs/pkg/helm/")
+;; (require 'helm-config)
+;; (global-set-key (kbd "C-c h") 'helm-mini)
 
 ;; +----------------+
 ;; | Sensitive data |
@@ -97,7 +165,6 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(abbrev-file-name "~/dotFiles/emacs/abbrev/abbrev_defs")
- '(background-mode light)
  '(backup-directory-alist (quote (("." . ".~"))))
  '(bs-attributes-list (quote (("" 1 1 left bs--get-marked-string) ("M" 1 1 left bs--get-modified-string) ("R" 2 2 left bs--get-readonly-string) ("Buffer" bs--get-name-length 10 left bs--get-name) ("" 1 1 left " ") ("Mode" 12 12 right bs--get-mode-name) ("" 2 2 left "  "))))
  '(bs-default-sort-name "by mode")
@@ -105,8 +172,6 @@
  '(coffee-mode-hook (quote (subword-mode)))
  '(coffee-tab-width 2)
  '(column-number-mode t)
- '(custom-enabled-themes (quote (tomorrow-night-bright)))
- '(custom-safe-themes t)
  '(default-input-method "bulgarian-alt-phonetic")
  '(dired-dwim-target t)
  '(dired-recursive-copies (quote always))
@@ -127,5 +192,6 @@
  '(tool-bar-position (quote right))
  '(tool-bar-style (quote image))
  '(uniquify-buffer-name-style (quote post-forward) nil (uniquify))
+ '(visible-bell t)
  '(which-function-mode t)
  '(x-gtk-use-system-tooltips nil))

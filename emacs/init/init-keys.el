@@ -1,7 +1,8 @@
-(require 'ido-goto-symbol)
+;; (require 'ido-goto-symbol)
 
 ;; Redefine system keys
 (global-set-key (kbd "C-x C-b") 'bs-show)
+(global-set-key (kbd "C-o") 'y/open-line)
 (global-set-key (kbd "M-x") 'smex)
 
 ;; Built-in commands
@@ -11,8 +12,6 @@
 (global-set-key (kbd "M-n") (lambda () (interactive) (next-line     5)))
 (global-set-key (kbd "M-p") (lambda () (interactive) (previous-line 5)))
 (global-unset-key (kbd "C-x o"))
-;; (global-set-key (kbd "M-n") (lambda () (interactive) (other-window 1)))
-;; (global-set-key (kbd "M-p") (lambda () (interactive) (other-window -1)))
 
 ;; External commands
 (global-set-key (kbd "C-c i") 'ido-goto-symbol)

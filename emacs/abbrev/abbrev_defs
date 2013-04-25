@@ -48,6 +48,7 @@
     ("1pdb" "import pdb; pdb.set_trace()" nil 2)
     ("1root" "/sudo:root@localhost:" nil 3)
     ("1unilit" "from __future__ import unicode_literals" nil 1)
+    ("1impsix" "try:\n    import six\nexcept ImportError:\n    from django.utils import six")
    ))
 
 (define-abbrev-table 'grep-mode-abbrev-table '())
