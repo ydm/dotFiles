@@ -4,26 +4,27 @@
 ;; +----------+
 ;; | Packages |
 ;; +----------+
-(require 'package)
-(add-to-list 'package-archives
-             '("marmalade" . "http://marmalade-repo.org/packages/"))
-(package-initialize t)
-(unless package-archive-contents
-  (package-refresh-contents))
+;; (require 'package)
+;; (add-to-list 'package-archives
+;;              '("marmalade" . "http://marmalade-repo.org/packages/"))
+;; (message "package--initialized=%s" package--initialized)
+;; (package-initialize)
+;; (unless package-archive-contents
+;;   (package-refresh-contents))
 
-(defvar *my-packages*
-  '(ace-jump-mode
-    coffee-mode
-    expand-region
-    less-css-mode
-    multiple-cursors
-    smex))
+;; (defvar *my-packages*
+;;   '(ace-jump-mode
+;;     coffee-mode
+;;     expand-region
+;;     less-css-mode
+;;     multiple-cursors
+;;     smex))
 
-(defun y/install-package (name)
-  "Install a package if it's not already installed."
-  (unless (package-installed-p name)
-    (package-install name)))
-(mapcar 'y/install-package *my-packages*)
+;; (defun y/install-package (name)
+;;   "Install a package if it's not already installed."
+;;   (unless (package-installed-p name)
+;;     (package-install name)))
+;; (mapcar 'y/install-package *my-packages*)
 
 ;; +------------------------+
 ;; | Manually load packages |
@@ -66,24 +67,28 @@
 (add-to-list 'load-path
              "~/dotFiles/emacs/themes/tomorrow-theme/GNU Emacs")
 
+(defvar y/day-start '(8 0))
+(defvar y/night-start '(20 0))
 (defvar y/day-theme 'solarized-light)
-(defvar y/night-theme 'tomorrow-night-bright)
-(defvar y/day-theme-at '(8 0))
-(defvar y/night-theme-at '(20 0))
+(defvar y/night-theme 'monokai)
+;; (defvar y/night-theme 'zenburn)
+;; (defvar y/night-theme 'tomorrow-night-bright)
 
 (defun y/time-tuple-to-minutes (tup) (+ (* (car tup) 60) (cadr tup)))
 (defun y/now-in-minutes () (+ (* 60 (nth 2 (decode-time)))
                               (nth 1 (decode-time))))
-(defvar y/day-theme-at-minutes (y/time-tuple-to-minutes y/day-theme-at))
-(defvar y/night-theme-at-minutes (y/time-tuple-to-minutes y/night-theme-at))
+
+(defvar y/day-start-minutes (y/time-tuple-to-minutes y/day-start))
+(defvar y/night-start-minutes (y/time-tuple-to-minutes y/night-start))
+
+(defun y/is-day ()
+  (and (>= now y/day-start-minutes)
+       (<  now y/night-start-minutes)))
 
 (defun y/load-theme-by-daytime ()
   (let* ((current-theme (car custom-enabled-themes))
          (now (y/now-in-minutes))
-         (new-theme (if (and (>= now y/day-theme-at-minutes)
-                             (<  now y/night-theme-at-minutes))
-                        y/day-theme
-                      y/night-theme)))
+         (new-theme (if (y/is-day) y/day-theme y/night-theme)))
     (unless (eq current-theme new-theme)
       (disable-theme current-theme)
       (load-theme new-theme t))))
@@ -96,8 +101,8 @@
 
 ;; (progn
 ;;   (let* ((now (y/now-in-minutes))
-;;          (time-day   (- now y/day-theme-at-minutes))
-;;          (time-night (- now y/night-theme-at-minutes))
+;;          (time-day   (- now y/day-start-minutes))
+;;          (time-night (- now y/night-start-minutes))
 ;;          (time (if (< time-night 0)
 ;;                    (+ time-day (* 60 24))
 ;;                  time-night))
@@ -140,14 +145,14 @@
 ;; +------+
 ;; | Helm |
 ;; +------+
-;; (add-to-list 'load-path "~/dotFiles/emacs/pkg/helm/")
-;; (require 'helm-config)
-;; (global-set-key (kbd "C-c h") 'helm-mini)
+(add-to-list 'load-path "~/dotFiles/emacs/pkg/helm/")
+(require 'helm-config)
+(global-set-key (kbd "C-c h") 'helm-mini)
 
 ;; +----------------+
 ;; | Sensitive data |
 ;; +----------------+
-;; (load (y/file *emacs-dir* "sensitive"))
+(load "~/dotFiles/emacs/sensitive")
 
 ;; +-----------+
 ;; | Customize |
@@ -184,7 +189,8 @@
  '(ispell-dictionary "english")
  '(less-css-compile-at-save t)
  '(line-move-visual nil)
- '(python-mode-hook (quote (subword-mode)) t)
+ '(package-archives (quote (("marmalade" . "http://marmalade-repo.org/packages/") ("gnu" . "http://elpa.gnu.org/packages/"))))
+ '(python-mode-hook (quote (flymake-python-pyflakes-load subword-mode)) t)
  '(rcirc-default-nick "yordan")
  '(rcirc-server-alist (quote (("irc.freenode.net" :port 7000 :channels ("#4web" "#bgdev" "#emacs" "#gnu") :encryption tls))))
  '(scroll-bar-mode nil)

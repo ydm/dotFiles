@@ -1,15 +1,21 @@
 (require 'ansi-color)
+(require 'cl)
 
-(defun string-startswith (s1 s2)
-  (if (or (not (stringp s1)) (not (stringp s2)) (string< s1 s2))
-      nil
-    (string= (substring s1 0 (length s2)) s2)))
+(defun string-startswith (str head)
+  (and (stringp str)
+       (stringp head)
+       (string= head
+                (substring str 0
+                           (min (length str)
+                                (length head))))))
 
 (defun unwanted-buffers (&optional wanted)
-  (unless wanted (setq wanted '("*Messages*" "*scratch*")))
+  (unless wanted (setq wanted '("*Django: " "*Messages*" "*scratch*")))
   (defun wantedp (b)
-    (or (member (buffer-name b) wanted) (get-buffer-process b)))
-  (require 'cl)                         ; TODO: use the new cl library
+    (or (get-buffer-process b)
+        (remove nil
+                (mapcar (lambda (p) (string-match p (buffer-name b)))
+                        wanted))))
   (remove-if 'wantedp (buffer-list)))
 
 ;; +----------+
