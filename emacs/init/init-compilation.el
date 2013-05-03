@@ -1,11 +1,12 @@
-(defun y/close-compilation-buffer-on-success (status code msg)
-  (if (and (eq status 'exit) (zerop code))
-      (set-window-buffer (get-buffer-window) (other-buffer))
-    (progn
-      (setq buffer-read-only nil)
-      (apply-ansi-color-current-buffer)
-      (setq buffer-read-only t)))
-  (cons msg code))
-(setq compilation-exit-message-function 'y/close-compilation-buffer-on-success)
+(defun y:on-compilation-finish (buffer msg)
+  (with-current-buffer buffer
+    (if (zerop exit-status)
+        (set-window-buffer (get-buffer-window) (other-buffer))
+      (progn
+        (setq buffer-read-only nil)
+        (y:ansi-color-apply-on-buffer)
+        (setq buffer-read-only t)))))
+
+(add-to-list 'compilation-finish-functions #'y:on-compilation-finish)
 
 (provide 'init-compilation)
