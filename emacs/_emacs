@@ -20,11 +20,11 @@
 ;;     multiple-cursors
 ;;     smex))
 
-;; (defun y/install-package (name)
+;; (defun y:install-package (name)
 ;;   "Install a package if it's not already installed."
 ;;   (unless (package-installed-p name)
 ;;     (package-install name)))
-;; (mapcar 'y/install-package *my-packages*)
+;; (mapcar 'y:install-package *my-packages*)
 
 ;; +------------------------+
 ;; | Manually load packages |
@@ -62,55 +62,35 @@
 
 ;; tomorrow-theme also requires some files to be find-able trough the
 ;; load-path
-(add-to-list 'custom-theme-load-path
-             "~/dotFiles/emacs/themes/tomorrow-theme/GNU Emacs")
-(add-to-list 'load-path
-             "~/dotFiles/emacs/themes/tomorrow-theme/GNU Emacs")
+;; (add-to-list 'custom-theme-load-path
+;;              "~/dotFiles/emacs/themes/tomorrow-theme/GNU Emacs")
+;; (add-to-list 'load-path
+;;              "~/dotFiles/emacs/themes/tomorrow-theme/GNU Emacs")
 
-(defvar y/day-start '(8 0))
-(defvar y/night-start '(20 0))
-(defvar y/day-theme 'solarized-light)
-(defvar y/night-theme 'monokai)
-;; (defvar y/night-theme 'zenburn)
-;; (defvar y/night-theme 'tomorrow-night-bright)
+(defvar y:day-start '(8 0))
+(defvar y:night-start '(20 0))
+(defvar y:day-theme 'solarized-light)
+(defvar y:night-theme 'monokai)
 
-(defun y/time-tuple-to-minutes (tup) (+ (* (car tup) 60) (cadr tup)))
-(defun y/now-in-minutes () (+ (* 60 (nth 2 (decode-time)))
+(defun y:time-tuple-to-minutes (tup) (+ (* (car tup) 60) (cadr tup)))
+(defun y:now-in-minutes () (+ (* 60 (nth 2 (decode-time)))
                               (nth 1 (decode-time))))
 
-(defvar y/day-start-minutes (y/time-tuple-to-minutes y/day-start))
-(defvar y/night-start-minutes (y/time-tuple-to-minutes y/night-start))
+(defvar y:day-start-minutes (y:time-tuple-to-minutes y:day-start))
+(defvar y:night-start-minutes (y:time-tuple-to-minutes y:night-start))
 
-(defun y/is-day ()
-  (and (>= now y/day-start-minutes)
-       (<  now y/night-start-minutes)))
+(defun y:day? ()
+  (and (>= now y:day-start-minutes)
+       (<  now y:night-start-minutes)))
 
-(defun y/load-theme-by-daytime ()
+(defun y:load-theme-by-daytime ()
   (let* ((current-theme (car custom-enabled-themes))
-         (now (y/now-in-minutes))
-         (new-theme (if (y/is-day) y/day-theme y/night-theme)))
+         (now (y:now-in-minutes))
+         (new-theme (if (y:day?) y:day-theme y:night-theme)))
     (unless (eq current-theme new-theme)
       (disable-theme current-theme)
       (load-theme new-theme t))))
-(run-at-time 0 300 #'y/load-theme-by-daytime)
-
-;; night time should always be gt day time
-;; (defun y/load-theme-task ()
-;;   (y/load-theme-by-daytime)
-;;   (run-at-time y/interval nil #'y/load-theme-task))
-
-;; (progn
-;;   (let* ((now (y/now-in-minutes))
-;;          (time-day   (- now y/day-start-minutes))
-;;          (time-night (- now y/night-start-minutes))
-;;          (time (if (< time-night 0)
-;;                    (+ time-day (* 60 24))
-;;                  time-night))
-;;          (seconds (* time 60)))
-;;     (run-at-time seconds y/interval #'y/load-theme-by-daytime)))
-
-;; ;; Load theme initially
-;; (y/load-theme-by-daytime)
+(run-at-time 0 300 #'y:load-theme-by-daytime)
 
 ;; +------+
 ;; | Misc |
