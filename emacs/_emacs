@@ -45,6 +45,7 @@
 (add-to-list 'load-path "~/dotFiles/emacs/init/lib/")
 
 (require 'init-compilation)
+(require 'init-defuns)
 (require 'init-dired)
 (require 'init-flymake)
 (require 'init-interactives)
@@ -90,29 +91,28 @@
     (unless (eq current-theme new-theme)
       (disable-theme current-theme)
       (load-theme new-theme t))))
+
 (run-at-time 0 300 #'y:load-theme-by-daytime)
 
 ;; +------+
 ;; | Misc |
 ;; +------+
-(add-hook 'before-save-hook
-          (lambda ()
-            ;; TODO: I should start using a markdown-mode instead of
-            ;; fundamental-mode to edit md files
-            (unless (eq major-mode 'fundamental-mode)
-              (delete-trailing-whitespace))))
 (defalias 'yes-or-no-p 'y-or-n-p)       ; always y/n instead of yes/no
 
+(add-hook 'before-save-hook #'y:del-trail-ws-before-save-hook)
+(add-hook 'find-file-hook #'y:mkdir-ff-hook)
+
 ;; Apply ansi color to the shell output buffer
-(defadvice display-message-or-buffer (before apply-ansi-color activate)
+(defadvice display-message-or-buffer
+  (before y:ansi-color-apply-on-shell-output activate)
   (let ((buffer (ad-get-arg 0)))
     (and (bufferp buffer)
          (string= (buffer-name buffer) "*Shell Command Output*")
-         (apply-ansi-color-current-buffer buffer))))
+         (y:ansi-color-apply-on-buffer buffer))))
 
-;; Clean up the buffer list when displaying the BS selection window
-(defadvice bs-show (before kill-system-buffers-before-bs-show)
-  (kill-system-buffers))
+;; Clean up the buffer list when displaying the BS window
+(defadvice bs-show (before y:kill-system-buffers-before-bs-show activate)
+  (y:kill-system-buffers))
 
 ;; +---------------------+
 ;; | Run Emacs as server |
@@ -163,16 +163,20 @@
  '(display-time-mode t)
  '(electric-pair-mode t)
  '(global-hl-line-mode t)
+ '(ido-enable-flex-matching t)
  '(ido-mode (quote both) nil (ido))
  '(indent-tabs-mode nil)
  '(inhibit-startup-screen t)
  '(ispell-dictionary "english")
  '(less-css-compile-at-save t)
  '(line-move-visual nil)
+ '(mouse-yank-at-point t)
  '(package-archives (quote (("marmalade" . "http://marmalade-repo.org/packages/") ("gnu" . "http://elpa.gnu.org/packages/"))))
  '(python-mode-hook (quote (flymake-python-pyflakes-load subword-mode)) t)
  '(rcirc-default-nick "yordan")
  '(rcirc-server-alist (quote (("irc.freenode.net" :port 7000 :channels ("#4web" "#bgdev" "#emacs" "#gnu") :encryption tls))))
+ '(save-place t nil (saveplace))
+ '(save-place-file "~/.emacs.d/places")
  '(scroll-bar-mode nil)
  '(show-paren-mode t)
  '(tool-bar-position (quote right))
