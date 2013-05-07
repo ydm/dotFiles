@@ -102,6 +102,10 @@
 (add-hook 'before-save-hook #'y:del-trail-ws-before-save-hook)
 (add-hook 'find-file-hook #'y:mkdir-ff-hook)
 
+;; Clean up the buffer list when displaying the BS window
+(defadvice bs-show (before y:kill-system-buffers-before-bs-show activate)
+  (y:kill-system-buffers))
+
 ;; Apply ansi color to the shell output buffer
 (defadvice display-message-or-buffer
   (before y:ansi-color-apply-on-shell-output activate)
@@ -110,9 +114,15 @@
          (string= (buffer-name buffer) "*Shell Command Output*")
          (y:ansi-color-apply-on-buffer buffer))))
 
-;; Clean up the buffer list when displaying the BS window
-(defadvice bs-show (before y:kill-system-buffers-before-bs-show activate)
-  (y:kill-system-buffers))
+(defadvice ido-find-file
+  (after y:sudo-ff-if-not-writable-or-diff-owner activate)
+  "Reopen file as root if it's not writable or file's owner is
+different.  Idea:
+http://emacsredux.com/blog/2013/04/21/edit-files-as-root/"
+  (unless (or (file-writable-p (buffer-file-name))
+              (y:same-owner-p (buffer-file-name)))
+    (find-alternate-file
+     (concat "/sudo:root@localhost:" buffer-file-name))))
 
 ;; +---------------------+
 ;; | Run Emacs as server |

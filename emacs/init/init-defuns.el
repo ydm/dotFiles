@@ -20,6 +20,11 @@
   (open-line 1)
   (indent-for-tab-command))
 
+(defun y:same-owner-p (file)
+  (let ((owner (caddr (file-attributes file))))
+    (cond ((stringp owner) (string-equal owner (user-login-name)))
+          (t (= owner (user-uid))))))
+
 (defun y:string-startswith (str head)
   (and (stringp str)
        (stringp head)
