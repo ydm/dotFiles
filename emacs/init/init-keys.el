@@ -6,8 +6,9 @@
 (global-unset-key (kbd "C-x z"))        ; repeat
 
 ;; Redefine system keys
+(global-set-key (kbd "C-o") 'y:open-line)
 (global-set-key (kbd "C-x C-b") 'bs-show)
-(global-set-key (kbd "C-o") 'y/open-line)
+(global-set-key (kbd "M-/") 'hippie-expand)
 (global-set-key (kbd "M-x") 'smex)
 
 ;; Built-in commands
