@@ -14,9 +14,9 @@
 ;; Built-in commands
 (global-set-key (kbd "<f5>") 'sort-lines)
 (global-set-key (kbd "C-M-z") (lambda () (interactive) (other-window -1)))
-(global-set-key (kbd "C-z") (lambda () (interactive) (other-window  1)))
-(global-set-key (kbd "M-n") (lambda () (interactive) (next-line     5)))
-(global-set-key (kbd "M-p") (lambda () (interactive) (previous-line 5)))
+(global-set-key (kbd "C-z")   (lambda () (interactive) (other-window  1)))
+(global-set-key (kbd "M-n")   (lambda () (interactive) (next-line     5)))
+(global-set-key (kbd "M-p")   (lambda () (interactive) (previous-line 5)))
 
 ;; External commands
 (global-set-key (kbd "C-c i") #'ido-goto-symbol)
@@ -29,5 +29,23 @@
 (global-set-key (kbd "s-a") #'ace-jump-mode)
 (global-set-key (kbd "s-e") #'er/expand-region)
 (global-set-key (kbd "s-z") #'repeat)
+
+;; Mode specific commands
+(require 'dired) ;; TODO
+(define-key dired-mode-map (kbd "/")
+  (lambda (regexp)
+    (interactive "sFind-grep (grep regexp): ")
+    (find-grep-dired default-directory regexp)))
+
+;; Key chords
+(defvar y:key-chords
+  '(("jj" . (lambda () (interactive) (switch-to-buffer (other-buffer))))))
+
+(add-hook 'after-init-hook
+	  (lambda ()
+	    (require 'key-chord)
+            (mapcar (lambda (e)
+                      (key-chord-define-global (kbd (car e)) (cdr e)))
+                    y:key-chords)))
 
 (provide 'init-keys)
