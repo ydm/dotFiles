@@ -32,6 +32,9 @@
 (global-set-key (kbd "s-e") #'er/expand-region)
 (global-set-key (kbd "s-z") #'repeat)
 
+;; My external commands
+(global-set-key (kbd "C-(") #'y:parentheses-eol)
+
 ;; Mode specific commands
 (require 'dired)
 (define-key dired-mode-map (kbd "/")
@@ -40,14 +43,15 @@
     (find-grep-dired default-directory regexp)))
 
 ;; Key chords
-(defvar *y:key-chords*
-  '(("jj" . (lambda () (interactive) (switch-to-buffer (other-buffer))))
+(defvar y:key-chords
+  '(
+    ("jj" . (lambda () (interactive) (switch-to-buffer (other-buffer))))
     ))
 
 (add-hook 'after-init-hook
 	  (lambda ()
             (mapcar (lambda (e)
                       (key-chord-define-global (kbd (car e)) (cdr e)))
-                    *y:key-chords*)))
+                    y:key-chords)))
 
 (provide 'init-keys)

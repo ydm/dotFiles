@@ -18,6 +18,7 @@
     multiple-cursors
     pymacs
     python-django
+    smex
     tabbar))
 
 (defun y:install-package (name)
@@ -72,10 +73,8 @@
 
 (defvar y:day-start '(8 0))
 (defvar y:night-start '(20 0))
-(defvar y:day-theme 'dichromacy)
-(defvar y:night-theme 'dichromacy)
-;; (defvar y:night-theme 'tomorrow-night-bright)
-;; (defvar y:night-theme 'monokai)
+(defvar y:day-theme 'solarized-light)
+(defvar y:night-theme 'solarized-light)
 
 (defun y:time-tuple-to-minutes (tup) (+ (* (car tup) 60) (cadr tup)))
 (defun y:now-in-minutes () (+ (* 60 (nth 2 (decode-time)))
@@ -157,11 +156,11 @@ http://emacsredux.com/blog/2013/04/21/edit-files-as-root/"
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(default ((t (:family "Inconsolata LGC" :foundry "unknown" :slant normal :weight normal :height 113 :width normal))))
- '(tabbar-button ((t (:inherit tabbar-default))))
- '(tabbar-default ((t (:inherit variable-pitch :background "light gray" :foreground "black" :height 1.0))))
- '(tabbar-selected ((t (:inherit tabbar-default :foreground "black" :overline t :weight semi-bold))))
- '(tabbar-separator ((t (:inherit tabbar-default :height 1.0))))
- '(tabbar-unselected ((t (:inherit tabbar-default :foreground "dim gray")))))
+ '(tabbar-button ((t (:inherit tabbar-default))) t)
+ '(tabbar-default ((t (:inherit variable-pitch :background "light gray" :foreground "black" :height 1.0))) t)
+ '(tabbar-selected ((t (:inherit tabbar-default :foreground "black" :overline t :weight semi-bold))) t)
+ '(tabbar-separator ((t (:inherit tabbar-default :height 1.0))) t)
+ '(tabbar-unselected ((t (:inherit tabbar-default :foreground "dim gray"))) t))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -181,6 +180,7 @@ http://emacsredux.com/blog/2013/04/21/edit-files-as-root/"
  '(dired-recursive-copies (quote always))
  '(display-time-mode t)
  '(electric-pair-mode t)
+ '(gdb-many-windows t)
  '(global-hl-line-mode t)
  '(ido-enable-flex-matching t)
  '(ido-mode (quote both) nil (ido))

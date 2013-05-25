@@ -30,6 +30,12 @@
   (open-line 1)
   (indent-for-tab-command))
 
+(defun y:parentheses-eol ()
+  (interactive)
+  (insert-char ?()
+  (move-end-of-line 1)
+  (insert-char ?)))
+
 (defun y:same-owner-p (file)
   (let ((owner (caddr (file-attributes file))))
     (cond ((stringp owner) (string-equal owner (user-login-name)))
