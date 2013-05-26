@@ -1,11 +1,9 @@
 [[ -f ~/.Xresources ]] && xrdb -merge ~/.Xresources
 [[ -f ~/.fehbg ]] && sh ~/.fehbg
 
-# Set map initially
+# Initially set map
 setxkbmap us -option ctrl:nocaps
 # setxkbmap dvorak -option ctrl:nocaps
 
-# Lunch the awesome window manager ;)
-# exec awesome
-
 exec i3
+
