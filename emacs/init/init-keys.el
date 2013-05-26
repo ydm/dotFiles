@@ -15,10 +15,8 @@
 (global-set-key (kbd "<f5>") 'sort-lines)
 (global-set-key (kbd "C-M-z") (lambda () (interactive) (other-window -1)))
 (global-set-key (kbd "C-z")   (lambda () (interactive) (other-window  1)))
-(global-set-key (kbd "M-n")   (lambda () (interactive) (next-line     5)))
-(global-set-key (kbd "M-p")   (lambda () (interactive) (previous-line 5)))
-(global-set-key (kbd "C-.")   #'tabbar-forward-tab)
-(global-set-key (kbd "C-,")   #'tabbar-backward-tab)
+;; (global-set-key (kbd "C-.")   #'tabbar-forward-tab)
+;; (global-set-key (kbd "C-,")   #'tabbar-backward-tab)
 
 ;; External commands
 (global-set-key (kbd "C-c i") #'ido-goto-symbol)
@@ -28,9 +26,10 @@
 (global-set-key (kbd "s-.") #'mc/mark-next-like-this)
 (global-set-key (kbd "s-<") #'mc/edit-lines)
 (global-set-key (kbd "s->") #'mc/mark-all-like-this)
-(global-set-key (kbd "s-a") #'ace-jump-mode)
-(global-set-key (kbd "s-e") #'er/expand-region)
+(global-set-key (kbd "s-m") #'er/expand-region)
 (global-set-key (kbd "s-z") #'repeat)
+(global-set-key (kbd "s-n")   (lambda () (interactive) (next-line     5)))
+(global-set-key (kbd "s-p")   (lambda () (interactive) (previous-line 5)))
 
 ;; My external commands
 (global-set-key (kbd "C-(") #'y:parentheses-eol)
@@ -44,9 +43,8 @@
 
 ;; Key chords
 (defvar y:key-chords
-  '(
-    ("jj" . (lambda () (interactive) (switch-to-buffer (other-buffer))))
-    ))
+  '(("jj" . (lambda () (interactive) (switch-to-buffer (other-buffer))))
+    ("hh" . ace-jump-mode)))
 
 (add-hook 'after-init-hook
 	  (lambda ()
