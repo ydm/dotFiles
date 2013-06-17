@@ -16,10 +16,10 @@
     markdown-mode
     monokai-theme
     multiple-cursors
+    pretty-mode-plus
     pymacs
     python-django
-    smex
-    tabbar))
+    smex))
 
 (defun y:install-package (name)
   "Install a package if it's not already installed."
@@ -40,6 +40,9 @@
 
 (add-to-list 'load-path "~/dotFiles/emacs/pkg/unbound/")
 (require 'unbound)
+
+;; (add-to-list 'load-path "~/dotFiles/emacs/pkg/python.el/")
+;; (require 'python)
 
 ;; +--------------+
 ;; | Init scripts |
@@ -73,8 +76,8 @@
 
 (defvar y:day-start '(8 0))
 (defvar y:night-start '(20 0))
-(defvar y:day-theme 'solarized-light)
-(defvar y:night-theme 'solarized-light)
+(defvar y:day-theme 'tommorow-day)
+(defvar y:night-theme 'tomorrow-night)
 
 (defun y:time-tuple-to-minutes (tup) (+ (* (car tup) 60) (cadr tup)))
 (defun y:now-in-minutes () (+ (* 60 (nth 2 (decode-time)))
@@ -84,12 +87,12 @@
 (defvar y:night-start-minutes (y:time-tuple-to-minutes y:night-start))
 
 (defun y:day? ()
-  (and (>= now y:day-start-minutes)
-       (<  now y:night-start-minutes)))
+  (let ((now (y:now-in-minutes)))
+    (and (>= now y:day-start-minutes)
+         (<  now y:night-start-minutes))))
 
 (defun y:load-theme-by-daytime ()
   (let* ((current-theme (car custom-enabled-themes))
-         (now (y:now-in-minutes))
          (new-theme (if (y:day?) y:day-theme y:night-theme)))
     (unless (eq current-theme new-theme)
       (disable-theme current-theme)
@@ -108,6 +111,10 @@
 ;; Clean up the buffer list when displaying the BS window
 (defadvice bs-show (before y:kill-system-buffers-before-bs-show activate)
   (y:kill-system-buffers))
+
+;; Pep8 requires tramp >.<
+(defadvice pep8 (before y:load-tramp-before-pep8 activate)
+  (require 'tramp))
 
 ;; Apply ansi color to the shell output buffer
 (defadvice display-message-or-buffer
@@ -155,12 +162,7 @@ http://emacsredux.com/blog/2013/04/21/edit-files-as-root/"
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:family "Inconsolata LGC" :foundry "unknown" :slant normal :weight normal :height 113 :width normal))))
- '(tabbar-button ((t (:inherit tabbar-default))) t)
- '(tabbar-default ((t (:inherit variable-pitch :background "light gray" :foreground "black" :height 1.0))) t)
- '(tabbar-selected ((t (:inherit tabbar-default :foreground "black" :overline t :weight semi-bold))) t)
- '(tabbar-separator ((t (:inherit tabbar-default :height 1.0))) t)
- '(tabbar-unselected ((t (:inherit tabbar-default :foreground "dim gray"))) t))
+ '(default ((t (:family "Inconsolata LGC" :foundry "unknown" :slant normal :weight normal :height 113 :width normal)))))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -169,17 +171,26 @@ http://emacsredux.com/blog/2013/04/21/edit-files-as-root/"
  ;; If there is more than one, they won't work right.
  '(abbrev-file-name "~/dotFiles/emacs/abbrev/abbrev_defs")
  '(backup-directory-alist (quote (("." . ".~"))))
- '(bs-attributes-list (quote (("" 1 1 left bs--get-marked-string) ("M" 1 1 left bs--get-modified-string) ("R" 2 2 left bs--get-readonly-string) ("Buffer" bs--get-name-length 10 left bs--get-name) ("" 1 1 left " ") ("Mode" 12 12 right bs--get-mode-name) ("" 2 2 left "  "))))
+ '(bs-attributes-list
+   (quote
+    (("" 1 1 left bs--get-marked-string)
+     ("M" 1 1 left bs--get-modified-string)
+     ("R" 2 2 left bs--get-readonly-string)
+     ("Buffer" bs--get-name-length 10 left bs--get-name)
+     ("" 1 1 left " ")
+     ("Mode" 12 12 right bs--get-mode-name)
+     ("" 2 2 left "  "))))
  '(bs-default-sort-name "by mode")
  '(calendar-week-start-day 1)
  '(coffee-mode-hook (quote (subword-mode)))
  '(coffee-tab-width 2)
  '(column-number-mode t)
  '(default-input-method "bulgarian-alt-phonetic")
+ '(delete-selection-mode t)
  '(dired-dwim-target t)
  '(dired-recursive-copies (quote always))
- '(display-time-mode t)
  '(electric-pair-mode t)
+ '(fill-column 79)
  '(gdb-many-windows t)
  '(global-hl-line-mode t)
  '(ido-enable-flex-matching t)
@@ -190,19 +201,34 @@ http://emacsredux.com/blog/2013/04/21/edit-files-as-root/"
  '(less-css-compile-at-save t)
  '(line-move-visual nil)
  '(mouse-yank-at-point t)
- '(package-archives (quote (("marmalade" . "http://marmalade-repo.org/packages/") ("gnu" . "http://elpa.gnu.org/packages/"))))
+ '(package-archives
+   (quote
+    (("gnu" . "http://elpa.gnu.org/packages/")
+     ("marmalade" . "http://marmalade-repo.org/packages/"))))
  '(python-django-qmgmt-dumpdata-default-format "yaml")
- '(python-mode-hook (quote (flymake-python-pyflakes-load subword-mode)) t)
+ '(python-mode-hook
+   (quote
+    (flymake-python-pyflakes-load subword-mode hs-minor-mode)) t)
+ '(python-shell-completion-module-string-code "';'.join(module_completion('''%s'''))\\n")
+ '(python-shell-completion-setup-code "from IPython.core.completerlib import module_completion")
+ '(python-shell-completion-string-code
+   "';'.join(get_ipython().Completer.all_completions('''%s'''))\\n
+")
+ '(python-shell-interpreter "ipython")
+ '(python-shell-interpreter-args "--profile=dev")
+ '(python-shell-prompt-block-regexp "In \\\\[[0-9]+\\\\]: ")
+ '(python-shell-prompt-output-regexp "Out\\\\[[0-9]+\\\\]: ")
  '(rcirc-default-nick "yordan")
- '(rcirc-server-alist (quote (("irc.freenode.net" :port 7000 :channels ("#4web" "#bgdev" "#emacs" "#gnu") :encryption tls))))
+ '(rcirc-server-alist
+   (quote
+    (("irc.freenode.net" :port 7000 :channels
+      ("#4web" "#bgdev" "#emacs" "#gnu" "#python")
+      :encryption tls))))
  '(save-place t nil (saveplace))
  '(save-place-file "~/.emacs.d/places")
  '(scroll-bar-mode nil)
  '(show-paren-mode t)
- '(tabbar-separator (quote (1)))
- '(tabbar-use-images nil)
  '(tags-revert-without-query t)
- '(term-mode-hook (quote (term-line-mode)))
  '(tool-bar-position (quote right))
  '(tool-bar-style (quote image))
  '(uniquify-buffer-name-style (quote post-forward) nil (uniquify))
@@ -210,9 +236,9 @@ http://emacsredux.com/blog/2013/04/21/edit-files-as-root/"
  '(which-function-mode t)
  '(x-gtk-use-system-tooltips nil))
 
-;; This should be set last as this it'll be executed first before any
-;; other functions hooked to after-init-hook
+;; This should be set last as this way it'll be executed first before any other
+;; hooked functions
 (add-hook 'after-init-hook
           (lambda ()
-            (message "install-package: %s"
+            (message "Install packages: %s"
                      (mapcar #'y:install-package *y:my-packages*))))

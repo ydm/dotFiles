@@ -15,4 +15,9 @@
 (add-hook 'after-init-hook (lambda () (key-chord-mode 1)))
 ;; (add-hook 'after-init-hook (lambda () (tabbar-mode 1)))
 
+(add-hook 'after-init-hook
+          (lambda ()
+            (require 'pretty-mode-plus)
+            (global-pretty-mode 1)))
+
 (provide 'init-modes)

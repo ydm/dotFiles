@@ -7,6 +7,6 @@
         (y:ansi-color-apply-on-buffer)
         (setq buffer-read-only t)))))
 
-(add-to-list 'compilation-finish-functions #'y:on-compilation-finish)
+;; (add-to-list 'compilation-finish-functions #'y:on-compilation-finish)
 
 (provide 'init-compilation)
