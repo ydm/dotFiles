@@ -1,84 +1,55 @@
-! +----------------------------------------------------------+
-! | Config: https://wiki.archlinux.org/index.php/X_resources |
-! +----------------------------------------------------------+
-
-! URxvt*font:           inconsolatalgc:normal:pixelsize=15
 ! URxvt*font: xft:DejaVu Sans Mono:pixelsize=15:antialias=true:hinting=true
-URxvt*font: xft:inconsolatalgc:pixelsize=15:antialias=true:hinting=true
-! xterm*metaSendsEscape:    true
-! *utf8:               2
+URxvt.font: xft:InconsolataLGC:pixelsize=16:antialias=true:hinting=true
 
-! URxvt*transparent: true
-! URxvt*shading: 80
+! my
+URxvt.shading: 110
+URxvt.fading: 10
+URxvt.scrollBar: false
+URxvt.transparent: true
 
+URxvt.perl-ext: default,url-select
+! URxvt.perl-ext-common:  clipboard,default,tabbed
+URxvt.perl-ext-common:  clipboard,default
 
-! Solarized color scheme for the X Window System
-!
-! http://ethanschoonover.com/solarized
+! urxvt-perls/url-select
+URxvt.keysym.M-u: perl:url-select:select_next
+URxvt.url-select.launcher: /usr/bin/firefox -new-tab
+URxvt.url-select.underline: true
 
+! urxvt-perls/clipboard
+URxvt.keysym.M-w: perl:clipboard:copy
+URxvt.keysym.C-y: perl:clipboard:paste
+URxvt.keysym.M-y: perl:clipboard:paste_escaped
 
-! Common
+! tabs
+! URxvt.tabbed.tabbar-fg: 6
+! URxvt.tabbed.tabbar-bg: 0
+! URxvt.tabbed.tab-fg:    9
+! URxvt.tabbed.tab-bg:    0
 
-#define S_yellow #b58900
-#define S_orange #cb4b16
-#define S_red #dc322f
-#define S_magenta #d33682
-#define S_violet #6c71c4
-#define S_blue #268bd2
-#define S_cyan #2aa198
-#define S_green #859900
+! solarized
+URxvt.fadeColor: #002b36
+URxvt.pointerColorBackground: #586e75
+URxvt.pointerColorForeground: #93a1a1
 
-
-! Dark
-
-! #define S_base03 #002b36
-! #define S_base02 #073642
-! #define S_base01 #586e75
-! #define S_base00 #657b83
-! #define S_base0 #839496
-! #define S_base1 #93a1a1
-! #define S_base2 #eee8d5
-! #define S_base3 #fdf6e3
-
-
-! Light
-
-#define S_base03 #fdf6e3
-#define S_base02 #eee8d5
-#define S_base01 #93a1a1
-#define S_base00 #839496
-#define S_base0 #657b83
-#define S_base1 #586e75
-#define S_base2 #073642
-#define S_base3 #002b36
-
-
-! To only apply colors to your terminal, for example, prefix
-! the color assignment statement with its name. Example:
-!
-! URxvt*background: S_base03
-
-URxvt*background: S_base03
-URxvt*foreground: S_base0
-URxvt*fading: 40
-URxvt*fadeColor: S_base03
-URxvt*cursorColor: S_base1
-URxvt*pointerColorBackground: S_base01
-URxvt*pointerColorForeground: S_base1
-
-URxvt*color0: S_base02
-URxvt*color1: S_red
-URxvt*color2: S_green
-URxvt*color3: S_yellow
-URxvt*color4: S_blue
-URxvt*color5: S_magenta
-URxvt*color6: S_cyan
-URxvt*color7: S_base2
-URxvt*color9: S_orange
-URxvt*color8: S_base03
-URxvt*color10: S_base01
-URxvt*color11: S_base00
-URxvt*color12: S_base0
-URxvt*color13: S_violet
-URxvt*color14: S_base1
-URxvt*color15: S_base3
+! tommorow night bright
+! URxvt.foreground: #eaeaea
+URxvt.foreground: #ffffff
+URxvt.background: #000000
+URxvt.cursorColor: #aeafad
+URxvt.color0: #000000
+URxvt.color1: #d54e53
+URxvt.color2: #b9ca4a
+URxvt.color3: #e78c45
+URxvt.color4: #7aa6da
+URxvt.color5: #c397d8
+URxvt.color6: #70c0b1
+URxvt.color7: #424242
+URxvt.color8: #666666
+URxvt.color9: #FF3334
+URxvt.color10: #9ec400
+URxvt.color11: #e7c547
+URxvt.color12: t_blue
+URxvt.color13: #b777e0
+URxvt.color14: #54ced6
+URxvt.color15: #2a2a2a_line
