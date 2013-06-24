@@ -1,0 +1,5 @@
+/* Remove the annoying status line (the one popping in when you move your mouse
+   over a link. */
+.statuspanel-label {
+    display: none;
+}
