@@ -7,6 +7,15 @@
   (unless (member major-mode '(fundamental-mode markdown-mode))
     (delete-trailing-whitespace)))
 
+(defun y:kill-filename ()
+  (interactive)
+  (let ((filename (if (equal major-mode 'dired-mode)
+                      default-directory
+                    (buffer-file-name))))
+    (when filename
+      (kill-new filename)
+      (message "Killed %s" filename))))
+
 ;; http://www.emacswiki.org/emacs/InteractivelyDoThings#toc11
 (defun y:ido-find-tag ()
   "Find a tag using ido"
