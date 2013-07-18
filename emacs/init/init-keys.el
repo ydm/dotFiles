@@ -7,21 +7,18 @@
 (global-unset-key (kbd "C-x b"))        ; ido-switch-buffer
 
 ;; Redefine system keys
-(global-set-key (kbd "C-o") 'y:open-line)
-(global-set-key (kbd "C-x C-b") 'bs-show)
-;; (global-set-key (kbd "M-/") 'hippie-expand)
-(global-set-key (kbd "M-x") 'smex)
+(global-set-key (kbd "C-o") #'y:open-line)
+(global-set-key (kbd "C-x C-b") #'bs-show)
+(global-set-key (kbd "M-x") #'smex)
+;; (global-set-key (kbd "M-/") #'hippie-expand)
 
 ;; Built-in commands
-(global-set-key (kbd "<f5>") 'sort-lines)
+(global-set-key (kbd "<f5>") #'sort-lines)
 (global-set-key (kbd "C-M-z") (lambda () (interactive) (other-window -1)))
 (global-set-key (kbd "C-z")   (lambda () (interactive) (other-window  1)))
-;; (global-set-key (kbd "C-.")   #'tabbar-forward-tab)
-;; (global-set-key (kbd "C-,")   #'tabbar-backward-tab)
 
 ;; External commands
 (global-set-key (kbd "C-c i") #'ido-goto-symbol)
-(global-set-key (kbd "C-x f") #'find-file-in-project)
 (global-set-key (kbd "C-x j") 'python-django-open-project)
 (global-set-key (kbd "s-,") #'mc/mark-previous-like-this)
 (global-set-key (kbd "s-.") #'mc/mark-next-like-this)
@@ -34,7 +31,7 @@
 (global-set-key (kbd "s-'") #'forward-whitespace)
 
 ;; My external commands
-(global-set-key (kbd "C-(") #'y:parentheses-eol)
+(global-set-key (kbd "C-(") #'y:wrap-in-parentheses)
 
 ;; Mode specific commands
 (require 'dired)

@@ -3,21 +3,18 @@
     (flymake-mode (js-mode-hook))
     (subword-mode (js-mode-hook))))
 
-(dolist (el *automatic-minor-modes*)
-  (let ((mode (car el)))
-    (dolist (hook (cadr el))
-      (add-hook hook mode))))
+(defun y:hook-mode (e)
+  (let ((minor-mode (car e))
+        (hook-list (cadr e)))
+    (mapcar (lambda (hook)
+              (add-hook hook minor-mode))
+            hook-list)))
+
+(mapcar #'y:hook-mode *automatic-minor-modes*)
 
 ;; Enable global abbreviations
 (setq-default abbrev-mode t)
 
 ;; Global modes
 (add-hook 'after-init-hook (lambda () (key-chord-mode 1)))
-;; (add-hook 'after-init-hook (lambda () (tabbar-mode 1)))
-
-(add-hook 'after-init-hook
-          (lambda ()
-            (require 'pretty-mode-plus)
-            (global-pretty-mode 1)))
-
 (provide 'init-modes)

@@ -5,10 +5,12 @@
   '(
     ("1alpha" "α" nil 0)
     ("1beta" "β" nil 0)
-    ("1coding" "-*- coding: utf-8-unix -*-" nil 1)
     ("1copyright" "©" nil 0)
     ("1dj" "/usr/lib/python2.7/site-packages/django" nil 3)
     ("1interpunct" "·" nil 0)
+
+    ;; TODO: These are Python specific, make them available in python-mode only
+    ("1coding" "-*- coding: utf-8-unix -*-" nil 1)
     ("1pdb" "import pdb; pdb.set_trace()" nil 2)
     ("1unilit" "from __future__ import unicode_literals" nil 1)
    ))

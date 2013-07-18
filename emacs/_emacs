@@ -7,8 +7,6 @@
 (defvar *y:my-packages*
   '(ace-jump-mode
     coffee-mode
-    expand-region
-    find-file-in-project
     flymake-easy
     flymake-python-pyflakes
     key-chord
@@ -17,9 +15,9 @@
     monokai-theme
     multiple-cursors
     pretty-mode-plus
-    pymacs
     python-django
-    smex))
+    smex
+    yaml-mode))
 
 (defun y:install-package (name)
   "Install a package if it's not already installed."
@@ -35,8 +33,16 @@
 (add-to-list 'load-path "~/dotFiles/emacs/pkg/errnav-minor-mode/")
 (autoload 'errnav-minor-mode "errnav-minor-mode")
 
-(add-to-list 'load-path "~/dotFiles/emacs/pkg/yaml-mode/")
-(autoload 'yaml-mode "yaml-mode")
+;; (add-to-list 'load-path "~/dotFiles/emacs/pkg/folding")
+;; (require 'folding)
+
+(add-to-list 'load-path "~/dotFiles/emacs/pkg/fuzzy-match/")
+(require 'fuzzy-match)
+
+;; (setq inferior-lisp-program "/usr/bin/sbcl")
+;; (add-to-list 'load-path "~/dotFiles/emacs/pkg/slime/")
+;; (require 'slime)
+;; (slime-setup)
 
 (add-to-list 'load-path "~/dotFiles/emacs/pkg/unbound/")
 (require 'unbound)
@@ -76,8 +82,8 @@
 
 (defvar y:day-start '(8 0))
 (defvar y:night-start '(20 0))
-(defvar y:day-theme 'tommorow-day)
-(defvar y:night-theme 'tomorrow-night)
+(defvar y:day-theme 'tomorrow-day)
+(defvar y:night-theme 'monokai)
 
 (defun y:time-tuple-to-minutes (tup) (+ (* (car tup) 60) (cadr tup)))
 (defun y:now-in-minutes () (+ (* 60 (nth 2 (decode-time)))
@@ -92,13 +98,13 @@
          (<  now y:night-start-minutes))))
 
 (defun y:load-theme-by-daytime ()
-  (let* ((current-theme (car custom-enabled-themes))
-         (new-theme (if (y:day?) y:day-theme y:night-theme)))
-    (unless (eq current-theme new-theme)
-      (disable-theme current-theme)
+  (let* ((new-theme (if (y:day?) y:day-theme y:night-theme)))
+    (unless (member new-theme custom-enabled-themes)
+      (disable-theme (car custom-enabled-themes))
       (load-theme new-theme t))))
 
-(run-at-time 0 300 #'y:load-theme-by-daytime)
+;; TODO x}
+(run-at-time 1 300 #'y:load-theme-by-daytime)
 
 ;; +------+
 ;; | Misc |
@@ -130,9 +136,10 @@
 different.  Idea:
 http://emacsredux.com/blog/2013/04/21/edit-files-as-root/"
   (unless (or (file-writable-p (buffer-file-name))
-              (y:same-owner-p (buffer-file-name)))
-    (find-alternate-file
-     (concat "/sudo:root@localhost:" buffer-file-name))))
+             (y:same-owner-p (buffer-file-name)))
+    (if (y-or-n-p "Open file for editing?")
+        (find-alternate-file
+         (concat "/sudo:root@localhost:" buffer-file-name)))))
 
 ;; +---------------------+
 ;; | Run Emacs as server |
@@ -170,16 +177,10 @@ http://emacsredux.com/blog/2013/04/21/edit-files-as-root/"
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(abbrev-file-name "~/dotFiles/emacs/abbrev/abbrev_defs")
+ '(ansi-color-faces-vector [default bold shadow italic underline bold bold-italic bold])
+ '(ansi-color-names-vector (vector "#eaeaea" "#d54e53" "#b9ca4a" "#e7c547" "#7aa6da" "#c397d8" "#70c0b1" "#000000"))
  '(backup-directory-alist (quote (("." . ".~"))))
- '(bs-attributes-list
-   (quote
-    (("" 1 1 left bs--get-marked-string)
-     ("M" 1 1 left bs--get-modified-string)
-     ("R" 2 2 left bs--get-readonly-string)
-     ("Buffer" bs--get-name-length 10 left bs--get-name)
-     ("" 1 1 left " ")
-     ("Mode" 12 12 right bs--get-mode-name)
-     ("" 2 2 left "  "))))
+ '(bs-attributes-list (quote (("" 1 1 left bs--get-marked-string) ("M" 1 1 left bs--get-modified-string) ("R" 2 2 left bs--get-readonly-string) ("Buffer" bs--get-name-length 10 left bs--get-name) ("" 1 1 left " ") ("Mode" 12 12 right bs--get-mode-name) ("" 2 2 left "  "))))
  '(bs-default-sort-name "by mode")
  '(calendar-week-start-day 1)
  '(coffee-mode-hook (quote (subword-mode)))
@@ -190,9 +191,11 @@ http://emacsredux.com/blog/2013/04/21/edit-files-as-root/"
  '(dired-dwim-target t)
  '(dired-recursive-copies (quote always))
  '(electric-pair-mode t)
+ '(fci-rule-color "#2a2a2a")
  '(fill-column 79)
  '(gdb-many-windows t)
  '(global-hl-line-mode t)
+ '(haskell-mode-hook (quote (turn-on-haskell-simple-indent)))
  '(ido-enable-flex-matching t)
  '(ido-mode (quote both) nil (ido))
  '(indent-tabs-mode nil)
@@ -201,29 +204,19 @@ http://emacsredux.com/blog/2013/04/21/edit-files-as-root/"
  '(less-css-compile-at-save t)
  '(line-move-visual nil)
  '(mouse-yank-at-point t)
- '(package-archives
-   (quote
-    (("gnu" . "http://elpa.gnu.org/packages/")
-     ("marmalade" . "http://marmalade-repo.org/packages/"))))
+ '(package-archives (quote (("gnu" . "http://elpa.gnu.org/packages/") ("marmalade" . "http://marmalade-repo.org/packages/"))))
  '(python-django-qmgmt-dumpdata-default-format "yaml")
- '(python-mode-hook
-   (quote
-    (flymake-python-pyflakes-load subword-mode hs-minor-mode)) t)
+ '(python-mode-hook (quote (flymake-python-pyflakes-load subword-mode hs-minor-mode)) t)
  '(python-shell-completion-module-string-code "';'.join(module_completion('''%s'''))\\n")
  '(python-shell-completion-setup-code "from IPython.core.completerlib import module_completion")
- '(python-shell-completion-string-code
-   "';'.join(get_ipython().Completer.all_completions('''%s'''))\\n
+ '(python-shell-completion-string-code "';'.join(get_ipython().Completer.all_completions('''%s'''))\\n
 ")
  '(python-shell-interpreter "ipython")
  '(python-shell-interpreter-args "--profile=dev")
  '(python-shell-prompt-block-regexp "In \\\\[[0-9]+\\\\]: ")
  '(python-shell-prompt-output-regexp "Out\\\\[[0-9]+\\\\]: ")
  '(rcirc-default-nick "yordan")
- '(rcirc-server-alist
-   (quote
-    (("irc.freenode.net" :port 7000 :channels
-      ("#4web" "#bgdev" "#emacs" "#gnu" "#python")
-      :encryption tls))))
+ '(rcirc-server-alist (quote (("irc.freenode.net" :port 7000 :channels ("#4web" "#bgdev" "#emacs" "#gnu" "#python") :encryption tls))))
  '(save-place t nil (saveplace))
  '(save-place-file "~/.emacs.d/places")
  '(scroll-bar-mode nil)

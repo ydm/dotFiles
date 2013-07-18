@@ -39,7 +39,7 @@
   (open-line 1)
   (indent-for-tab-command))
 
-(defun y:parentheses-eol ()
+(defun y:wrap-in-parentheses ()
   (interactive)
   (insert-char ?()
   (move-end-of-line 1)
@@ -65,6 +65,6 @@
         (remove nil
                 (mapcar (lambda (p) (string-match p (buffer-name b)))
                         wanted))))
-  (remove-if 'wantedp (buffer-list)))
+  (remove-if #'wantedp (buffer-list)))
 
 (provide 'init-defuns)

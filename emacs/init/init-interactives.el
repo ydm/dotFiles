@@ -54,4 +54,10 @@ Emacs Redux"
           (set-buffer-modified-p modified))))
     (message "Buffer is not visiting a file.")))
 
+(defun replace-last-sexp ()
+  (interactive)
+  (let ((value (eval (preceding-sexp))))
+    (kill-sexp -1)
+    (insert (format "%s" value))))
+
 (provide 'init-interactives)
