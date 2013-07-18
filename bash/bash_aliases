@@ -6,7 +6,8 @@ alias grep='grep --color=auto'
 alias ls='ls --color=auto'
 
 # Editing
-alias e='emacsclient -c'
+alias ec='emacsclient -c'
+alias e='emacs'
 
 # Sys
 alias res='sudo reboot'
@@ -18,6 +19,7 @@ alias glg="git log --graph --pretty=format:'%Cblue%h%Creset -%C(yellow)%d%Creset
 alias gst='git status'
 alias gco='git commit -m'
 alias gad='git add'
+alias grm='git rm'
 alias gpull='git pull origin master'
 alias gpush='git push origin master'
 
