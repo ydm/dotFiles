@@ -3,6 +3,7 @@
 
 ;; Dependencies
 ;;   init-defuns:
+;;     y:python-main-buffers
 ;;     y:string-startswith
 ;;     y:unwanted-buffers
 
@@ -85,5 +86,12 @@ Emacs Redux"
     ;; Start new python shell
     (run-python python-shell-interpreter t show-python-shell)
     (python-shell-send-buffer t)))
+
+(defun y:python-run-main (&optional show-python-shell)
+  (interactive)
+  (let ((main (car (y:python-main-buffers))))
+    (when main
+      (with-current-buffer main
+        (y:python-run show-python-shell)))))
 
 (provide 'init-interactives)

@@ -1,8 +1,11 @@
 (require 'ansi-color)
+(require 'cl)
 
 ;; Dependencies:
 ;;   ansi-color:
 ;;     ansi-color-apply-on-region
+;;   cl:
+;;     cl-remove-if
 
 (defun y:ansi-color-apply-on-buffer (&optional buffer)
   (interactive)
@@ -67,14 +70,15 @@
   (move-end-of-line 1)
   (insert-char ?)))
 
-;; TODO
-(require 'cl)
+;; +----------+
+;; | Pythonic |
+;; +----------+
 (defun y:not-python-main-buffer-p (b &optional main-regexp)
-  "TODO: use main-regexp with fallback to main\.py instead of
+  "TODO: Use main-regexp with fallback to main\.py instead of
 hard-coding."
   (not (string-match "main\.py" (buffer-name b))))
+
 (defun y:python-main-buffers (&optional main-regexp)
   (cl-remove-if #'y:not-python-main-buffer-p (buffer-list)))
-;; (car (y:python-main-buffers))
 
 (provide 'init-defuns)

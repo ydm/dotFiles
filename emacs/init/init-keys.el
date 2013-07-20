@@ -35,8 +35,10 @@
 
 ;; My external commands
 (global-set-key (kbd "<f9>") #'y:python-run)
+(global-set-key (kbd "<f10>") #'y:python-run-main)
 (global-set-key (kbd "C-(") #'y:wrap-in-parentheses)
 (global-set-key (kbd "C-<f9>") (lambda () (interactive) (y:python-run t)))
+(global-set-key (kbd "C-<f10>") (lambda () (interactive) (y:python-run-main t)))
 (global-set-key (kbd "C-c i") #'ido-goto-symbol)
 (global-set-key (kbd "s-n") (lambda () (interactive) (next-line     5)))
 (global-set-key (kbd "s-p") (lambda () (interactive) (previous-line 5)))
