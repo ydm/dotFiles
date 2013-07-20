@@ -5,7 +5,7 @@ bash_dir=$dot_dir/bash
 emacs_dir=$dot_dir/emacs
 git_dir=$dot_dir/git
 X_dir=$dot_dir/X
-awesome_dir=$dot_dir/awesome
+i3_dir=$dot_dir/_i3
 
 msg_installing () {
     echo -n "Installing settings for $1... "
@@ -52,12 +52,22 @@ install_X () {
     msg_done
 }
 
-install_awesome () {
-    ln -s -T $awesome_dir $HOME/.config/awesome
+install_i3 () {
+    ln -s -T $i3_dir $HOME/.i3
 }
 
-install_bash
-install_emacs
-install_git
-install_X
-install_awesome
+install_all () {
+    install_bash
+    install_emacs
+    install_git
+    install_X
+    install_i3
+}
+
+if [[ $# == 0 ]]
+then
+    install_all
+else
+    # TODO: Check if such procedure exists
+    install_$1
+fi
