@@ -6,6 +6,7 @@
 ;;     ido-goto-symbol
 ;;   init-interactives:
 ;;     y:open-line
+;;     y:python-run
 ;;     y:wrap-in-parentheses
 
 ;; Unset system keys
@@ -25,19 +26,21 @@
 (global-set-key (kbd "C-z")   (lambda () (interactive) (other-window  1)))
 
 ;; External commands
-(global-set-key (kbd "C-c i") #'ido-goto-symbol)
 (global-set-key (kbd "C-x j") #'python-django-open-project)
 (global-set-key (kbd "s-,") #'mc/mark-previous-like-this)
 (global-set-key (kbd "s-.") #'mc/mark-next-like-this)
 (global-set-key (kbd "s-<") #'mc/edit-lines)
 (global-set-key (kbd "s->") #'mc/mark-all-like-this)
 (global-set-key (kbd "s-z") #'repeat)
-(global-set-key (kbd "s-n") (lambda () (interactive) (next-line     5)))
-(global-set-key (kbd "s-p") (lambda () (interactive) (previous-line 5)))
-(global-set-key (kbd "s-'") #'forward-whitespace)
 
 ;; My external commands
+(global-set-key (kbd "<f9>") #'y:python-run)
 (global-set-key (kbd "C-(") #'y:wrap-in-parentheses)
+(global-set-key (kbd "C-<f9>") (lambda () (interactive) (y:python-run t)))
+(global-set-key (kbd "C-c i") #'ido-goto-symbol)
+(global-set-key (kbd "s-n") (lambda () (interactive) (next-line     5)))
+(global-set-key (kbd "s-p") (lambda () (interactive) (previous-line 5)))
+;; (global-set-key (kbd "s-'") #'forward-whitespace)
 
 ;; Mode specific commands
 (define-key dired-mode-map (kbd "/")

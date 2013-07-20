@@ -170,8 +170,7 @@
  '(python-shell-completion-setup-code "from IPython.core.completerlib import module_completion")
  '(python-shell-completion-string-code "';'.join(get_ipython().Completer.all_completions('''%s'''))\\n
 ")
- '(python-shell-interpreter "ipython")
- '(python-shell-interpreter-args "--profile=dev")
+ '(python-shell-interpreter "python")
  '(python-shell-prompt-block-regexp "In \\\\[[0-9]+\\\\]: ")
  '(python-shell-prompt-output-regexp "Out\\\\[[0-9]+\\\\]: ")
  '(rcirc-default-nick "yordan")

@@ -71,7 +71,7 @@ Emacs Redux"
     (kill-sexp -1)
     (insert (format "%s" value))))
 
-(defun y:python-run ()
+(defun y:python-run (&optional show-python-shell)
   (interactive)
   (let* ((dedicated-proc-name (python-shell-get-process-name t))
          (dedicated-proc-buffer-name (format "*%s*" dedicated-proc-name))
@@ -83,7 +83,7 @@ Emacs Redux"
         (set-process-query-on-exit-flag process nil)
         (kill-buffer buffer)))
     ;; Start new python shell
-    (run-python python-shell-interpreter t)
+    (run-python python-shell-interpreter t show-python-shell)
     (python-shell-send-buffer t)))
 
 (provide 'init-interactives)
