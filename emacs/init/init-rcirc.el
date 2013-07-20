@@ -1,7 +1,7 @@
+(require 'rcirc)
+
 ;; # pacman -S beep
 ;; # chmod 4755 /usr/bin/beep
-
-(require 'rcirc)
 
 (add-hook 'rcirc-print-hooks 'my-rcirc-print-hook)
 (defun my-rcirc-print-hook (process sender response target text)

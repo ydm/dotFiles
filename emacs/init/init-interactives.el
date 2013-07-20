@@ -1,10 +1,15 @@
-(require 'ansi-color)
-(require 'cl)
 (require 'init-defuns)
+;; (require 'cl)
+
+;; Dependencies
+;;   init-defuns:
+;;     y:string-startswith
+;;     y:unwanted-buffers
 
 ;; +----------+
 ;; | Commands |
 ;; +----------+
+
 (defun y:beautifyjs ()
   "Run beautifier (which comes as nodejs package) on current file."
   (interactive)
@@ -31,11 +36,17 @@ afterwards."
 
 (defun y:kill-system-buffers ()
   (interactive)
-  (defun kis (b)
-    "[K]ill buiffer [i]f it's a [s]ystem buffer. "
+  (defun kill (b)
+    "Kill buiffer if it's a system buffer. "
     (if (y:string-startswith (buffer-name b) "*")
         (kill-buffer b)))
-  (mapcar #'kis (y:unwanted-buffers)))
+  (mapcar #'kill (y:unwanted-buffers)))
+
+(defun y:open-line ()
+  (interactive)
+  (move-beginning-of-line nil)
+  (open-line 1)
+  (indent-for-tab-command))
 
 (defun y:rename-file (new)
   "Rename the file behind the current buffer.  Credits go to
@@ -54,10 +65,25 @@ Emacs Redux"
           (set-buffer-modified-p modified))))
     (message "Buffer is not visiting a file.")))
 
-(defun replace-last-sexp ()
+(defun y:replace-last-sexp ()
   (interactive)
   (let ((value (eval (preceding-sexp))))
     (kill-sexp -1)
     (insert (format "%s" value))))
+
+(defun y:python-run ()
+  (interactive)
+  (let* ((dedicated-proc-name (python-shell-get-process-name t))
+         (dedicated-proc-buffer-name (format "*%s*" dedicated-proc-name))
+         (dedicated-running (comint-check-proc dedicated-proc-buffer-name)))
+    ;; If there's already a python shell running for this buffer, kill it
+    (when dedicated-running
+      (let* ((process (python-shell-get-or-create-process))
+             (buffer (process-buffer process)))
+        (set-process-query-on-exit-flag process nil)
+        (kill-buffer buffer)))
+    ;; Start new python shell
+    (run-python python-shell-interpreter t)
+    (python-shell-send-buffer t)))
 
 (provide 'init-interactives)

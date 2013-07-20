@@ -56,6 +56,7 @@
 (add-to-list 'load-path "~/dotFiles/emacs/init/")
 (add-to-list 'load-path "~/dotFiles/emacs/init/lib/")
 
+(require 'init-advice)
 (require 'init-compilation)
 (require 'init-defuns)
 (require 'init-dired)
@@ -64,7 +65,6 @@
 (require 'init-keys)
 (require 'init-modes)
 (require 'init-rcirc)
-(require 'init-shell)
 
 ;; +--------+
 ;; | Themes |
@@ -82,7 +82,7 @@
 
 (defvar y:day-start '(8 0))
 (defvar y:night-start '(20 0))
-(defvar y:day-theme 'tomorrow-day)
+(defvar y:day-theme 'monokai)
 (defvar y:night-theme 'monokai)
 
 (defun y:time-tuple-to-minutes (tup) (+ (* (car tup) 60) (cadr tup)))
@@ -103,7 +103,6 @@
       (disable-theme (car custom-enabled-themes))
       (load-theme new-theme t))))
 
-;; TODO x}
 (run-at-time 1 300 #'y:load-theme-by-daytime)
 
 ;; +------+
@@ -111,50 +110,13 @@
 ;; +------+
 (defalias 'yes-or-no-p 'y-or-n-p)       ; always y/n instead of yes/no
 
-(add-hook 'before-save-hook #'y:del-trail-ws-before-save-hook)
-(add-hook 'find-file-hook #'y:mkdir-ff-hook)
-
-;; Clean up the buffer list when displaying the BS window
-(defadvice bs-show (before y:kill-system-buffers-before-bs-show activate)
-  (y:kill-system-buffers))
-
-;; Pep8 requires tramp >.<
-(defadvice pep8 (before y:load-tramp-before-pep8 activate)
-  (require 'tramp))
-
-;; Apply ansi color to the shell output buffer
-(defadvice display-message-or-buffer
-  (before y:ansi-color-apply-on-shell-output activate)
-  (let ((buffer (ad-get-arg 0)))
-    (and (bufferp buffer)
-         (string= (buffer-name buffer) "*Shell Command Output*")
-         (y:ansi-color-apply-on-buffer buffer))))
-
-(defadvice ido-find-file
-  (after y:sudo-ff-if-not-writable-or-diff-owner activate)
-  "Reopen file as root if it's not writable or file's owner is
-different.  Idea:
-http://emacsredux.com/blog/2013/04/21/edit-files-as-root/"
-  (unless (or (file-writable-p (buffer-file-name))
-             (y:same-owner-p (buffer-file-name)))
-    (if (y-or-n-p "Open file for editing?")
-        (find-alternate-file
-         (concat "/sudo:root@localhost:" buffer-file-name)))))
-
 ;; +---------------------+
 ;; | Run Emacs as server |
 ;; +---------------------+
 ;; https://github.com/magnars/.emacs.d/blob/master/init.el
-(require 'server)
-(unless (server-running-p)
-  (server-start))
-
-;; +------+
-;; | Helm |
-;; +------+
-(add-to-list 'load-path "~/dotFiles/emacs/pkg/helm/")
-(require 'helm-config)
-(global-set-key (kbd "C-c h") 'helm-mini)
+;; (require 'server)
+;; (unless (server-running-p)
+;;   (server-start))
 
 ;; +----------------+
 ;; | Sensitive data |

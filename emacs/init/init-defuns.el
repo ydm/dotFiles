@@ -1,9 +1,15 @@
+(require 'ansi-color)
+
+;; Dependencies:
+;;   ansi-color:
+;;     ansi-color-apply-on-region
+
 (defun y:ansi-color-apply-on-buffer (&optional buffer)
   (interactive)
   (with-current-buffer (if buffer buffer (current-buffer))
     (ansi-color-apply-on-region (point-min) (point-max))))
 
-(defun y:del-trail-ws-before-save-hook ()
+(defun y:delete-trailing-ws-by-mode ()
   (unless (member major-mode '(fundamental-mode markdown-mode))
     (delete-trailing-whitespace)))
 
@@ -27,23 +33,11 @@
               tags-completion-table)
     (find-tag (ido-completing-read "Tag: " tag-names))))
 
-(defun y:mkdir-ff-hook ()
+(defun y:make-file-dir ()
   (let ((dir (directory-file-name (file-name-directory (buffer-file-name)))))
     (unless (file-exists-p dir)
       (make-directory dir t)
       (message "Directory created %s" dir))))
-
-(defun y:open-line ()
-  (interactive)
-  (move-beginning-of-line nil)
-  (open-line 1)
-  (indent-for-tab-command))
-
-(defun y:wrap-in-parentheses ()
-  (interactive)
-  (insert-char ?()
-  (move-end-of-line 1)
-  (insert-char ?)))
 
 (defun y:same-owner-p (file)
   (let ((owner (caddr (file-attributes file))))
@@ -66,5 +60,11 @@
                 (mapcar (lambda (p) (string-match p (buffer-name b)))
                         wanted))))
   (remove-if #'wantedp (buffer-list)))
+
+(defun y:wrap-in-parentheses ()
+  (interactive)
+  (insert-char ?()
+  (move-end-of-line 1)
+  (insert-char ?)))
 
 (provide 'init-defuns)
