@@ -139,8 +139,6 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(abbrev-file-name "~/dotFiles/emacs/abbrev/abbrev_defs")
- '(ansi-color-faces-vector [default bold shadow italic underline bold bold-italic bold])
- '(ansi-color-names-vector (vector "#eaeaea" "#d54e53" "#b9ca4a" "#e7c547" "#7aa6da" "#c397d8" "#70c0b1" "#000000"))
  '(backup-directory-alist (quote (("." . ".~"))))
  '(bs-attributes-list (quote (("" 1 1 left bs--get-marked-string) ("M" 1 1 left bs--get-modified-string) ("R" 2 2 left bs--get-readonly-string) ("Buffer" bs--get-name-length 10 left bs--get-name) ("" 1 1 left " ") ("Mode" 12 12 right bs--get-mode-name) ("" 2 2 left "  "))))
  '(bs-default-sort-name "by mode")
@@ -153,7 +151,6 @@
  '(dired-dwim-target t)
  '(dired-recursive-copies (quote always))
  '(electric-pair-mode t)
- '(fci-rule-color "#2a2a2a")
  '(fill-column 79)
  '(gdb-many-windows t)
  '(global-hl-line-mode t)
