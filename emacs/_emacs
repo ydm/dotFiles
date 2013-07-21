@@ -7,14 +7,14 @@
 (defvar *y:my-packages*
   '(ace-jump-mode
     coffee-mode
-    flymake-easy
     flymake-python-pyflakes
+    jedi
     key-chord
     less-css-mode
     markdown-mode
     monokai-theme
     multiple-cursors
-    pretty-mode-plus
+    pep8
     python-django
     smex
     yaml-mode))
@@ -160,17 +160,18 @@
  '(indent-tabs-mode nil)
  '(inhibit-startup-screen t)
  '(ispell-dictionary "english")
+ '(jedi:complete-on-dot t)
  '(less-css-compile-at-save t)
  '(line-move-visual nil)
  '(mouse-yank-at-point t)
  '(package-archives (quote (("gnu" . "http://elpa.gnu.org/packages/") ("marmalade" . "http://marmalade-repo.org/packages/"))))
  '(python-django-qmgmt-dumpdata-default-format "yaml")
- '(python-mode-hook (quote (flymake-python-pyflakes-load subword-mode hs-minor-mode)) t)
+ '(python-mode-hook (quote (flymake-python-pyflakes-load hs-minor-mode jedi:setup auto-complete-mode subword-mode)) t)
  '(python-shell-completion-module-string-code "';'.join(module_completion('''%s'''))\\n")
  '(python-shell-completion-setup-code "from IPython.core.completerlib import module_completion")
  '(python-shell-completion-string-code "';'.join(get_ipython().Completer.all_completions('''%s'''))\\n
 ")
- '(python-shell-interpreter "python")
+ '(python-shell-interpreter "ipython")
  '(python-shell-prompt-block-regexp "In \\\\[[0-9]+\\\\]: ")
  '(python-shell-prompt-output-regexp "Out\\\\[[0-9]+\\\\]: ")
  '(rcirc-default-nick "yordan")
