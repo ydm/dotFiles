@@ -84,8 +84,10 @@ Emacs Redux"
         (set-process-query-on-exit-flag process nil)
         (kill-buffer buffer)))
     ;; Start new python shell
-    (run-python python-shell-interpreter t show-python-shell)
-    (python-shell-send-buffer t)))
+    (let ((window (selected-window)))
+      (run-python python-shell-interpreter t show-python-shell)
+      (python-shell-send-buffer t)
+      (select-window window))))
 
 (defun y:python-run-main (&optional show-python-shell)
   (interactive)

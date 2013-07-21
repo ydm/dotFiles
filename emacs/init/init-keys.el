@@ -1,7 +1,14 @@
+(require 'dired)
+(require 'python)
+
 (require 'ido-goto-symbol)
 (require 'init-interactives)
 
 ;; Dependencies:
+;;   dired:
+;;     dired-mode-map
+;;   python:
+;;     python-mode-map
 ;;   ido-goto-symbol:
 ;;     ido-goto-symbol
 ;;   init-interactives:
@@ -34,11 +41,7 @@
 (global-set-key (kbd "s-z") #'repeat)
 
 ;; My external commands
-(global-set-key (kbd "<f9>") #'y:python-run)
-(global-set-key (kbd "<f10>") #'y:python-run-main)
 (global-set-key (kbd "C-(") #'y:wrap-in-parentheses)
-(global-set-key (kbd "C-<f9>") (lambda () (interactive) (y:python-run t)))
-(global-set-key (kbd "C-<f10>") (lambda () (interactive) (y:python-run-main t)))
 (global-set-key (kbd "C-c i") #'ido-goto-symbol)
 (global-set-key (kbd "s-n") (lambda () (interactive) (next-line     5)))
 (global-set-key (kbd "s-p") (lambda () (interactive) (previous-line 5)))
@@ -49,6 +52,15 @@
   (lambda (regexp)
     (interactive "sFind-grep (grep regexp): ")
     (find-grep-dired default-directory regexp)))
+
+(define-key python-mode-map (kbd "<f9>") #'y:python-run)
+(define-key python-mode-map (kbd "<f10>") #'y:python-run-main)
+
+(define-key python-mode-map (kbd "C-<f9>")
+  '(y:python-run t))
+  ;; (lambda () (interactive) (y:python-run t)))
+(define-key python-mode-map (kbd "C-<f10>")
+  (lambda () (interactive) (y:python-run-main t)))
 
 ;; Key chords
 (defvar y:key-chords

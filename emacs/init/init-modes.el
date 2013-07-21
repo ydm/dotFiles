@@ -20,9 +20,11 @@ at position 0: a function that will be hooked,
 at position 1: a list of hooks")
 
 (defun y:apply-hooks (e)
-  (let ((minor-mode (car e))
+  (let ((func (car e))
         (hook-list (cadr e)))
-    (mapcar (lambda (hook) (add-hook hook minor-mode))
+    (mapcar (lambda (hook)
+              ;; (message "(add-hook %s %s)" hook func)
+              (add-hook hook func))
             hook-list)))
 
 (mapcar #'y:apply-hooks y:hook-config)
