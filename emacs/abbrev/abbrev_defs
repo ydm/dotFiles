@@ -17,7 +17,7 @@
   '(
     ("1alpha" "α" nil 0)
     ("1beta" "β" nil 0)
-    ("1coding" "-*- coding: utf-8-unix -*-" nil 1)
+    ("1coding" "-*- coding: utf-8 -*-" nil 1)
     ("1copyright" "©" nil 0)
     ("1dj" "/usr/lib/python2.7/site-packages/django" nil 3)
     ("1interpunct" "·" nil 0)

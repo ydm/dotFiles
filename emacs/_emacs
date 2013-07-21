@@ -15,7 +15,7 @@
     monokai-theme
     multiple-cursors
     pep8
-    python-django
+    ;; python-django
     smex
     solarized-theme
     yaml-mode))
@@ -72,7 +72,7 @@
 ;; +--------+
 (defvar y:day-start '(8 0))
 (defvar y:night-start '(20 0))
-(defvar y:day-theme 'monokai)
+(defvar y:day-theme 'solarized-light)
 (defvar y:night-theme 'monokai)
 
 (defun y:time-tuple-to-minutes (tup) (+ (* (car tup) 60) (cadr tup)))
@@ -161,7 +161,7 @@
  '(python-shell-completion-setup-code "from IPython.core.completerlib import module_completion")
  '(python-shell-completion-string-code "';'.join(get_ipython().Completer.all_completions('''%s'''))\\n
 ")
- '(python-shell-interpreter "ipython")
+ '(python-shell-interpreter "ipython2")
  '(python-shell-prompt-block-regexp "In \\\\[[0-9]+\\\\]: ")
  '(python-shell-prompt-output-regexp "Out\\\\[[0-9]+\\\\]: ")
  '(rcirc-default-nick "yordan")
