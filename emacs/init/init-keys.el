@@ -57,8 +57,7 @@
 (define-key python-mode-map (kbd "<f10>") #'y:python-run-main)
 
 (define-key python-mode-map (kbd "C-<f9>")
-  '(y:python-run t))
-  ;; (lambda () (interactive) (y:python-run t)))
+  (lambda () (interactive) (y:python-run t)))
 (define-key python-mode-map (kbd "C-<f10>")
   (lambda () (interactive) (y:python-run-main t)))
 
