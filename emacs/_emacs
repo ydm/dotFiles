@@ -17,6 +17,7 @@
     pep8
     python-django
     smex
+    solarized-theme
     yaml-mode))
 
 (defun y:install-package (name)
@@ -69,17 +70,6 @@
 ;; +--------+
 ;; | Themes |
 ;; +--------+
-(require 'custom)
-(add-to-list 'custom-theme-load-path
-	     "~/dotFiles/emacs/themes/emacs-color-theme-solarized/")
-
-;; tomorrow-theme also requires some files to be find-able trough the
-;; load-path
-(add-to-list 'custom-theme-load-path
-             "~/dotFiles/emacs/themes/tomorrow-theme/GNU Emacs")
-(add-to-list 'load-path
-             "~/dotFiles/emacs/themes/tomorrow-theme/GNU Emacs")
-
 (defvar y:day-start '(8 0))
 (defvar y:night-start '(20 0))
 (defvar y:day-theme 'monokai)
@@ -166,7 +156,7 @@
  '(mouse-yank-at-point t)
  '(package-archives (quote (("gnu" . "http://elpa.gnu.org/packages/") ("marmalade" . "http://marmalade-repo.org/packages/"))))
  '(python-django-qmgmt-dumpdata-default-format "yaml")
- '(python-mode-hook (quote (flymake-python-pyflakes-load hs-minor-mode jedi:setup auto-complete-mode subword-mode)) t)
+ '(python-mode-hook (quote (flymake-python-pyflakes-load hs-minor-mode jedi:setup subword-mode)) t)
  '(python-shell-completion-module-string-code "';'.join(module_completion('''%s'''))\\n")
  '(python-shell-completion-setup-code "from IPython.core.completerlib import module_completion")
  '(python-shell-completion-string-code "';'.join(get_ipython().Completer.all_completions('''%s'''))\\n
