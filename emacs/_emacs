@@ -12,7 +12,8 @@
     key-chord
     less-css-mode
     markdown-mode
-    monokai-theme
+    ;; monokai-theme
+    sea-before-storm-theme
     multiple-cursors
     pep8
     ;; python-django
@@ -72,8 +73,8 @@
 ;; +--------+
 (defvar y:day-start '(8 0))
 (defvar y:night-start '(20 0))
-(defvar y:day-theme 'solarized-light)
-(defvar y:night-theme 'monokai)
+(defvar y:day-theme 'sea-before-storm)
+(defvar y:night-theme 'sea-before-storm)
 
 (defun y:time-tuple-to-minutes (tup) (+ (* (car tup) 60) (cadr tup)))
 (defun y:now-in-minutes () (+ (* 60 (nth 2 (decode-time)))
