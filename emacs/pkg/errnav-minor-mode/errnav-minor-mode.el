@@ -8,7 +8,11 @@
 (defun errnav-display-errors ()
   (interactive)
   (let ((e (mapconcat 'identity (errnav-get-errors) "\n")))
-    (pos-tip-show e '("white" . "#5f2737"))))
+    ;; (pos-tip-show e '("white" . "#5f2737"))
+    ;; (pos-tip-show e '("black" . "#503450"))
+    ;; (pos-tip-show e '("black" . "#d17515"))
+    (pos-tip-show e)
+    ))
 
 (defadvice flymake-goto-next-error (after errnav-next-advice activate compile)
   (errnav-display-errors))

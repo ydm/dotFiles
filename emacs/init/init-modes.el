@@ -12,7 +12,7 @@
   '((errnav-minor-mode (flymake-mode-hook))
     (flymake-mode (js-mode-hook))
     (subword-mode (js-mode-hook))
-    (y:delete-trailing-ws-by-mode (before-save-hook))
+    ;; (y:delete-trailing-ws-by-mode (before-save-hook))
     (y:dired-reuse-buffer-on-up (dired-mode-hook))
     (y:make-file-dir (find-file-hook)))
   "Each entry of the list contains:

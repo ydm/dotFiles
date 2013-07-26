@@ -91,7 +91,10 @@ Emacs Redux"
 
 (defun y:python-run-main (&optional show-python-shell)
   (interactive)
-  (let ((main (car (y:python-main-buffers))))
+  (message "yo? %s" (y:python-main-buffers
+                     (if (local-variable-p 'run-by) run-by)))
+  (let ((main (car (y:python-main-buffers
+                    (if (local-variable-p 'run-by) run-by)))))
     (when main
       (with-current-buffer main
         (y:python-run show-python-shell)))))

@@ -74,11 +74,13 @@
 ;; | Pythonic |
 ;; +----------+
 (defun y:not-python-main-buffer-p (b &optional main-regexp)
-  "TODO: Use main-regexp with fallback to main\.py instead of
-hard-coding."
-  (not (string-match "main\.py" (buffer-name b))))
+  "Use main-regexp with fallback to main\.py to match the main
+buffer."
+  (not (string-match (or main-regexp "^main\.py") (buffer-name b))))
 
 (defun y:python-main-buffers (&optional main-regexp)
-  (cl-remove-if #'y:not-python-main-buffer-p (buffer-list)))
+  (cl-remove-if (lambda (b)
+                  (y:not-python-main-buffer-p b main-regexp))
+                (buffer-list)))
 
 (provide 'init-defuns)
