@@ -28,6 +28,7 @@
     ("1ubinenv3" "#!/usr/bin/env python3")
     ("1pdb" "import pdb; pdb.set_trace()" nil 2)
     ("1unilit" "from __future__ import unicode_literals" nil 1)
+    ("1ifmain" "if __name__ == '__main__':\n    main()")
    ))
 
 (define-abbrev-table 'inferior-python-mode-abbrev-table '())
