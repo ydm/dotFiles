@@ -9,11 +9,15 @@
 ;;     dired-mode-map
 ;;   python:
 ;;     python-mode-map
+;;   thingatpt
+;;     forward-whitespace
 ;;   ido-goto-symbol:
 ;;     ido-goto-symbol
 ;;   init-interactives:
 ;;     y:open-line
 ;;     y:python-run
+;;     y:python-run-main
+;;     y:python-rerun
 ;;     y:wrap-in-parentheses
 
 ;; Unset system keys
@@ -45,7 +49,7 @@
 (global-set-key (kbd "C-c i") #'ido-goto-symbol)
 (global-set-key (kbd "s-n") (lambda () (interactive) (next-line     5)))
 (global-set-key (kbd "s-p") (lambda () (interactive) (previous-line 5)))
-;; (global-set-key (kbd "s-'") #'forward-whitespace)
+(global-set-key (kbd "s-o") #'forward-whitespace)
 
 ;; Mode specific commands
 (define-key dired-mode-map (kbd "/")
@@ -55,11 +59,14 @@
 
 (define-key python-mode-map (kbd "<f9>") #'y:python-run)
 (define-key python-mode-map (kbd "<f10>") #'y:python-run-main)
+(define-key python-mode-map (kbd "<f11>") #'y:python-rerun)
 
 (define-key python-mode-map (kbd "C-<f9>")
   (lambda () (interactive) (y:python-run t)))
 (define-key python-mode-map (kbd "C-<f10>")
   (lambda () (interactive) (y:python-run-main t)))
+(define-key python-mode-map (kbd "C-<f11>")
+  (lambda () (interactive) (y:python-rerun t)))
 
 ;; Key chords
 (defvar y:key-chords
