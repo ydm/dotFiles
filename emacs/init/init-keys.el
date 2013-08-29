@@ -1,5 +1,6 @@
 (require 'dired)
 (require 'python)
+(require 'thingatpt)
 
 (require 'ido-goto-symbol)
 (require 'init-interactives)

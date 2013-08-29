@@ -49,6 +49,9 @@
 (add-to-list 'load-path "~/dotFiles/emacs/pkg/unbound/")
 (require 'unbound)
 
+(add-to-list 'load-path "~/dotFiles/emacs/pkg/")
+(require 'python-django)
+
 ;; (add-to-list 'load-path "~/dotFiles/emacs/pkg/python.el/")
 ;; (require 'python)
 
@@ -157,7 +160,7 @@
  '(mouse-yank-at-point t)
  '(package-archives (quote (("gnu" . "http://elpa.gnu.org/packages/") ("marmalade" . "http://marmalade-repo.org/packages/"))))
  '(python-django-qmgmt-dumpdata-default-format "yaml")
- '(python-mode-hook (quote (flymake-python-pyflakes-load hs-minor-mode jedi:setup subword-mode)) t)
+ '(python-mode-hook (quote (flymake-python-pyflakes-load hs-minor-mode subword-mode)) t)
  '(python-shell-completion-module-string-code "';'.join(module_completion('''%s'''))\\n")
  '(python-shell-completion-setup-code "from IPython.core.completerlib import module_completion")
  '(python-shell-completion-string-code "';'.join(get_ipython().Completer.all_completions('''%s'''))\\n
