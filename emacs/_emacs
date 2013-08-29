@@ -70,6 +70,7 @@
 (require 'init-keys)
 (require 'init-modes)
 (require 'init-rcirc)
+(require 'init-shell)
 
 ;; +--------+
 ;; | Themes |
