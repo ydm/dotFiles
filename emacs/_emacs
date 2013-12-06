@@ -7,8 +7,8 @@
 (defvar *y:my-packages*
   '(ace-jump-mode
     coffee-mode
+    etags-select
     flymake-python-pyflakes
-    jedi
     key-chord
     less-css-mode
     markdown-mode
@@ -78,6 +78,8 @@
 (defvar y:day-start '(8 0))
 (defvar y:night-start '(20 0))
 (defvar y:day-theme 'sea-before-storm)
+;; (defvar y:day-theme 'solarized-light)
+;; (defvar y:day-theme 'monokai)
 (defvar y:night-theme 'sea-before-storm)
 
 (defun y:time-tuple-to-minutes (tup) (+ (* (car tup) 60) (cadr tup)))
@@ -135,7 +137,16 @@
  ;; If there is more than one, they won't work right.
  '(abbrev-file-name "~/dotFiles/emacs/abbrev/abbrev_defs")
  '(backup-directory-alist (quote (("." . ".~"))))
- '(bs-attributes-list (quote (("" 1 1 left bs--get-marked-string) ("M" 1 1 left bs--get-modified-string) ("R" 2 2 left bs--get-readonly-string) ("Buffer" bs--get-name-length 10 left bs--get-name) ("" 1 1 left " ") ("Mode" 12 12 right bs--get-mode-name) ("" 2 2 left "  "))))
+ '(bs-attributes-list (quote (("" 1 1 left bs--get-marked-string)
+                              ("M" 1 1 left bs--get-modified-string)
+                              ("R" 2 2 left bs--get-readonly-string)
+                              ("Buffer" bs--get-name-length 10 left bs--get-name)
+                              ("" 1 1 left " ")
+                              ("Mode" 12 12 right bs--get-mode-name)
+                              ("" 2 2 left "  ")
+                              ("File" 12 12 left bs--get-file-name)
+                              ("" 2 2 left "  ")
+                              )))
  '(bs-default-sort-name "by mode")
  '(calendar-week-start-day 1)
  '(coffee-mode-hook (quote (subword-mode)))
@@ -155,7 +166,6 @@
  '(indent-tabs-mode nil)
  '(inhibit-startup-screen t)
  '(ispell-dictionary "english")
- '(jedi:complete-on-dot t)
  '(less-css-compile-at-save t)
  '(line-move-visual nil)
  '(mouse-yank-at-point t)

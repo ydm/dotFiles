@@ -35,13 +35,6 @@ at position 1: a list of hooks")
 ;; Global modes
 (add-hook 'after-init-hook
 	  (lambda ()
-	    ;; key-chord
-	    (key-chord-mode 1)
-
-	    ;; jedi
-	    (require 'jedi)		; TODO
-            (message "Yeah! %s, %s" jedi:server-command jedi:server-script)
-	    (setq jedi:server-command
-                  (list "python2" jedi:server-script))))
+	    (key-chord-mode 1)))
 
 (provide 'init-modes)
