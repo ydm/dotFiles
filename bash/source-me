@@ -1,7 +1,6 @@
 # -*- mode: Shell-script -*-
 #
-# Append this file to your ~/.bashrc or simply add:
-# source ~/dotFiles/bash/source-me
+# Append this file to ~/.bashrc or add source ~/dotFiles/bash/source-me
 #
 
 # prompt
@@ -12,5 +11,8 @@ for f in $HOME/dotFiles/bash/bash_*; do
     source $f
 done
 
-# add wannabin to PATH
-export PATH=$PATH:$HOME/dotFiles/wannabin
+# add bin and wannabin to PATH
+export PATH=$PATH:$HOME/bin:$HOME/dotFiles/wannabin
+
+# SVN Editor
+export SVN_EDITOR=emacs

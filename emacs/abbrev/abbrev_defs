@@ -27,7 +27,10 @@
     ("1ubinenv2" "#!/usr/bin/env python2")
     ("1ubinenv3" "#!/usr/bin/env python3")
     ("1pdb" "import pdb; pdb.set_trace()" nil 2)
-    ("1unilit" "from __future__ import unicode_literals" nil 1)
+    ("1unilit" "from __future__ import unicode_literals" nil 0)
+    ("1printfunc" "from __future__ import print_function" nil 0)
+    ("1ifmain" "if __name__ == '__main__':\n    main()")
+    ("1stack" "import traceback; traceback.print_stack()")
    ))
 
 (define-abbrev-table 'inferior-python-mode-abbrev-table '())

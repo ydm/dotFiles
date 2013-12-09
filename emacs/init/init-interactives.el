@@ -72,6 +72,9 @@ Emacs Redux"
     (kill-sexp -1)
     (insert (format "%s" value))))
 
+(defvar y:python-last-run-buffer 'nil
+  "The buffer that's last run by python-run function.")
+
 (defun y:python-run (&optional show-python-shell)
   (interactive)
   (let* ((dedicated-proc-name (python-shell-get-process-name t))
@@ -87,16 +90,22 @@ Emacs Redux"
     (let ((window (selected-window)))
       (run-python python-shell-interpreter t show-python-shell)
       (python-shell-send-buffer t)
-      (select-window window))))
+      (select-window window)
+      (setq y:python-last-run-buffer (current-buffer)))))
 
 (defun y:python-run-main (&optional show-python-shell)
   (interactive)
-  (message "yo? %s" (y:python-main-buffers
-                     (if (local-variable-p 'run-by) run-by)))
   (let ((main (car (y:python-main-buffers
                     (if (local-variable-p 'run-by) run-by)))))
     (when main
       (with-current-buffer main
         (y:python-run show-python-shell)))))
+
+(defun y:python-rerun (&optional show-python-shell)
+  (interactive)
+  (when y:python-last-run-buffer
+      (message "last-run-buffer=%s" y:python-last-run-buffer)
+      (with-current-buffer y:python-last-run-buffer
+        (y:python-run show-python-shell))))
 
 (provide 'init-interactives)

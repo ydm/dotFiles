@@ -1,7 +1,4 @@
 emacs/plugins/php-mode
 emacs/plugins/po-mode
 emacs/plugins/yaml-mode
-xmonad/xmonad-i386-linux
-xmonad/xmonad.errors
-xmonad/xmonad.hi
-xmonad/xmonad.o
+_i3/i3log

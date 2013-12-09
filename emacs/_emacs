@@ -7,6 +7,7 @@
 (defvar *y:my-packages*
   '(ace-jump-mode
     coffee-mode
+    etags-select
     flymake-python-pyflakes
     key-chord
     less-css-mode
@@ -48,6 +49,9 @@
 (add-to-list 'load-path "~/dotFiles/emacs/pkg/unbound/")
 (require 'unbound)
 
+(add-to-list 'load-path "~/dotFiles/emacs/pkg/")
+(require 'python-django)
+
 ;; (add-to-list 'load-path "~/dotFiles/emacs/pkg/python.el/")
 ;; (require 'python)
 
@@ -69,6 +73,7 @@
 (require 'init-keys)
 (require 'init-modes)
 (require 'init-rcirc)
+(require 'init-shell)
 
 ;; +--------+
 ;; | Themes |
@@ -76,6 +81,8 @@
 (defvar y:day-start '(8 0))
 (defvar y:night-start '(20 0))
 (defvar y:day-theme 'sea-before-storm)
+;; (defvar y:day-theme 'solarized-light)
+;; (defvar y:day-theme 'monokai)
 (defvar y:night-theme 'sea-before-storm)
 
 (defun y:time-tuple-to-minutes (tup) (+ (* (car tup) 60) (cadr tup)))
@@ -133,7 +140,16 @@
  ;; If there is more than one, they won't work right.
  '(abbrev-file-name "~/dotFiles/emacs/abbrev/abbrev_defs")
  '(backup-directory-alist (quote (("." . ".~"))))
- '(bs-attributes-list (quote (("" 1 1 left bs--get-marked-string) ("M" 1 1 left bs--get-modified-string) ("R" 2 2 left bs--get-readonly-string) ("Buffer" bs--get-name-length 10 left bs--get-name) ("" 1 1 left " ") ("Mode" 12 12 right bs--get-mode-name) ("" 2 2 left "  "))))
+ '(bs-attributes-list (quote (("" 1 1 left bs--get-marked-string)
+                              ("M" 1 1 left bs--get-modified-string)
+                              ("R" 2 2 left bs--get-readonly-string)
+                              ("Buffer" bs--get-name-length 10 left bs--get-name)
+                              ("" 1 1 left " ")
+                              ("Mode" 12 12 right bs--get-mode-name)
+                              ("" 2 2 left "  ")
+                              ("File" 12 12 left bs--get-file-name)
+                              ("" 2 2 left "  ")
+                              )))
  '(bs-default-sort-name "by mode")
  '(calendar-week-start-day 1)
  '(coffee-mode-hook (quote (subword-mode)))
@@ -144,7 +160,7 @@
  '(dired-dwim-target t)
  '(dired-recursive-copies (quote always))
  '(electric-pair-mode t)
- '(fill-column 79)
+ '(fill-column 72)
  '(gdb-many-windows t)
  '(global-hl-line-mode t)
  '(haskell-mode-hook (quote (turn-on-haskell-simple-indent)))

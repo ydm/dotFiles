@@ -1,8 +1,11 @@
+(require 'dired-x)
 (require 'dired)
 
 ;; Dependencies:
 ;;   dired:
 ;;     dired-find-alternate-file
+;;   dired-x:
+;;     dired-omit-files
 
 (put 'dired-find-alternate-file 'disabled nil) ; Allow nav in dired buffer
 
@@ -11,5 +14,9 @@
     (lambda ()
       (interactive)
       (find-alternate-file ".."))))
+
+;; Ignore certain files from listing
+(setq-default dired-omit-files-p t)
+(add-to-list 'dired-omit-extensions ".pyc")
 
 (provide 'init-dired)
