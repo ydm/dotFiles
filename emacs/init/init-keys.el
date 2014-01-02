@@ -7,34 +7,36 @@
 
 ;; Dependencies:
 ;;   dired:
-;;     dired-mode-map
+;;     'dired-mode-map
 ;;   python:
-;;     python-mode-map
+;;     'python-mode-map
 ;;   thingatpt
-;;     forward-whitespace
+;;     (forward-whitespace)
 ;;   ido-goto-symbol:
-;;     ido-goto-symbol
+;;     (ido-goto-symbol)
 ;;   init-interactives:
-;;     y:open-line
-;;     y:python-run
-;;     y:python-run-main
-;;     y:python-rerun
-;;     y:wrap-in-parentheses
+;;     (y:open-line)
+;;     (y:python-run)
+;;     (y:python-run-main)
+;;     (y:python-rerun)
+;;     (y:wrap-in-parentheses)
 
-;; Unset system keys (Some of them are redefined below, XXX)
-(global-unset-key (kbd "C-x C-z"))      ; suspend-frame
-(global-unset-key (kbd "C-x b"))        ; ido-switch-buffer
-(global-unset-key (kbd "C-x o"))        ; other-frame
-(global-unset-key (kbd "C-x z"))        ; repeat
-(global-unset-key (kbd "M-,"))          ; tags-loop-continue
-(global-unset-key (kbd "M-."))          ; find-tag
-(global-unset-key (kbd "M-x"))          ; execute-extend-command
+;; Unset system keys
+(global-unset-key (kbd "C-o"))          ; (open-line)
+(global-unset-key (kbd "C-x C-b"))      ; (list-buffers)
+(global-unset-key (kbd "C-x C-z"))      ; (suspend-frame)
+(global-unset-key (kbd "C-x b"))        ; (ido-switch-buffer)
+(global-unset-key (kbd "C-x o"))        ; (other-frame)
+(global-unset-key (kbd "C-x z"))        ; (repeat)
+(global-unset-key (kbd "M-,"))          ; (tags-loop-continue)
+(global-unset-key (kbd "M-."))          ; (find-tag)
+(global-unset-key (kbd "M-x"))          ; (execute-extend-command)
 
 ;; Redefine system keys
 (global-set-key (kbd "C-o") #'y:open-line)
 (global-set-key (kbd "C-x C-b") #'bs-show)
-(global-set-key (kbd "M-x") #'smex)
 (global-set-key (kbd "M-.") #'etags-select-find-tag)
+(global-set-key (kbd "M-x") #'smex)
 
 ;; Built-in commands
 (global-set-key (kbd "<f5>") #'sort-lines)
@@ -63,13 +65,14 @@
     (find-grep-dired default-directory regexp)))
 
 (define-key python-mode-map (kbd "<f9>") #'y:python-run)
-(define-key python-mode-map (kbd "<f10>") #'y:python-run-main)
-(define-key python-mode-map (kbd "<f11>") #'y:python-rerun)
-
 (define-key python-mode-map (kbd "C-<f9>")
   (lambda () (interactive) (y:python-run t)))
+
+(define-key python-mode-map (kbd "<f10>") #'y:python-run-main)
 (define-key python-mode-map (kbd "C-<f10>")
   (lambda () (interactive) (y:python-run-main t)))
+
+(define-key python-mode-map (kbd "<f11>") #'y:python-rerun)
 (define-key python-mode-map (kbd "C-<f11>")
   (lambda () (interactive) (y:python-rerun t)))
 
@@ -79,9 +82,9 @@
     ("hh" . ace-jump-mode)
     ("bb" . ido-switch-buffer)))
 
-;; If it's a first time Emacs run key-chords is still unpresent, but it will be
-;; installed by my package installation mechanism.  That's why I hook to
-;; after-init-hook when I know for sure it'll be there up and running
+;; If that's the first time Emacs is run, key-chords is still not
+;; installed.  That's why we hook to 'after-init-hook, when we know for
+;; sure it will be installed and present
 (add-hook 'after-init-hook
 	  (lambda ()
             (mapcar (lambda (e)

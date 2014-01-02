@@ -3,21 +3,21 @@
 
 ;; Dependencies
 ;;   init-defuns:
-;;     y:python-main-buffers
-;;     y:string-startswith
-;;     y:unwanted-buffers
+;;     (y:python-main-buffers)
+;;     (y:string-startswith)
+;;     (y:unwanted-buffers)
 
 ;; +----------+
 ;; | Commands |
 ;; +----------+
 
 (defun y:beautifyjs ()
-  "Run beautifier (which comes as nodejs package) on current file."
+  "Run beautifier nodejs package on current file."
   (interactive)
   (let* ((orgfile (buffer-file-name))
          (tmpfile (format "%s_beautify" orgfile)))
     (save-buffer)
-    ;; TODO: Check if file ends in .js.
+    ;; TODO: Check if the file ends in .js.
     (shell-command (format "beautifier %s > %s" orgfile tmpfile))
     (delete-file orgfile)
     (rename-file tmpfile orgfile)
@@ -73,7 +73,7 @@ Emacs Redux"
     (insert (format "%s" value))))
 
 (defvar y:python-last-run-buffer 'nil
-  "The buffer that's last run by python-run function.")
+  "The buffer that's last run by the (python-run) function.")
 
 (defun y:python-run (&optional show-python-shell)
   (interactive)

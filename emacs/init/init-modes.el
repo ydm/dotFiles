@@ -3,21 +3,21 @@
 
 ;; Dependencies:
 ;;   init-dired:
-;;     y:dired-reuse-buffer-on-up
+;;     (y:dired-reuse-buffer-on-up)
 ;;   init-defuns:
-;;     y:delete-trailing-ws-by-mode
-;;     y:make-file-dir
+;;     (y:delete-trailing-ws-by-mode)
+;;     (y:mkdir-for-buffer-file-name)
 
 (defvar y:hook-config
   '((errnav-minor-mode (flymake-mode-hook))
     (flymake-mode (js-mode-hook))
     (subword-mode (js-mode-hook))
-    ;; (y:delete-trailing-ws-by-mode (before-save-hook))
+    (y:delete-trailing-ws-by-mode (before-save-hook))
     (y:dired-reuse-buffer-on-up (dired-mode-hook))
-    (y:make-file-dir (find-file-hook)))
-  "Each entry of the list contains:
-at position 0: a function that will be hooked,
-at position 1: a list of hooks")
+    (y:mkdir-for-buffer-file-name (find-file-hook)))
+  "Each entry of this list contains:
+1) a function that will be hooked,
+2) a list of hooks to hook the function to.")
 
 (defun y:apply-hooks (e)
   (let ((func (car e))

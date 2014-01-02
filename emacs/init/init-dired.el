@@ -3,9 +3,10 @@
 
 ;; Dependencies:
 ;;   dired:
-;;     dired-find-alternate-file
+;;     'dired-find-alternate-file
 ;;   dired-x:
-;;     dired-omit-files
+;;     'dired-omit-extensions
+;;     'dired-omit-files-p
 
 (put 'dired-find-alternate-file 'disabled nil) ; Allow nav in dired buffer
 
