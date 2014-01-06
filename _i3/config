@@ -149,5 +149,8 @@ bar {
         status_command i3status
 }
 
-# Make Python Gui applications always load in floating mode
+# y: Make Python Gui applications always load in floating mode
 for_window [class="Ipython2"] floating enable
+
+# y: Make Kivy windows floatable
+for_window [title="Kivy"] floating enable
