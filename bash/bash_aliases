@@ -3,7 +3,7 @@
 
 # Colors
 alias grep='grep --color=auto'
-alias ls='ls --color=auto'
+alias ls='ls --color=auto --block-size=M'
 
 # Editing
 alias ec='emacsclient -c'

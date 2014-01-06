@@ -32,9 +32,9 @@
 (defvar y:packages
   '(("~/dotFiles/emacs/pkg/tomorrow-theme" . tomorrow-day-theme)
     ("~/dotFiles/emacs/pkg/python-django.el" . python-django)
-    ("~/dotFiles/emacs/pkg/errnav-minor-mode/" . errnav-minor-mode)
-    ("~/dotFiles/emacs/pkg/fuzzy-match/" . fuzzy-match)
-    ("~/dotFiles/emacs/pkg/unbound/" . unbound)))
+    ("~/dotFiles/emacs/pkg/errnav-minor-mode" . errnav-minor-mode)
+    ("~/dotFiles/emacs/pkg/fuzzy-match" . fuzzy-match)
+    ("~/dotFiles/emacs/pkg/unbound" . unbound)))
 
 (mapcar (lambda (p)
           (add-to-list 'load-path (car p))
@@ -92,14 +92,6 @@
 ;; | Misc |
 ;; +------+
 (defalias 'yes-or-no-p 'y-or-n-p)       ; always y/n instead of yes/no
-
-;; +---------------------+
-;; | Run Emacs as server |
-;; +---------------------+
-;; https://github.com/magnars/.emacs.d/blob/master/init.el
-;; (require 'server)
-;; (unless (server-running-p)
-;;   (server-start))
 
 ;; +----------------+
 ;; | Sensitive data |
