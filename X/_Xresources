@@ -2,8 +2,8 @@
 URxvt.font: xft:InconsolataLGC:pixelsize=16:antialias=true:hinting=true
 
 ! my
-URxvt.shading: 110
-URxvt.fading: 10
+URxvt.shading: 50
+URxvt.fading: 80
 URxvt.scrollBar: false
 URxvt.transparent: true
 
