@@ -1,3 +1,3 @@
 [submodule "emacs/pkg/python-django.el"]
 	path = emacs/pkg/python-django.el
-	url = https://github.com/fgallina/python-django.el.git
+	url = https://github.com/fgallina/python-django.el

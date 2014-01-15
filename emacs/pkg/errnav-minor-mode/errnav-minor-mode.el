@@ -8,6 +8,7 @@
 (defun errnav-display-errors ()
   (interactive)
   (let ((e (mapconcat 'identity (errnav-get-errors) "\n")))
+    ;; TODO y: Let's configure this using standard theme colors? ;)
     ;; (pos-tip-show e '("white" . "#5f2737"))
     ;; (pos-tip-show e '("black" . "#503450"))
     ;; (pos-tip-show e '("black" . "#d17515"))

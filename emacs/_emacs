@@ -8,17 +8,14 @@
   '(ace-jump-mode
     coffee-mode
     etags-select
+    flymake-jslint
     flymake-python-pyflakes
     key-chord
     less-css-mode
-    markdown-mode
-    ;; monokai-theme
-    sea-before-storm-theme
+    ;; sea-before-storm-theme
     multiple-cursors
     pep8
-    ;; python-django
     smex
-    solarized-theme
     yaml-mode))
 
 (defun y:install-package (name)
@@ -29,34 +26,20 @@
   (unless (package-installed-p name)
     (package-install name)))
 
-;; +------------------------+
-;; | Manually load packages |
-;; +------------------------+
-(add-to-list 'load-path "~/dotFiles/emacs/pkg/errnav-minor-mode/")
-(autoload 'errnav-minor-mode "errnav-minor-mode")
+;; +--------------------------+
+;; | Load themes and packages |
+;; +--------------------------+
+(defvar y:packages
+  '(("~/dotFiles/emacs/pkg/tomorrow-theme" . tomorrow-day-theme)
+    ("~/dotFiles/emacs/pkg/python-django.el" . python-django)
+    ("~/dotFiles/emacs/pkg/errnav-minor-mode" . errnav-minor-mode)
+    ("~/dotFiles/emacs/pkg/fuzzy-match" . fuzzy-match)
+    ("~/dotFiles/emacs/pkg/unbound" . unbound)))
 
-;; (add-to-list 'load-path "~/dotFiles/emacs/pkg/folding")
-;; (require 'folding)
-
-(add-to-list 'load-path "~/dotFiles/emacs/pkg/fuzzy-match/")
-(require 'fuzzy-match)
-
-;; (setq inferior-lisp-program "/usr/bin/sbcl")
-;; (add-to-list 'load-path "~/dotFiles/emacs/pkg/slime/")
-;; (require 'slime)
-;; (slime-setup)
-
-(add-to-list 'load-path "~/dotFiles/emacs/pkg/unbound/")
-(require 'unbound)
-
-(add-to-list 'load-path "~/dotFiles/emacs/pkg/")
-(require 'python-django)
-
-;; (add-to-list 'load-path "~/dotFiles/emacs/pkg/python.el/")
-;; (require 'python)
-
-(add-to-list 'load-path "~/dotFiles/emacs/pkg/python-django.el/")
-(require 'python-django)
+(mapcar (lambda (p)
+          (add-to-list 'load-path (car p))
+          (require (cdr p)))
+        y:packages)
 
 ;; +--------------+
 ;; | Init scripts |
@@ -78,17 +61,17 @@
 ;; +--------+
 ;; | Themes |
 ;; +--------+
+(defun y:time-tuple-to-minutes (tup)
+  (+ (* (car tup) 60)
+     (cadr tup)))
+(defun y:now-in-minutes ()
+  (+ (* 60 (nth 2 (decode-time)))
+     (nth 1 (decode-time))))
+
 (defvar y:day-start '(8 0))
 (defvar y:night-start '(20 0))
-(defvar y:day-theme 'sea-before-storm)
-;; (defvar y:day-theme 'solarized-light)
-;; (defvar y:day-theme 'monokai)
-(defvar y:night-theme 'sea-before-storm)
-
-(defun y:time-tuple-to-minutes (tup) (+ (* (car tup) 60) (cadr tup)))
-(defun y:now-in-minutes () (+ (* 60 (nth 2 (decode-time)))
-                              (nth 1 (decode-time))))
-
+(defvar y:day-theme 'tomorrow-day)
+(defvar y:night-theme 'tomorrow-night)
 (defvar y:day-start-minutes (y:time-tuple-to-minutes y:day-start))
 (defvar y:night-start-minutes (y:time-tuple-to-minutes y:night-start))
 
@@ -109,14 +92,6 @@
 ;; | Misc |
 ;; +------+
 (defalias 'yes-or-no-p 'y-or-n-p)       ; always y/n instead of yes/no
-
-;; +---------------------+
-;; | Run Emacs as server |
-;; +---------------------+
-;; https://github.com/magnars/.emacs.d/blob/master/init.el
-;; (require 'server)
-;; (unless (server-running-p)
-;;   (server-start))
 
 ;; +----------------+
 ;; | Sensitive data |
@@ -140,16 +115,7 @@
  ;; If there is more than one, they won't work right.
  '(abbrev-file-name "~/dotFiles/emacs/abbrev/abbrev_defs")
  '(backup-directory-alist (quote (("." . ".~"))))
- '(bs-attributes-list (quote (("" 1 1 left bs--get-marked-string)
-                              ("M" 1 1 left bs--get-modified-string)
-                              ("R" 2 2 left bs--get-readonly-string)
-                              ("Buffer" bs--get-name-length 10 left bs--get-name)
-                              ("" 1 1 left " ")
-                              ("Mode" 12 12 right bs--get-mode-name)
-                              ("" 2 2 left "  ")
-                              ("File" 12 12 left bs--get-file-name)
-                              ("" 2 2 left "  ")
-                              )))
+ '(bs-attributes-list (quote (("" 1 1 left bs--get-marked-string) ("M" 1 1 left bs--get-modified-string) ("R" 2 2 left bs--get-readonly-string) ("Buffer" bs--get-name-length 10 left bs--get-name) ("" 1 1 left " ") ("Mode" 12 12 right bs--get-mode-name) ("" 2 2 left "  ") ("File" 12 12 left bs--get-file-name) ("" 2 2 left "  "))))
  '(bs-default-sort-name "by mode")
  '(calendar-week-start-day 1)
  '(coffee-mode-hook (quote (subword-mode)))
@@ -174,19 +140,14 @@
  '(mouse-yank-at-point t)
  '(package-archives (quote (("gnu" . "http://elpa.gnu.org/packages/") ("marmalade" . "http://marmalade-repo.org/packages/"))))
  '(python-django-qmgmt-dumpdata-default-format "yaml")
- '(python-mode-hook (quote (flymake-python-pyflakes-load hs-minor-mode subword-mode)) t)
- '(python-shell-completion-module-string-code "';'.join(module_completion('''%s'''))\\n")
- '(python-shell-completion-setup-code "from IPython.core.completerlib import module_completion")
- '(python-shell-completion-string-code "';'.join(get_ipython().Completer.all_completions('''%s'''))\\n
-")
- '(python-shell-interpreter "ipython2")
- '(python-shell-prompt-block-regexp "In \\\\[[0-9]+\\\\]: ")
- '(python-shell-prompt-output-regexp "Out\\\\[[0-9]+\\\\]: ")
+ '(python-mode-hook (quote (flymake-python-pyflakes-load subword-mode (lambda nil (hs-minor-mode)))) t)
+ '(python-shell-interpreter "python2")
  '(rcirc-default-nick "yordan")
  '(rcirc-server-alist (quote (("irc.freenode.net" :port 7000 :channels ("#4web" "#bgdev" "#emacs" "#gnu" "#python") :encryption tls))))
  '(save-place t nil (saveplace))
  '(save-place-file "~/.emacs.d/places")
  '(scroll-bar-mode nil)
+ '(shell-cd-regexp "\\(cd\\)\\|\\(\\.\\{1,4\\}\\)")
  '(show-paren-mode t)
  '(tags-revert-without-query t)
  '(tool-bar-position (quote right))
@@ -196,8 +157,8 @@
  '(which-function-mode t)
  '(x-gtk-use-system-tooltips nil))
 
-;; This should be set last as this way it'll be executed first before any other
-;; hooked functions
+;; This should be set last as this way it'll be executed first before
+;; any other hooked functions
 (add-hook 'after-init-hook
           (lambda ()
             (message "Install packages: %s"
