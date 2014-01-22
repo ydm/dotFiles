@@ -57,6 +57,13 @@ fundamental-mode."
                            (min (length str)
                                 (length head))))))
 
+(defun y:string-strip (str)
+  "http://is.gd/o1yX0V"
+  (while (string-match "\\`\n+\\|^\\s-+\\|\\s-+$\\|\n+\\'"
+                       str)
+    (setq str (replace-match "" t t str)))
+  str)
+
 (defun y:unwanted-buffers (&optional wanted)
   (unless wanted (setq wanted '("*Django: " "*Messages*" "*scratch*")))
   (defun wantedp (b)
@@ -150,7 +157,7 @@ buffer."
 
 (defun ut:header ()
   (interactive)
-  (insert "#     Date   Arv   Dpt  Total Balnce WBalnc\n"))
+  (insert "#     Date   Arv   Dpt  Total Balnce MBalnc\n"))
 
 ;; TODO: Set time to -1 minute from now
 (defun ut:arrive ()

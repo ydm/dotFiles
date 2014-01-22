@@ -10,7 +10,7 @@
 
 (defvar y:hook-config
   '((errnav-minor-mode (flymake-mode-hook))
-    (flymake-mode (js-mode-hook))
+    (flymake-jslint-load (js-mode-hook))
     (subword-mode (js-mode-hook))
     (y:delete-trailing-ws-by-mode (before-save-hook))
     (y:dired-reuse-buffer-on-up (dired-mode-hook))
