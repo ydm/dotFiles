@@ -118,7 +118,7 @@
  '(bs-attributes-list (quote (("" 1 1 left bs--get-marked-string) ("M" 1 1 left bs--get-modified-string) ("R" 2 2 left bs--get-readonly-string) ("Buffer" bs--get-name-length 10 left bs--get-name) ("" 1 1 left " ") ("Mode" 12 12 right bs--get-mode-name) ("" 2 2 left "  ") ("File" 12 12 left bs--get-file-name) ("" 2 2 left "  "))))
  '(bs-default-sort-name "by mode")
  '(calendar-week-start-day 1)
- '(coffee-mode-hook (quote (subword-mode)))
+ '(coffee-mode-hook (quote (flymake-coffee-load subword-mode)))
  '(coffee-tab-width 2)
  '(column-number-mode t)
  '(default-input-method "bulgarian-alt-phonetic")
