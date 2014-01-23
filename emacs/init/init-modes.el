@@ -39,5 +39,6 @@
 
 ;; Use web-mode (instead of html-mode) for HTML files
 (add-to-list 'auto-mode-alist '("\\.[sx]?html?\\(\\.[a-zA-Z_]+\\)?\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
 
 (provide 'init-modes)
