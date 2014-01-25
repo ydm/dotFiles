@@ -138,7 +138,6 @@
  '(line-move-visual nil)
  '(mouse-yank-at-point t)
  '(package-archives (quote (("gnu" . "http://elpa.gnu.org/packages/") ("marmalade" . "http://marmalade-repo.org/packages/"))))
- '(python-django-qmgmt-dumpdata-default-format "yaml")
  '(python-mode-hook (quote (flymake-python-pyflakes-load subword-mode (lambda nil (hs-minor-mode)))) t)
  '(python-shell-interpreter "python2")
  '(rcirc-default-nick "yordan")
