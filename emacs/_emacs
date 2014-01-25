@@ -1,5 +1,4 @@
-;; -*- mode: emacs-lisp; -*-
-;; -*- coding: utf-8; -*-
+;; -*- coding: utf-8 -*-
 
 ;; +----------+
 ;; | Packages |
@@ -118,14 +117,14 @@
  '(bs-attributes-list (quote (("" 1 1 left bs--get-marked-string) ("M" 1 1 left bs--get-modified-string) ("R" 2 2 left bs--get-readonly-string) ("Buffer" bs--get-name-length 10 left bs--get-name) ("" 1 1 left " ") ("Mode" 12 12 right bs--get-mode-name) ("" 2 2 left "  ") ("File" 12 12 left bs--get-file-name) ("" 2 2 left "  "))))
  '(bs-default-sort-name "by mode")
  '(calendar-week-start-day 1)
- '(coffee-mode-hook (quote (flymake-coffee-load subword-mode)))
+ '(coffee-mode-hook (quote (coffee-cos-mode flymake-coffee-load subword-mode)))
  '(coffee-tab-width 2)
  '(column-number-mode t)
  '(default-input-method "bulgarian-alt-phonetic")
  '(delete-selection-mode t)
  '(dired-dwim-target t)
  '(dired-recursive-copies (quote always))
- '(electric-pair-mode t)
+ ;; '(electric-pair-mode t)
  '(fill-column 72)
  '(gdb-many-windows t)
  '(global-hl-line-mode t)
@@ -147,7 +146,6 @@
  '(save-place t nil (saveplace))
  '(save-place-file "~/.emacs.d/places")
  '(scroll-bar-mode nil)
- '(shell-cd-regexp "\\(cd\\)\\|\\(\\.\\{1,4\\}\\)")
  '(show-paren-mode t)
  '(tags-revert-without-query t)
  '(tool-bar-position (quote right))

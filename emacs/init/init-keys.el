@@ -80,7 +80,7 @@
 (defvar y:key-chords
   '(("jj" . (lambda () (interactive) (switch-to-buffer (other-buffer))))
     ("hh" . ace-jump-mode)
-    ("bb" . ido-switch-buffer)))
+    ("vv" . ido-switch-buffer)))
 
 ;; If that's the first time Emacs is run, key-chords is still not
 ;; installed.  That's why we hook to 'after-init-hook, when we know for
