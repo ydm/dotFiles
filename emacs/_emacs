@@ -6,12 +6,12 @@
 (defvar *y:my-packages*
   '(ace-jump-mode
     coffee-mode
+    editorconfig
     etags-select
     flymake-jslint
     flymake-python-pyflakes
     key-chord
     less-css-mode
-    ;; sea-before-storm-theme
     multiple-cursors
     pep8
     smex
