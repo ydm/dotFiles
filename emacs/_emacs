@@ -126,7 +126,7 @@
  '(dired-dwim-target t)
  '(dired-recursive-copies (quote always))
  '(fill-column 72)
- '(flymake-jslint-args nil)
+ '(flymake-jslint-args (quote ("--browser")))
  '(gdb-many-windows t)
  '(global-hl-line-mode t)
  '(haskell-mode-hook (quote (turn-on-haskell-simple-indent)))
