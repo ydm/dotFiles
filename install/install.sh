@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# TODO y:
+# npm -g install editorconfig
+# npm -g install coffee-?script
+# npm -g install less
+# --> npm -g install recess
+
 dot_dir=$HOME/dotFiles
 bash_dir=$dot_dir/bash
 emacs_dir=$dot_dir/emacs
