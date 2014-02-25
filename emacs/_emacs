@@ -11,10 +11,10 @@
     flymake-python-pyflakes
     key-chord
     less-css-mode
-    ;; sea-before-storm-theme
     multiple-cursors
     pep8
     smex
+    web-mode
     yaml-mode))
 
 (defun y:install-package (name)
@@ -124,8 +124,8 @@
  '(delete-selection-mode t)
  '(dired-dwim-target t)
  '(dired-recursive-copies (quote always))
- ;; '(electric-pair-mode t)
  '(fill-column 72)
+ '(flymake-jslint-args (quote ("--vars" "--white")))
  '(gdb-many-windows t)
  '(global-hl-line-mode t)
  '(haskell-mode-hook (quote (turn-on-haskell-simple-indent)))

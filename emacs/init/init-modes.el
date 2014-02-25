@@ -17,7 +17,7 @@
     (y:mkdir-for-buffer-file-name (find-file-hook)))
   "Each entry of this list contains:
 1) a function that will be hooked,
-2) a list of hooks to hook the function to.")
+2) a list of hooks to bind the function to.")
 
 (defun y:apply-hooks (e)
   (let ((func (car e))
@@ -26,8 +26,11 @@
               ;; (message "(add-hook %s %s)" hook func)
               (add-hook hook func))
             hook-list)))
-
 (mapcar #'y:apply-hooks y:hook-config)
+
+;; Use web-mode for html documents and Django templates
+(add-to-list 'auto-mode-alist '("\\.[sx]?html?\\(\\.[a-zA-Z_]+\\)?\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
 
 ;; Enable global abbreviations
 (setq-default abbrev-mode t)

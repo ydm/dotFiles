@@ -149,6 +149,9 @@ bar {
         status_command i3status
 }
 
+# y: Because I like Bulgarian more than I like your mom! ;)
+bindsym $mod+Shift+Return exec switchxkbmap
+
 # y: Make Python Gui applications always load in floating mode
 for_window [class="Ipython2"] floating enable
 
