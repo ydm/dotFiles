@@ -28,6 +28,30 @@
   (y:kill-system-buffers)
   (kill-some-buffers (y:unwanted-buffers)))
 
+(defun y:comment-box ()
+  (interactive)
+  (let* ((start (line-beginning-position))
+         (end (line-end-position))
+         (line (buffer-substring-no-properties start end))
+         (match (string-match
+                 "\\([[:space:]]*\\)\\([^[:space:]]+\\)[[:space:]]+\\(.*\\)"
+                 line))
+         (initial-space (if (null match) nil (match-string 1 line)))
+         (comment-start (if (null match) nil (match-string 2 line)))
+         (comment-body (if (null match) nil (match-string 3 line))))
+    (unless (null initial-space)
+      (delete-region start end)
+
+      (defun y:box-insert (s)
+        (insert (format "%s%s %s\n"  initial-space comment-start s)))
+
+      (let ((border (format
+                     "+%s+"
+                     (make-string (+ 2 (length comment-body)) ?-))))
+        (y:box-insert border)
+        (y:box-insert (format "| %s |" comment-body))
+        (y:box-insert border)))))
+
 (defun y:delete-file ()
   "Delete the file behind the current buffer and kill the buffer
 afterwards."
