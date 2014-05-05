@@ -4,9 +4,9 @@
 ;; | Packages |
 ;; +----------+
 (defvar *y:my-packages*
-  '(ace-jump-mode
+  '(
+    ace-jump-mode
     coffee-mode
-    editorconfig
     etags-select
     flymake-jslint
     flymake-python-pyflakes
@@ -18,13 +18,17 @@
     web-mode
     yaml-mode))
 
-(defun y:install-package (name)
-  "Install a package if it's not already installed."
+(defun y:install-packages ()
+  "Install packages if they're not already there."
   (package-initialize t)
-  (unless package-archive-contents
-    (package-refresh-contents))
-  (unless (package-installed-p name)
-    (package-install name)))
+  (when (remove t (mapcar #'package-installed-p *y:my-packages*))
+    (unless package-archive-contents
+      (package-refresh-contents))
+    (mapcar (lambda (p)
+              (when (not (package-installed-p p))
+                (message "Installing %s" p)
+                (package-install p)))
+            *y:my-packages*)))
 
 ;; +--------------------------+
 ;; | Load themes and packages |
@@ -157,7 +161,4 @@
 
 ;; This is set last (after all requires, loads, etc) as this way this
 ;; hook will is executed first before any other hooks
-(add-hook 'after-init-hook
-          (lambda ()
-            (message "Install packages: %s"
-                     (mapcar #'y:install-package *y:my-packages*))))
+(add-hook 'after-init-hook #'y:install-packages)
