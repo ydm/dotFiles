@@ -59,8 +59,7 @@ fundamental-mode."
 
 (defun y:string-strip (str)
   "http://is.gd/o1yX0V"
-  (while (string-match "\\`\n+\\|^\\s-+\\|\\s-+$\\|\n+\\'"
-                       str)
+  (while (string-match "\\`\n+\\|^\\s-+\\|\\s-+$\\|\n+\\'" str)
     (setq str (replace-match "" t t str)))
   str)
 

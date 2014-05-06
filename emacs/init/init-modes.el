@@ -9,7 +9,8 @@
 ;;     (y:mkdir-for-buffer-file-name)
 
 (defvar y:hook-config
-  '((errnav-minor-mode (flymake-mode-hook))
+  '((ansi-color-for-comint-mode-on (shell-mode-hook))
+    (errnav-minor-mode (flymake-mode-hook))
     (flymake-jslint-load (js-mode-hook))
     (subword-mode (js-mode-hook))
     (y:delete-trailing-ws-by-mode (before-save-hook))

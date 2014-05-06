@@ -6,7 +6,6 @@
 (defvar *y:my-packages*
   '(ace-jump-mode
     coffee-mode
-    editorconfig
     etags-select
     flymake-jslint
     flymake-python-pyflakes
@@ -126,7 +125,7 @@
  '(dired-dwim-target t)
  '(dired-recursive-copies (quote always))
  '(fill-column 72)
- '(flymake-jslint-args (quote ("--browser" "--unparam" "--vars" "--white")))
+ '(flymake-jslint-args (quote ("--browser" "--plusplus" "--unparam" "--vars")))
  '(gdb-many-windows t)
  '(global-hl-line-mode t)
  '(haskell-mode-hook (quote (turn-on-haskell-simple-indent)))
@@ -140,7 +139,7 @@
  '(mouse-yank-at-point t)
  '(package-archives (quote (("gnu" . "http://elpa.gnu.org/packages/") ("marmalade" . "http://marmalade-repo.org/packages/"))))
  '(python-mode-hook (quote (flymake-python-pyflakes-load subword-mode (lambda nil (hs-minor-mode)))) t)
- '(python-shell-interpreter "python2")
+ '(python-shell-interpreter "python")
  '(rcirc-default-nick "yordan")
  '(rcirc-server-alist (quote (("irc.freenode.net" :port 7000 :channels ("#4web" "#bgdev" "#emacs" "#gnu" "#python") :encryption tls))))
  '(save-place t nil (saveplace))
