@@ -18,6 +18,11 @@ fundamental-mode."
   (unless (member major-mode '(fundamental-mode))
     (delete-trailing-whitespace)))
 
+(defun y:get-buffer (buffer-or-name)
+  (if buffer-or-name
+      (get-buffer buffer-or-name)
+    nil))
+
 (defun y:kill-filename ()
   (interactive)
   (let ((filename (if (equal major-mode 'dired-mode)

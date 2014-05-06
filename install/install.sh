@@ -26,13 +26,13 @@ install_bash () {
     echo "
 # include settings from my dotFiles
 source $bash_dir/source-me" >> ~/.bashrc
-    ln -s -T $bash_dir/_lessfilter $HOME/.lessfilter
+    ln -s $bash_dir/_lessfilter $HOME/.lessfilter
     msg_done
 }
 
 install_emacs () {
     msg_installing 'emacs'
-    ln -s -T $emacs_dir/_emacs $HOME/.emacs
+    ln -s $emacs_dir/_emacs $HOME/.emacs
     msg_done
 }
 
@@ -63,11 +63,11 @@ install_i3 () {
 }
 
 install_all () {
-    install_bash
+    # install_bash
     install_emacs
-    install_git
-    install_X
-    install_i3
+    # install_git
+    # install_X
+    # install_i3
 }
 
 if [[ $# == 0 ]]
