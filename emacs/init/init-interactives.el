@@ -110,14 +110,14 @@ Emacs Redux"
              (buffer (process-buffer process)))
         (set-process-query-on-exit-flag process nil)
         (kill-buffer buffer)))
-    ;; Start new python shell
-    (message "[Python] Current buffer = %s" (current-buffer))
+
+    ;; Set current buffer as the last run buffer
     (setq y:python-last-run-buffer (buffer-name (current-buffer)))
 
+    ;; Start new python shell
     (run-python python-shell-interpreter t show-python-shell)
     (python-shell-send-buffer t)
-    (select-window (selected-window))
-    )))
+    (select-window (selected-window))))
 
 (defun y:python-run-main (&optional show-python-shell)
   (interactive)
@@ -132,7 +132,6 @@ Emacs Redux"
   (let ((buffer (y:get-buffer y:python-last-run-buffer)))
     (when buffer
       (with-current-buffer buffer
-        (message "last-run-buffer=%s" y:python-last-run-buffer)
         (y:python-run show-python-shell)))))
 
 (provide 'init-interactives)
