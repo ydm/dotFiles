@@ -1,45 +1,55 @@
 #!/bin/bash
 
 # TODO y:
-# npm -g install editorconfig
-# npm -g install coffee-?script
 # npm -g install less
-# --> npm -g install recess
+# npm -g install recess
 
-dot_dir=$HOME/dotFiles
-bash_dir=$dot_dir/bash
-emacs_dir=$dot_dir/emacs
-git_dir=$dot_dir/git
-X_dir=$dot_dir/X
-i3_dir=$dot_dir/_i3
+BASE="$HOME"/dotFiles
 
-msg_installing () {
-    echo -n "Installing settings for $1... "
+
+function installing {
+    echo "Installing $1... "
 }
 
-msg_done () {
-    echo 'done.'
+
+# +---------+
+# | Configs |
+# +---------+
+
+function install_X {
+    installing xinitrc
+
+    # ln -s -T $X_dir/_Xresources ~/.Xresources
+    cp "$BASE"/X/_xinitrc ~/.xinitrc
 }
 
-install_bash () {
-    msg_installing 'bash'
-    echo "
-# include settings from my dotFiles
-source $bash_dir/source-me" >> ~/.bashrc
-    ln -s $bash_dir/_lessfilter $HOME/.lessfilter
-    msg_done
+function install_emacs {
+    installing emacs
+
+    rm ~/.emacs 2>/dev/null
+    ln -s "$BASE"/emacs/_emacs ~/.emacs
 }
 
-install_emacs () {
-    msg_installing 'emacs'
-    ln -s $emacs_dir/_emacs $HOME/.emacs
-    msg_done
+function install_fonts {
+    installing fonts
+
+    mkdir -p ~/.fonts/Inconsolata-LGC
+    cd "$BASE"/fonts/Inconsolata-LGC
+    git archive HEAD | tar x -C ~/.fonts/Inconsolata-LGC
+    fc-cache -vf
 }
 
-install_git () {
-    msg_installing 'git'
+function install_git {
+    installing git
+
+    # First, unset all existing config settings
+    for c in $(git config --global --list | grep -o -Pe '^[^=]*')
+    do
+	git config --global --unset "$c"
+    done
+
+    # Now set mine ;)
     git config --global alias.st 'status -s'
-    git config --global alias.co 'commit'
     git config --global color.branch auto
     git config --global color.diff auto
     git config --global color.status auto
@@ -47,33 +57,32 @@ install_git () {
     git config --global user.email 'yordan@4web.bg'
     git config --global user.name 'Yordan Miladinov'
 
-    cp $git_dir/Emacs.gitignore $HOME/.global_gitignore
-    msg_done
-}
-
-install_X () {
-    msg_installing 'X'
-    ln -s -T $X_dir/_Xresources ~/.Xresources
-    ln -s -T $X_dir/_xinitrc ~/.xinitrc
-    msg_done
+    # ...and copy the global gitignore that makes git happy to work
+    # together with Emacs
+    cp "$BASE"/git/Emacs.gitignore ~/.global_gitignore
 }
 
 install_i3 () {
-    ln -s -T $i3_dir $HOME/.i3
+    installing i3
+
+    rm ~/.i3 2>/dev/null
+    ln -s -T "$BASE"/_i3 ~/.i3
 }
 
 install_all () {
-    # install_bash
+    install_X
     install_emacs
-    # install_git
-    # install_X
-    # install_i3
+    install_fonts
+    install_git
+    install_i3
 }
 
 if [[ $# == 0 ]]
 then
     install_all
 else
-    # TODO: Check if such procedure exists
-    install_$1
+    for arg in $@
+    do
+	install_$arg
+    done
 fi
