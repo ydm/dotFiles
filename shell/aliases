@@ -6,22 +6,15 @@ alias grep='grep --color=auto'
 alias ls='ls --color=auto --block-size=M'
 
 # Editing
-alias ec='emacsclient -c'
 alias e='emacs'
 
 # Sys
-alias res='sudo reboot'
-alias bye='sudo shutdown -h 0'
+alias byte='poweroff'
+alias res='reboot'
 
 # Git
 alias gl="git log --pretty=tformat:'%h %Cblue%cr%Creset %cn %Cgreen%s%Creset'"
 alias glg="git log --graph --pretty=format:'%Cblue%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative"
-alias gst='git status'
-alias gco='git commit -m'
-alias gad='git add'
-alias grm='git rm'
-alias gpull='git pull origin master'
-alias gpush='git push origin master'
 
 # Navigation
 alias ....='cd ../../..'
