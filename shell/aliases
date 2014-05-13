@@ -1,5 +1,8 @@
-# -*- mode: Shell-script -*-
-# A lot of thanks to https://github.com/bitprophet/dotfiles/
+# +---------------------------------+
+# | Start of dotFiles/shell/aliases |
+# +---------------------------------+
+
+# Thanks to https://github.com/bitprophet/dotfiles/
 
 # Colors
 alias grep='grep --color=auto'
@@ -9,7 +12,7 @@ alias ls='ls --color=auto --block-size=M'
 alias e='emacs'
 
 # Sys
-alias byte='poweroff'
+alias bye='poweroff'
 alias res='reboot'
 
 # Git
@@ -30,3 +33,7 @@ alias upgrade='sudo pacman -Syu --noconfirm'
 
 # Other
 alias t='tree -Ca -I ".git"'
+
+# +-------------------------------+
+# | End of dotFiles/shell/aliases |
+# +-------------------------------+

@@ -62,19 +62,25 @@ function install_git {
     cp "$BASE"/git/Emacs.gitignore ~/.global_gitignore
 }
 
-install_i3 () {
+function install_i3 {
     installing i3
 
     rm ~/.i3 2>/dev/null
     ln -s -T "$BASE"/_i3 ~/.i3
 }
 
-install_all () {
+function install_shell {
+    installing "shell settings"
+    cat "$BASE"/shell/aliases >> ~/.zlogin
+}
+
+function install_all {
     install_X
     install_emacs
     install_fonts
     install_git
     install_i3
+    install_shell
 }
 
 if [[ $# == 0 ]]
