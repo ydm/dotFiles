@@ -100,7 +100,8 @@
 ;; +----------------+
 ;; | Sensitive data |
 ;; +----------------+
-(load "~/dotFiles/emacs/sensitive")
+(and (file-exists-p "~.emacs.d/local.el")
+     (load "~/.emacs.d/local.el"))
 
 ;; +-----------+
 ;; | Customize |
