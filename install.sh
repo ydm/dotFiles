@@ -17,9 +17,9 @@ function installing {
 # +---------+
 
 function install_X {
-    installing xinitrc
+    installing "X settings"
 
-    # ln -s -T $X_dir/_Xresources ~/.Xresources
+    cp "$BASE"/X/_Xresources ~/.Xresources
     cp "$BASE"/X/_xinitrc ~/.xinitrc
 }
 
