@@ -60,6 +60,7 @@ function install_git {
     # ...and copy the global gitignore that makes git happy to work
     # together with Emacs
     cp "$BASE"/git/Emacs.gitignore ~/.global_gitignore
+    git config --global core.excludesfile ~/.global_gitignore
 }
 
 function install_i3 {
