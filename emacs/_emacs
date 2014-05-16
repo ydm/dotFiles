@@ -97,12 +97,6 @@
 ;; +------+
 (defalias 'yes-or-no-p 'y-or-n-p)       ; always y/n instead of yes/no
 
-;; +----------------+
-;; | Sensitive data |
-;; +----------------+
-(and (file-exists-p "~.emacs.d/local.el")
-     (load "~/.emacs.d/local.el"))
-
 ;; +-----------+
 ;; | Customize |
 ;; +-----------+
@@ -163,3 +157,9 @@
 ;; This is set last (after all requires, loads, etc) as this way this
 ;; hook will is executed first before any other hooks
 (add-hook 'after-init-hook #'y:install-packages)
+
+;; +----------------+
+;; | Sensitive data |
+;; +----------------+
+(and (file-exists-p "~/.emacs.d/local.el")
+     (load "~/.emacs.d/local.el"))
