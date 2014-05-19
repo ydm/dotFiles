@@ -1,0 +1,9 @@
+# +------------------------------+
+# | Start of dotFiles/shell/path |
+# +------------------------------+
+
+export PATH=~/dotFiles/wannabin:"$PATH"
+
+# +------------------------------+
+# | Start of dotFiles/shell/path |
+# +------------------------------+

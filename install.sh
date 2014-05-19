@@ -72,7 +72,8 @@ function install_i3 {
 
 function install_shell {
     installing "shell settings"
-    cat "$BASE"/shell/aliases >> ~/.zlogin
+    cat "$BASE"/shell/path >> ~/.profile
+    cat "$BASE"/shell/aliases >> ~/.profile
 }
 
 function install_all {
