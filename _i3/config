@@ -157,3 +157,7 @@ for_window [class="Ipython2"] floating enable
 
 # y: Make Kivy windows floatable
 for_window [title="Kivy"] floating enable
+
+# y: Disply the network manager applet
+# https://faq.i3wm.org/question/2/how-can-i-use-networkmanager-with-i3/
+exec --no-startup-id nm-applet
