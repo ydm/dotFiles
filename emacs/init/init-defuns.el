@@ -7,10 +7,21 @@
 ;;   cl:
 ;;     (cl-remove-if)
 
+
 (defun y:ansi-color-apply-on-buffer (&optional buffer)
   (interactive)
   (with-current-buffer (if buffer buffer (current-buffer))
     (ansi-color-apply-on-region (point-min) (point-max))))
+
+(defun y:all (p seq)
+  (loop for e in seq
+        do (unless (funcall p e) (return nil))
+        finally (return t)))
+
+(defun y:any (p seq)
+  (loop for e in seq
+        do (if (funcall p e)
+               (return t))))
 
 (defun y:delete-trailing-ws-by-mode ()
   "Delete trailing white space unless current major mode is
@@ -76,13 +87,16 @@ fundamental-mode."
   str)
 
 (defun y:unwanted-buffers (&optional wanted)
+  "Return a list of all buffers that are not bound to a process
+and are different than WANTED (defaults to django, messages and
+scratch)"
   (unless wanted (setq wanted '("*Django: " "*Messages*" "*scratch*")))
   (defun wantedp (b)
     (or (get-buffer-process b)
         (remove nil
                 (mapcar (lambda (p) (string-match p (buffer-name b)))
                         wanted))))
-  (remove-if #'wantedp (buffer-list)))
+  (cl-remove-if #'wantedp (buffer-list)))
 
 (defun y:wrap-in-parentheses ()
   (interactive)
