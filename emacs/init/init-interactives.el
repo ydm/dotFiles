@@ -7,14 +7,18 @@
 ;;     (y:string-startswith)
 ;;     (y:unwanted-buffers)
 
+
 ;; +-------------------------+
 ;; | Buffer related commands |
 ;; +-------------------------+
 
-(defun y:clear ()
+(defun y:kill-system-buffers ()
   (interactive)
-  (y:kill-system-buffers)
-  (kill-some-buffers (y:unwanted-buffers)))
+  (defun kill (b)
+    "Kill buiffer if it's a system buffer. "
+    (if (y:string-startswith (buffer-name b) "*")
+        (kill-buffer b)))
+  (mapcar #'kill (y:unwanted-buffers)))
 
 
 ;; +---------------+
@@ -27,15 +31,6 @@ afterwards."
   (interactive)
   (delete-file (buffer-file-name))
   (kill-buffer))
-
-
-(defun y:kill-system-buffers ()
-  (interactive)
-  (defun kill (b)
-    "Kill buiffer if it's a system buffer. "
-    (if (y:string-startswith (buffer-name b) "*")
-        (kill-buffer b)))
-  (mapcar #'kill (y:unwanted-buffers)))
 
 
 ;; +---------+
@@ -92,10 +87,10 @@ afterwards."
       (y:insert-block-delimiter title)
       (while (<= (line-number-at-pos) end-line)
         (end-of-line)
-        (when (< (current-column) 77)
+        (when (< (current-column) 78)
           (while (< (current-column) 78)
-            (insert ? ))
-          (insert ?#))
+            (insert-char ? ))
+          (insert-char ?#))
         (next-line))
       (y:insert-block-delimiter ""))))
 
