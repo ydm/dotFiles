@@ -43,6 +43,13 @@ fundamental-mode."
               tags-completion-table)
     (find-tag (ido-completing-read "Tag: " tag-names))))
 
+(defun y:insert-block-delimiter (title)
+  (let ((fixed (if (< 0 (length title)) (format "%s " title) "")))
+    (insert (format "# %s" fixed))
+    (loop for _ below (- 75 (length fixed))
+          do (insert ?-))
+    (insert " #\n")))
+
 (defun y:mkdir-for-buffer-file-name ()
   (let ((dir (directory-file-name (file-name-directory (buffer-file-name)))))
     (unless (file-exists-p dir)
