@@ -1,32 +1,63 @@
 (require 'init-defuns)
-;; (require 'cl)
 
 ;; Dependencies
 ;;   init-defuns:
+;;     (y:insert-block-delimiter)
 ;;     (y:python-main-buffers)
 ;;     (y:string-startswith)
 ;;     (y:unwanted-buffers)
 
-;; +----------+
-;; | Commands |
-;; +----------+
-
-(defun y:beautifyjs ()
-  "Run beautifier nodejs package on current file."
-  (interactive)
-  (let* ((orgfile (buffer-file-name))
-         (tmpfile (format "%s_beautify" orgfile)))
-    (save-buffer)
-    ;; TODO: Check if the file ends in .js.
-    (shell-command (format "beautifier %s > %s" orgfile tmpfile))
-    (delete-file orgfile)
-    (rename-file tmpfile orgfile)
-    (find-alternate-file orgfile)))
+;; +-------------------------+
+;; | Buffer related commands |
+;; +-------------------------+
 
 (defun y:clear ()
   (interactive)
   (y:kill-system-buffers)
   (kill-some-buffers (y:unwanted-buffers)))
+
+
+;; +---------------+
+;; | File commands |
+;; +---------------+
+
+(defun y:delete-file ()
+  "Delete the file behind the current buffer and kill the buffer
+afterwards."
+  (interactive)
+  (delete-file (buffer-file-name))
+  (kill-buffer))
+
+
+(defun y:kill-system-buffers ()
+  (interactive)
+  (defun kill (b)
+    "Kill buiffer if it's a system buffer. "
+    (if (y:string-startswith (buffer-name b) "*")
+        (kill-buffer b)))
+  (mapcar #'kill (y:unwanted-buffers)))
+
+
+;; +---------+
+;; | Editing |
+;; +---------+
+
+(defun y:open-line ()
+  (interactive)
+  (move-beginning-of-line nil)
+  (open-line 1)
+  (indent-for-tab-command))
+
+(defun y:replace-last-sexp ()
+  (interactive)
+  (let ((value (eval (preceding-sexp))))
+    (kill-sexp -1)
+    (insert (format "%s" value))))
+
+
+;; +----------+
+;; | Comments |
+;; +----------+
 
 (defun y:comment-box ()
   (interactive)
@@ -52,49 +83,26 @@
         (y:box-insert (format "| %s |" comment-body))
         (y:box-insert border)))))
 
-(defun y:delete-file ()
-  "Delete the file behind the current buffer and kill the buffer
-afterwards."
-  (interactive)
-  (delete-file (buffer-file-name))
-  (kill-buffer))
+(defun y:comment-block (start end title)
+  (interactive "r\nsBlock title: ")
+  (let ((start-line (line-number-at-pos start))
+        (end-line (line-number-at-pos end)))
+    (save-excursion
+      (goto-char start)
+      (y:insert-block-delimiter title)
+      (while (<= (line-number-at-pos) end-line)
+        (end-of-line)
+        (when (< (current-column) 77)
+          (while (< (current-column) 78)
+            (insert ? ))
+          (insert ?#))
+        (next-line))
+      (y:insert-block-delimiter ""))))
 
-(defun y:kill-system-buffers ()
-  (interactive)
-  (defun kill (b)
-    "Kill buiffer if it's a system buffer. "
-    (if (y:string-startswith (buffer-name b) "*")
-        (kill-buffer b)))
-  (mapcar #'kill (y:unwanted-buffers)))
 
-(defun y:open-line ()
-  (interactive)
-  (move-beginning-of-line nil)
-  (open-line 1)
-  (indent-for-tab-command))
-
-(defun y:rename-file (new)
-  "Rename the file behind the current buffer.  Credits go to
-Emacs Redux"
-  (interactive "sNew file name: ")
-  (if (and (< 0 (length new))
-           (file-exists-p (buffer-file-name)))
-      (cond
-       ((vc-backend (buffer-file-name))
-        (vc-rename-file (buffer-file-name) new))
-       (t
-        (let ((modified (buffer-modified-p)))
-          (rename-file (buffer-file-name) new t)
-          (rename-buffer new)
-          (set-visited-file-name new)
-          (set-buffer-modified-p modified))))
-    (message "Buffer is not visiting a file.")))
-
-(defun y:replace-last-sexp ()
-  (interactive)
-  (let ((value (eval (preceding-sexp))))
-    (kill-sexp -1)
-    (insert (format "%s" value))))
+;; +--------+
+;; | Python |
+;; +--------+
 
 (defvar y:python-last-run-buffer 'nil
   "The buffer that's last run by the (python-run) function.")
