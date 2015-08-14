@@ -3,39 +3,40 @@
 ;; +----------+
 ;; | Packages |
 ;; +----------+
+;; These packages are turned off:
+;;  - coffee-mode
+;;  - etags-select
+;;  - flymake-jslint
+;;  - flymake-python-pyflakes
+;;  - less-css-mode
+;;  - multiple-cursors
+;;  - pep8
+;;  - web-mode
+;;  - yaml-mode
+;;  - mel-mode
 (defvar *y:my-packages*
-  '(
-    ace-jump-mode
-    coffee-mode
-    etags-select
-    flymake-jslint
-    flymake-python-pyflakes
+  '(ace-jump-mode
     key-chord
-    less-css-mode
-    multiple-cursors
-    pep8
-    smex
-    web-mode
-    yaml-mode))
+    smex))
 
 (defun y:install-packages ()
   "Install packages if they're not already there."
   (package-initialize t)
-  (when (remove t (mapcar #'package-installed-p *y:my-packages*))
-    (unless package-archive-contents
-      (package-refresh-contents))
-    (mapcar (lambda (p)
-              (when (not (package-installed-p p))
-                (message "Installing %s" p)
-                (package-install p)))
-            *y:my-packages*)))
+  (unless package-archive-contents
+    (package-refresh-contents))
+  (mapcar (lambda (p)
+	    (if (package-installed-p p)
+		(message "Package %s is already installed" p)
+	      (progn
+		(message "Installing package %s" p)
+		(package-install p))))
+	  *y:my-packages*))
 
 ;; +--------------------------+
 ;; | Load themes and packages |
 ;; +--------------------------+
 (defvar y:packages
   '(("~/dotFiles/emacs/pkg/tomorrow-theme" . tomorrow-day-theme)
-    ("~/dotFiles/emacs/pkg/python-django.el" . python-django)
     ("~/dotFiles/emacs/pkg/errnav-minor-mode" . errnav-minor-mode)
     ("~/dotFiles/emacs/pkg/fuzzy-match" . fuzzy-match)
     ("~/dotFiles/emacs/pkg/unbound" . unbound)))
@@ -52,14 +53,9 @@
 (add-to-list 'load-path "~/dotFiles/emacs/init/lib/")
 
 (require 'init-advice)
-(require 'init-compilation)
-(require 'init-defuns)
 (require 'init-dired)
-(require 'init-flymake)
-(require 'init-interactives)
 (require 'init-keys)
 (require 'init-modes)
-(require 'init-rcirc)
 (require 'init-shell)
 
 ;; +--------+
@@ -105,7 +101,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:family "Inconsolata LGC" :foundry "unknown" :slant normal :weight normal :height 107 :width normal)))))
+ '(default ((t (:family "Consolas" :foundry "unknown" :slant normal :weight normal :height 107 :width normal)))))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -114,7 +110,17 @@
  ;; If there is more than one, they won't work right.
  '(abbrev-file-name "~/dotFiles/emacs/abbrev/abbrev_defs")
  '(backup-directory-alist (quote (("." . ".~"))))
- '(bs-attributes-list (quote (("" 1 1 left bs--get-marked-string) ("M" 1 1 left bs--get-modified-string) ("R" 2 2 left bs--get-readonly-string) ("Buffer" bs--get-name-length 10 left bs--get-name) ("" 1 1 left " ") ("Mode" 12 12 right bs--get-mode-name) ("" 2 2 left "  ") ("File" 12 12 left bs--get-file-name) ("" 2 2 left "  "))))
+ '(bs-attributes-list
+   (quote
+    (("" 1 1 left bs--get-marked-string)
+     ("M" 1 1 left bs--get-modified-string)
+     ("R" 2 2 left bs--get-readonly-string)
+     ("Buffer" bs--get-name-length 10 left bs--get-name)
+     ("" 1 1 left " ")
+     ("Mode" 12 12 right bs--get-mode-name)
+     ("" 2 2 left "  ")
+     ("File" 12 12 left bs--get-file-name)
+     ("" 2 2 left "  "))))
  '(bs-default-sort-name "by mode")
  '(calendar-week-start-day 1)
  '(coffee-mode-hook (quote (coffee-cos-mode flymake-coffee-load subword-mode)))
@@ -131,16 +137,28 @@
  '(haskell-mode-hook (quote (turn-on-haskell-simple-indent)))
  '(ido-enable-flex-matching t)
  '(ido-mode (quote both) nil (ido))
- '(indent-tabs-mode nil)
+ '(indent-tabs-mode t)
  '(inhibit-startup-screen t)
  '(ispell-dictionary "english")
  '(less-css-compile-at-save t)
  '(line-move-visual nil)
  '(mouse-yank-at-point t)
- '(package-archives (quote (("gnu" . "http://elpa.gnu.org/packages/") ("marmalade" . "http://marmalade-repo.org/packages/"))))
- '(python-mode-hook (quote (flymake-python-pyflakes-load subword-mode (lambda nil (hs-minor-mode)))) t)
+ '(package-archives
+   (quote
+    (("gnu" . "http://elpa.gnu.org/packages/")
+     ;; ("marmalade" . "http://marmalade-repo.org/packages/")
+     ("melpa" . "http://melpa.org/packages/"))))
+ '(python-mode-hook
+   (quote
+    (flymake-python-pyflakes-load subword-mode
+				  (lambda nil
+				    (hs-minor-mode)))) t)
  '(rcirc-default-nick "yordan")
- '(rcirc-server-alist (quote (("irc.freenode.net" :port 7000 :channels ("#4web" "#bgdev" "#emacs" "#gnu" "#python") :encryption tls))))
+ '(rcirc-server-alist
+   (quote
+    (("irc.freenode.net" :port 7000 :channels
+      ("#4web" "#bgdev" "#emacs" "#gnu" "#python")
+      :encryption tls))))
  '(save-place t nil (saveplace))
  '(save-place-file "~/.emacs.d/places")
  '(scroll-bar-mode nil)
