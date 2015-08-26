@@ -135,10 +135,9 @@
     (with-current-buffer etom-buffer
       (let ((last-prompt (count-lines (point-min) (point-max))))
         (goto-char (point-max))
-        (message "ydm: source=%s" tempfile)
         (comint-simple-send (get-buffer-process (current-buffer))
                             (format "source \"%s\";" tempfile)
-                            ;; TODO ydm
+                            ;;  XXX ydm
                             ;; (format "source \"%s\";"
                             ;;         (replace-string tempfile "\\\\" "\\\\\\\\" ))
                             )
