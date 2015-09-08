@@ -36,20 +36,26 @@
 
 ;; My commands mapped here and there
 (global-set-key (kbd "C-(")     #'y:wrap-in-parentheses)
+(global-set-key (kbd "C-\"")    #'y:wrap-in-double-quotes)
 (global-set-key (kbd "C-c i")   #'ido-goto-symbol)
 (global-set-key (kbd "s-n")     (lambda () (interactive) (next-line     5)))
 (global-set-key (kbd "s-o")     #'forward-whitespace)
 (global-set-key (kbd "s-p")     (lambda () (interactive) (previous-line 5)))
 
-;; Fucking Windows doesn't recognize s-p and s-o
+;; Fucking Windows doesn't recognize s-p and s-o, so these two are
+;; alternatives.
 (global-set-key (kbd "s-m")     (lambda () (interactive) (previous-line 5)))
 (global-set-key (kbd "s-f")     #'forward-whitespace)
 
-;; Mode specific commands
+;; Specific commands for dired-mode
 (define-key dired-mode-map (kbd "/")
   (lambda (regexp)
     (interactive "sFind-grep (grep regexp): ")
     (find-grep-dired default-directory regexp)))
+(define-key dired-mode-map (kbd "^")
+  (lambda ()
+    (interactive)
+    (find-alternate-file "..")))
 
 ;; Key chords
 (defvar y:key-chords
@@ -58,8 +64,8 @@
     ("vv" . ido-switch-buffer)))
 
 ;; If that's the first time Emacs is run, key-chords is still not
-;; installed.  That's why I hook to 'after-init-hook, when we know for
-;; sure it will be installed and present
+;; installed.  That's why I hook to 'after-init-hook, when it will be
+;; installed and present.
 (add-hook'after-init-hook
 	  (lambda ()
             (mapcar (lambda (e)

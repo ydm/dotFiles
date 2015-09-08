@@ -37,6 +37,12 @@
     (kill-sexp -1)
     (insert (format "%s" value))))
 
+(defun y:wrap-in-double-quotes ()
+  (interactive)
+  (insert-char ?\")
+  (move-end-of-line 1)
+  (insert-char ?\"))
+
 (defun y:wrap-in-parentheses ()
   (interactive)
   (insert-char ?()

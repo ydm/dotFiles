@@ -2,8 +2,6 @@
 
 ;; Dependencies:
 ;;   init-defuns:
-;;     (y:delete-trailing-ws-by-mode)
-;;     (y:mkdir-for-buffer-file-name)
 ;;     (y:reuse-dired-buffer-on-up)
 ;;
 ;; XXX: This module depends on all modes to be loaded.
@@ -14,7 +12,7 @@
     (y:reuse-dired-buffer-on-up (dired-mode-hook))
     ;; (errnav-minor-mode (flymake-mode-hook))
     ;; (flymake-jslint-load (js-mode-hook))
-    ;; (y:delete-trailing-ws-by-mode (before-save-hook))
+    ;; (y:delete-trailing-ws (before-save-hook))
     )
   "Each entry of this list contains:
 1) a function that will be hooked,

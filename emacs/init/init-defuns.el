@@ -7,7 +7,7 @@
 ;;   dired:
 ;;     dired-mode-map
 
-(defun y:delete-trailing-ws-by-mode ()
+(defun y:delete-trailing-ws ()
   "Delete trailing white space unless current major mode is
 fundamental-mode."
   (unless (member major-mode '(fundamental-mode))
