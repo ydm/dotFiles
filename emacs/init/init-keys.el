@@ -37,8 +37,9 @@
 ;; My commands mapped here and there
 (global-set-key (kbd "C-(")     #'y:wrap-in-parentheses)
 (global-set-key (kbd "C-c i")   #'ido-goto-symbol)
-(global-set-key (kbd "s-p")     (lambda () (interactive) (previous-line 5)))
 (global-set-key (kbd "s-n")     (lambda () (interactive) (next-line     5)))
+(global-set-key (kbd "s-o")     #'forward-whitespace)
+(global-set-key (kbd "s-p")     (lambda () (interactive) (previous-line 5)))
 
 ;; Fucking Windows doesn't recognize s-p and s-o
 (global-set-key (kbd "s-m")     (lambda () (interactive) (previous-line 5)))
