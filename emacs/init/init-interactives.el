@@ -4,7 +4,6 @@
 ;;   init-defuns:
 ;;     (y:insert-block-delimiter)
 ;;     (y:python-main-buffers)
-;;     (y:string-startswith)
 ;;     (y:system-buffers)
 
 
@@ -12,11 +11,15 @@
 ;; | Buffer commands |
 ;; +-----------------+
 
+(defun y:switch-to-last-buffer ()
+  (interactive)
+  (switch-to-buffer (other-buffer)))
+
 (defun y:kill-system-buffers ()
   (interactive)
   (defun kill (b)
     "Kill buiffer if it's a system buffer. "
-    (if (y:string-startswith (buffer-name b) "*")
+    (if (string-prefix-p "*" (buffer-name b))
         (kill-buffer b)))
   (mapcar #'kill (y:system-buffers)))
 

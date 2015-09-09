@@ -9,6 +9,8 @@
 ;;     (ido-goto-symbol)
 ;;   init-interactives:
 ;;     (y:open-line)
+;;     (y:switch-to-last-buffer)
+;;     (y:wrap-in-double-quotes)
 ;;     (y:wrap-in-parentheses)
 
 ;; Unset system keys
@@ -58,18 +60,16 @@
     (find-alternate-file "..")))
 
 ;; Key chords
-(defvar y:key-chords
-  '(("jj" . (lambda () (interactive) (switch-to-buffer (other-buffer))))
-    ("hh" . ace-jump-mode)
-    ("vv" . ido-switch-buffer)))
+(defun y:config-key-chords ()
+  (mapcar (lambda (e)
+	    (key-chord-define-global (kbd (car e)) (cdr e)))
+	    '(("jj" . y:switch-to-last-buffer)
+	      ("hh" . ace-jump-mode)
+	      ("vv" . ido-switch-buffer))))
 
 ;; If that's the first time Emacs is run, key-chords is still not
 ;; installed.  That's why I hook to 'after-init-hook, when it will be
-;; installed and present.
-(add-hook'after-init-hook
-	  (lambda ()
-            (mapcar (lambda (e)
-                      (key-chord-define-global (kbd (car e)) (cdr e)))
-                    y:key-chords)))
+;; installed and present... hopefully. :D
+(add-hook'after-init-hook #'y:config-key-chords)
 
 (provide 'init-keys)

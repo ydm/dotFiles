@@ -20,20 +20,6 @@ fundamental-mode."
           do (insert ?-))
     (insert " #\n")))
 
-(defun y:reuse-dired-buffer-on-up ()
-  (define-key dired-mode-map (kbd "^")
-    (lambda ()
-      (interactive)
-      (find-alternate-file ".."))))
-
-(defun y:string-startswith (str head)
-  (and (stringp str)
-       (stringp head)
-       (string= head
-                (substring str 0
-                           (min (length str)
-                                (length head))))))
-
 (defun y:system-buffers (&optional wanted)
   "Return a list of all buffers that are not bound to a process and are
 different than WANTED (defaults to messages, packages and scratch)"
