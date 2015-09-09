@@ -23,13 +23,12 @@ fundamental-mode."
 (defun y:system-buffers (&optional wanted)
   "Return a list of all buffers that are not bound to a process and are
 different than WANTED (defaults to messages, packages and scratch)"
-  (unless wanted (setq wanted '("*Messages*" "*Packages*" "*scratch*")))
-  (defun wantedp (b)
-    (or (get-buffer-process b)
-        (remove nil
-                (mapcar (lambda (p) (string-match p (buffer-name b)))
-                        wanted))))
-  (cl-remove-if #'wantedp (buffer-list)))
-
+  (let ((ans '())
+	(wanted (or wanted '("*Messages*" "*Packages*" "*scratch*"))))
+    (cl-loop for buffer in (buffer-list) do
+	     (or (get-buffer-process buffer)
+		 (member (buffer-name buffer) wanted)
+		 (add-to-list 'ans buffer)))
+    ans))
 
 (provide 'init-defuns)
