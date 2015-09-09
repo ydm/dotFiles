@@ -3,7 +3,6 @@
 ;; Dependencies
 ;;   init-defuns:
 ;;     (y:insert-block-delimiter)
-;;     (y:python-main-buffers)
 ;;     (y:system-buffers)
 
 
