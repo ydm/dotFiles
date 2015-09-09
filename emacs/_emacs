@@ -22,21 +22,19 @@
 ;; +---------------------------+
 ;; ("~/dotFiles/emacs/pkg/fuzzy-match" . fuzzy-match)
 ;; ("~/dotFiles/emacs/pkg/errnav-minor-mode" . errnav-minor-mode)
-
-(defvar *y:paths* '("~/dotFiles/emacs/pkg/tomorrow-theme"
-		    "~/dotFiles/emacs/pkg/unbound"
-		    "~/dotFiles/emacs/init/"
-		    "~/dotFiles/emacs/init/lib/"))
-(defvar *y:requires* '(tomorrow-night-theme
-		       unbound
-		       init-advice ;; loads init-interactives
-		       init-dired
-		       init-keys   ;; load init-interactives
-		       init-modes
-		       init-shell))
-
-(cl-loop for path in *y:paths* do (add-to-list 'load-path path))
-(cl-loop for req in *y:requires* do (require req))
+(let ((paths '("~/dotFiles/emacs/pkg/tomorrow-theme"
+	       "~/dotFiles/emacs/pkg/unbound"
+	       "~/dotFiles/emacs/init/"
+	       "~/dotFiles/emacs/init/lib/"))
+      (requires '(tomorrow-night-theme
+		  unbound
+		  init-advice ;; loads init-interactives
+		  init-dired
+		  init-keys   ;; load init-interactives
+		  init-modes
+		  init-shell)))
+  (cl-loop for path in paths do (add-to-list 'load-path path))
+  (cl-loop for req in requires do (require req)))
 
 ;; +--------+
 ;; | Themes |
@@ -58,6 +56,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(abbrev-file-name "~/dotFiles/emacs/abbrev/abbrev_defs")
+ '(ac-auto-start 0)
  '(backup-directory-alist (quote (("." . "~/.~"))))
  '(bs-attributes-list
    (quote
@@ -80,6 +79,7 @@
  '(gdb-many-windows t)
  '(ido-enable-flex-matching t)
  '(ido-mode (quote both) nil (ido))
+ '(indent-tabs-mode t)
  '(inhibit-startup-screen t)
  '(ispell-dictionary "english")
  '(line-move-visual nil)
@@ -103,12 +103,11 @@
 ;; +----------+
 ;; | Packages |
 ;; +----------+
-;; These packages are turned off:
 (defvar *y:my-packages*
   '(ace-jump-mode
+    auto-complete
     key-chord
     smex))
-
 (defun y:install-packages ()
   "Install packages if they're not already there."
   (package-initialize t)
@@ -116,9 +115,8 @@
     (package-refresh-contents))
   (cl-loop for p in *y:my-packages* do
 	(if (package-installed-p p)
-	    (message "Package %s is already installed" p)
-	  (message "Installing package %s" p)
+	    (message "Package is already installed: %s" p)
+	  (message "Installing package: %s" p)
 	  (package-install p))))
-
 ;; Adding this hook last means it will be executed first.
 (add-hook 'after-init-hook #'y:install-packages)

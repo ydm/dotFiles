@@ -6,7 +6,19 @@
   (cl-loop for (func hooks) in config
 	   do (mapcar (lambda (hook) (add-hook hook func)) hooks))
   ;; Enable abbrevs and key-chords globally
-  (setq-default abbrev-mode t)
-  (add-hook 'after-init-hook (lambda () (key-chord-mode 1)))  )
+
+  (setq-default abbrev-mode t))
+
+(add-hook 'after-init-hook
+	  (lambda ()
+
+	    ;; Auto-complete-mode
+	    (require 'auto-complete-config)
+	    (add-to-list 'ac-dictionary-directories
+			 "~/dotFiles/emacs/init/my-dicts")
+	    (ac-config-default)
+
+	    ;; Key-chord-mode
+	    (key-chord-mode 1)))
 
 (provide 'init-modes)
