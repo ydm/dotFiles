@@ -1,5 +1,105 @@
 ;; -*- coding: utf-8 -*-
 
+(require 'cl)
+
+;; +----------------+
+;; | Local settings |
+;; +----------------+
+(defun y:check-and-load (name)
+  (and (file-exists-p name)
+       (load name)))
+
+;; First execute the pre script.
+(y:check-and-load "~/.emacs.d/init/pre.el")
+
+;; The post script should be executed last.  Adding it first to the
+;; after-init-hook will do exactly that.
+(add-hook 'after-init-hook
+	  (lambda () (y:check-and-load "~/.emacs.d/init/post.el")))
+
+;; +---------------------------+
+;; | Require packages manually |
+;; +---------------------------+
+;; ("~/dotFiles/emacs/pkg/fuzzy-match" . fuzzy-match)
+;; ("~/dotFiles/emacs/pkg/errnav-minor-mode" . errnav-minor-mode)
+
+(defvar *y:paths* '("~/dotFiles/emacs/pkg/tomorrow-theme"
+		    "~/dotFiles/emacs/pkg/unbound"
+		    "~/dotFiles/emacs/init/"
+		    "~/dotFiles/emacs/init/lib/"))
+(defvar *y:requires* '(tomorrow-night-theme
+		       unbound
+		       init-advice ;; loads init-interactives
+		       init-dired
+		       init-keys   ;; load init-interactives
+		       init-modes
+		       init-shell))
+
+(cl-loop for path in *y:paths* do (add-to-list 'load-path path))
+(cl-loop for req in *y:requires* do (require req))
+
+;; +--------+
+;; | Themes |
+;; +--------+
+(cl-loop for theme in custom-enabled-themes do (disable-theme theme))
+(load-theme 'tomorrow-night t)
+
+;; +------+
+;; | Misc |
+;; +------+
+(defalias 'yes-or-no-p 'y-or-n-p)       ; always y/n instead of yes/no
+
+;; +-----------+
+;; | Customize |
+;; +-----------+
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(abbrev-file-name "~/dotFiles/emacs/abbrev/abbrev_defs")
+ '(backup-directory-alist (quote (("." . "~/.~"))))
+ '(bs-attributes-list
+   (quote
+    (("" 1 1 left bs--get-marked-string)
+     ("M" 1 1 left bs--get-modified-string)
+     ("R" 2 2 left bs--get-readonly-string)
+     ("Buffer" bs--get-name-length 10 left bs--get-name)
+     ("" 1 1 left " ")
+     ("Mode" 12 12 right bs--get-mode-name)
+     ("" 2 2 left "  ")
+     ("File" 12 12 left bs--get-file-name)
+     ("" 2 2 left "  "))))
+ '(bs-default-sort-name "by mode")
+ '(calendar-week-start-day 1)
+ '(column-number-mode t)
+ '(default-input-method "bulgarian-alt-phonetic")
+ '(delete-selection-mode t)
+ '(dired-dwim-target t)
+ '(dired-recursive-copies (quote always))
+ '(gdb-many-windows t)
+ '(ido-enable-flex-matching t)
+ '(ido-mode (quote both) nil (ido))
+ '(inhibit-startup-screen t)
+ '(ispell-dictionary "english")
+ '(line-move-visual nil)
+ '(mouse-yank-at-point t)
+ '(package-archives
+   (quote
+    (("gnu" . "http://elpa.gnu.org/packages/")
+     ("melpa" . "http://melpa.org/packages/"))))
+ '(save-place t nil (saveplace))
+ '(save-place-file "~/.emacs.d/places")
+ '(scroll-bar-mode nil)
+ '(show-paren-mode t)
+ '(tool-bar-mode nil)
+ '(tool-bar-position (quote right))
+ '(tool-bar-style nil)
+ '(uniquify-buffer-name-style (quote post-forward) nil (uniquify))
+ '(visible-bell t)
+ '(which-function-mode t)
+ '(x-gtk-use-system-tooltips nil))
+
 ;; +----------+
 ;; | Packages |
 ;; +----------+
@@ -14,161 +114,11 @@
   (package-initialize t)
   (unless package-archive-contents
     (package-refresh-contents))
-  (mapcar (lambda (p)
-  	    (if (package-installed-p p)
-  		(message "Package %s is already installed" p)
-  	      (progn
-  		(message "Installing package %s" p)
-  		(package-install p))))
-  	  *y:my-packages*))
+  (cl-loop for p in *y:my-packages* do
+	(if (package-installed-p p)
+	    (message "Package %s is already installed" p)
+	  (message "Installing package %s" p)
+	  (package-install p))))
 
-;; +--------------------------+
-;; | Load themes and packages |
-;; +--------------------------+
-(defvar y:packages
-  '(("~/dotFiles/emacs/pkg/tomorrow-theme" . tomorrow-day-theme)
-    ("~/dotFiles/emacs/pkg/errnav-minor-mode" . errnav-minor-mode)
-    ("~/dotFiles/emacs/pkg/fuzzy-match" . fuzzy-match)
-    ("~/dotFiles/emacs/pkg/unbound" . unbound)))
-
-(mapcar (lambda (p)
-          (add-to-list 'load-path (car p))
-          (require (cdr p)))
-        y:packages)
-
-;; +--------------+
-;; | Init scripts |
-;; +--------------+
-(add-to-list 'load-path "~/dotFiles/emacs/init/")
-(add-to-list 'load-path "~/dotFiles/emacs/init/lib/")
-
-(require 'init-advice)
-(require 'init-dired)
-(require 'init-keys)
-(require 'init-modes)
-(require 'init-shell)
-
-;; +--------+
-;; | Themes |
-;; +--------+
-(defun y:time-tuple-to-minutes (tup)
-  (+ (* (car tup) 60)
-     (cadr tup)))
-(defun y:now-in-minutes ()
-  (+ (* 60 (nth 2 (decode-time)))
-     (nth 1 (decode-time))))
-
-(defvar y:day-start '(8 0))
-(defvar y:night-start '(20 0))
-(defvar y:day-theme 'tomorrow-day)
-(defvar y:night-theme 'tomorrow-night)
-(defvar y:day-start-minutes (y:time-tuple-to-minutes y:day-start))
-(defvar y:night-start-minutes (y:time-tuple-to-minutes y:night-start))
-
-(defun y:day? ()
-  (let ((now (y:now-in-minutes)))
-    (and (>= now y:day-start-minutes)
-         (<  now y:night-start-minutes))))
-
-(defun y:load-theme-by-daytime ()
-  (let* ((new-theme (if (y:day?) y:day-theme y:night-theme)))
-    (unless (member new-theme custom-enabled-themes)
-      (disable-theme (car custom-enabled-themes))
-      (load-theme new-theme t))))
-
-(run-at-time 1 300 #'y:load-theme-by-daytime)
-
-;; +------+
-;; | Misc |
-;; +------+
-(defalias 'yes-or-no-p 'y-or-n-p)       ; always y/n instead of yes/no
-
-;; +-----------+
-;; | Customize |
-;; +-----------+
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(default ((t (:family "Consolas" :foundry "unknown" :slant normal :weight normal :height 107 :width normal)))))
-
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(abbrev-file-name "~/dotFiles/emacs/abbrev/abbrev_defs")
- '(backup-directory-alist (quote (("." . ".~"))))
- '(bs-attributes-list
-   (quote
-    (("" 1 1 left bs--get-marked-string)
-     ("M" 1 1 left bs--get-modified-string)
-     ("R" 2 2 left bs--get-readonly-string)
-     ("Buffer" bs--get-name-length 10 left bs--get-name)
-     ("" 1 1 left " ")
-     ("Mode" 12 12 right bs--get-mode-name)
-     ("" 2 2 left "  ")
-     ("File" 12 12 left bs--get-file-name)
-     ("" 2 2 left "  "))))
- '(bs-default-sort-name "by mode")
- '(calendar-week-start-day 1)
- '(coffee-mode-hook (quote (coffee-cos-mode flymake-coffee-load subword-mode)))
- '(coffee-tab-width 2)
- '(column-number-mode t)
- '(default-input-method "bulgarian-alt-phonetic")
- '(delete-selection-mode t)
- '(dired-dwim-target t)
- '(dired-recursive-copies (quote always))
- '(fill-column 72)
- '(flymake-jslint-args (quote ("--browser" "--plusplus" "--unparam" "--vars")))
- '(gdb-many-windows t)
- '(global-hl-line-mode t)
- '(haskell-mode-hook (quote (turn-on-haskell-simple-indent)))
- '(ido-enable-flex-matching t)
- '(ido-mode (quote both) nil (ido))
- '(indent-tabs-mode t)
- '(inhibit-startup-screen t)
- '(ispell-dictionary "english")
- '(less-css-compile-at-save t)
- '(line-move-visual nil)
- '(mouse-yank-at-point t)
- '(package-archives
-   (quote
-    (("gnu" . "http://elpa.gnu.org/packages/")
-     ;; ("marmalade" . "http://marmalade-repo.org/packages/")
-     ("melpa" . "http://melpa.org/packages/"))))
- '(python-mode-hook
-   (quote
-    (flymake-python-pyflakes-load subword-mode
-				  (lambda nil
-				    (hs-minor-mode)))) t)
- '(rcirc-default-nick "yordan")
- '(rcirc-server-alist
-   (quote
-    (("irc.freenode.net" :port 7000 :channels
-      ("#4web" "#bgdev" "#emacs" "#gnu" "#python")
-      :encryption tls))))
- '(save-place t nil (saveplace))
- '(save-place-file "~/.emacs.d/places")
- '(scroll-bar-mode nil)
- '(show-paren-mode t)
- '(tags-revert-without-query t)
- '(tool-bar-mode nil)
- '(tool-bar-position (quote right))
- '(tool-bar-style nil)
- '(uniquify-buffer-name-style (quote post-forward) nil (uniquify))
- '(visible-bell t)
- '(which-function-mode t)
- '(x-gtk-use-system-tooltips nil))
-
-;; +----------------+
-;; | Local settings |
-;; +----------------+
-(add-hook 'after-init-hook (lambda ()
-			     (and (file-exists-p "~/.emacs.d/local.el")
-				  (load "~/.emacs.d/local.el"))))
-
-;; This is set last (after all requires, loads, etc) as this way this
-;; hook will is executed first before any other hooks
+;; Adding this hook last means it will be executed first.
 (add-hook 'after-init-hook #'y:install-packages)

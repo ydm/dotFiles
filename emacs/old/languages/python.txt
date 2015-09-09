@@ -1,0 +1,8 @@
+(custom-set-variables
+'(fill-column 72)
+ '(python-mode-hook
+   (quote
+    (flymake-python-pyflakes-load subword-mode
+				  (lambda nil
+				    (hs-minor-mode)))) t))
+

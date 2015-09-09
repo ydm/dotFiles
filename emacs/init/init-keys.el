@@ -61,11 +61,11 @@
 
 ;; Key chords
 (defun y:config-key-chords ()
-  (mapcar (lambda (e)
-	    (key-chord-define-global (kbd (car e)) (cdr e)))
-	    '(("jj" . y:switch-to-last-buffer)
-	      ("hh" . ace-jump-mode)
-	      ("vv" . ido-switch-buffer))))
+  (let ((chords '(("jj" . y:switch-to-last-buffer)
+		  ("hh" . ace-jump-mode)
+		  ("vv" . ido-switch-buffer))))
+    (cl-loop for (chord . fn) in chords do
+	     (key-chord-define-global chord fn))))
 
 ;; If that's the first time Emacs is run, key-chords is still not
 ;; installed.  That's why I hook to 'after-init-hook, when it will be

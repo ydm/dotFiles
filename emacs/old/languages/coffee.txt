@@ -1,0 +1,4 @@
+(custom-set-variables
+'(coffee-mode-hook (quote (coffee-cos-mode flymake-coffee-load subword-mode)))
+ '(coffee-tab-width 2))
+ 

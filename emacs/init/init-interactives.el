@@ -3,7 +3,7 @@
 ;; Dependencies
 ;;   init-defuns:
 ;;     (y:insert-block-delimiter)
-;;     (y:system-buffers)
+;;     (y:safe-to-kill-buffers)
 
 
 ;; +-----------------+
@@ -17,10 +17,10 @@
 (defun y:kill-system-buffers ()
   (interactive)
   (defun kill (b)
-    "Kill buiffer if it's a system buffer. "
-    (if (string-prefix-p "*" (buffer-name b))
-        (kill-buffer b)))
-  (mapcar #'kill (y:system-buffers)))
+    "Kill buiffer if it starts with star."
+    (and (string-prefix-p "*" (buffer-name b))
+	 (kill-buffer b)))
+  (mapcar #'kill (y:safe-to-kill-buffers)))
 
 
 ;; +---------+

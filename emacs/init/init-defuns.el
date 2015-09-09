@@ -20,7 +20,7 @@ fundamental-mode."
           do (insert ?-))
     (insert " #\n")))
 
-(defun y:system-buffers (&optional wanted)
+(defun y:safe-to-kill-buffers (&optional wanted)
   "Return a list of all buffers that are not bound to a process and are
 different than WANTED (defaults to messages, packages and scratch)"
   (let ((ans '())
