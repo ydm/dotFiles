@@ -15,7 +15,7 @@
 	    ;; Auto-complete-mode
 	    (require 'auto-complete-config)
 	    (add-to-list 'ac-dictionary-directories
-			 "~/dotFiles/emacs/init/my-dicts")
+			 "~/dotFiles/emacs/dicts")
 	    (ac-config-default)
 
 	    ;; Key-chord-mode
