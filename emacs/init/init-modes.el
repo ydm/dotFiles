@@ -18,7 +18,15 @@
 			 "~/dotFiles/emacs/dicts")
 	    (ac-config-default)
 
-	    ;; Key-chord-mode
+	    ;; Use source-semantic for C/C++
+	    (add-hook 'c-mode-common-hook
+		      (lambda ()
+			(add-to-list 'ac-sources 'ac-source-semantic)))
+
+	    ;; Turn on semantic
+	    (semantic-mode 1)
+
+	    ;; Turn on key chords
 	    (key-chord-mode 1)))
 
 (provide 'init-modes)
