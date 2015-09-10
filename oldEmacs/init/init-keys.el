@@ -1,17 +1,35 @@
 (require 'dired)
 (require 'ido-goto-symbol)
-(require 'init-interactives)
 
 ;; Dependencies:
 ;;   dired:
 ;;     'dired-mode-map
 ;;   ido-goto-symbol:
 ;;     (ido-goto-symbol)
-;;   init-interactives:
-;;     (y:open-line)
-;;     (y:switch-to-last-buffer)
-;;     (y:wrap-in-double-quotes)
-;;     (y:wrap-in-parentheses)
+;;   smex:
+;;     (smex)
+
+(defun y:open-line ()
+  (interactive)
+  (move-beginning-of-line nil)
+  (open-line 1)
+  (indent-for-tab-command))
+
+(defun y:switch-to-last-buffer ()
+  (interactive)
+  (switch-to-buffer (other-buffer)))
+
+(defun y:wrap-in-double-quotes ()
+  (interactive)
+  (insert-char ?\")
+  (move-end-of-line 1)
+  (insert-char ?\"))
+
+(defun y:wrap-in-parentheses ()
+  (interactive)
+  (insert-char ?()
+  (move-end-of-line 1)
+  (insert-char ?)))
 
 ;; Unset system keys
 (global-unset-key (kbd "C-o"))          ; (open-line)
@@ -24,17 +42,17 @@
 (global-unset-key (kbd "M-."))          ; (find-tag)
 (global-unset-key (kbd "M-x"))          ; (execute-extend-command)
 
-;; Remapped built-in commands
+;; Reuse system keys
+(global-set-key (kbd "C-o")     #'y:open-line)
+(global-set-key (kbd "C-x C-b") #'bs-show)
+;; (global-set-key (kbd "M-.")     #'etags-select-find-tag)
+(global-set-key (kbd "M-x")     #'smex)
+
+;; Remapp built-in commands
 (global-set-key (kbd "<f5>")    #'sort-lines)
 (global-set-key (kbd "C-M-z")   (lambda () (interactive) (other-window -1)))
 (global-set-key (kbd "C-z")     (lambda () (interactive) (other-window  1)))
 (global-set-key (kbd "s-z")     #'repeat)
-
-;; Redefine system keys
-(global-set-key (kbd "C-o")     #'y:open-line)
-(global-set-key (kbd "C-x C-b") #'bs-show)
-(global-set-key (kbd "M-.")     #'etags-select-find-tag)
-(global-set-key (kbd "M-x")     #'smex)
 
 ;; My commands mapped here and there
 (global-set-key (kbd "C-(")     #'y:wrap-in-parentheses)
@@ -72,4 +90,4 @@
 ;; installed and present... hopefully. :D
 (add-hook'after-init-hook #'y:config-key-chords)
 
-(provide 'init-keys)
+(provide 'keys)

@@ -2,21 +2,54 @@
 
 (require 'cl)
 
-(defvar *y:modules-dir* "~/dotFiles/emacs/modules")
-(defvar *y:packages* '())
-(defvar *y:modules-off* '(init-ac))
-
-;; First execute the pre script.
+;; +----------------+
+;; | Local settings |
+;; +----------------+
 (defun y:check-and-load (name)
   (and (file-exists-p name)
        (load name)))
 
+;; First execute the pre script.
 (y:check-and-load "~/.emacs.d/init/pre.el")
-;; The post script should be executed last.  Being the first thing to
-;; add in the after-init-hook will do exactly that.
+
+;; The post script should be executed last.  Being the first thing in
+;; after-init-hook will do exactly that.
 (add-hook 'after-init-hook
 	  (lambda () (y:check-and-load "~/.emacs.d/init/post.el")))
 
+;; +---------------------------+
+;; | Require packages manually |
+;; +---------------------------+
+;; ("~/dotFiles/emacs/pkg/fuzzy-match" . fuzzy-match)
+;; ("~/dotFiles/emacs/pkg/errnav-minor-mode" . errnav-minor-mode)
+(let ((paths '("~/dotFiles/emacs/pkg/tomorrow-theme"
+	       "~/dotFiles/emacs/pkg/unbound"
+	       "~/dotFiles/emacs/init/"
+	       "~/dotFiles/emacs/init/lib/"))
+      (requires '(tomorrow-night-theme
+		  unbound
+		  init-advice ;; loads init-interactives
+		  init-dired
+		  init-keys   ;; load init-interactives
+		  init-modes
+		  init-shell)))
+  (cl-loop for path in paths do (add-to-list 'load-path path))
+  (cl-loop for req in requires do (require req)))
+
+;; +--------+
+;; | Themes |
+;; +--------+
+(cl-loop for theme in custom-enabled-themes do (disable-theme theme))
+(load-theme 'tomorrow-night t)
+
+;; +------+
+;; | Misc |
+;; +------+
+(defalias 'yes-or-no-p 'y-or-n-p)       ; always y/n instead of yes/no
+
+;; +-----------+
+;; | Customize |
+;; +-----------+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -67,38 +100,23 @@
  '(which-function-mode t)
  '(x-gtk-use-system-tooltips nil))
 
-;; +-------+
-;; | Stuff |
-;; +-------+
-(defalias 'yes-or-no-p 'y-or-n-p)
-(setq-default abbrev-mode t)
-
-;; +---------+
-;; | Modules |
-;; +---------+
-(add-to-list 'load-path *y:modules-dir*)
-(cl-loop for path in (directory-files *y:modules-dir* t "^[^\\.].*")
-	 for symbol = (intern (file-name-base path))
-	 when (not (member symbol *y:modules-off*)) do
-	 (if (file-directory-p path)
-	     (add-to-list 'load-path path))
-	 (message "[Modules ] Requiring %s" symbol)
-	 (require symbol))
-
 ;; +----------+
 ;; | Packages |
 ;; +----------+
+(defvar *y:my-packages*
+  '(ace-jump-mode
+    auto-complete
+    key-chord
+    smex))
 (defun y:install-packages ()
-  " Install all packages from *y:packages* if they're not already
-installed."
+  "Install packages if they're not already there."
   (package-initialize t)
   (unless package-archive-contents
     (package-refresh-contents))
-  (cl-loop for p in *y:packages* do
-	   (if (package-installed-p p)
-	       (message "[Packages] Already installed: %s" p)
-	     (message "[Packages] Installing: %s" p)
-	     (package-install p))))
-
-;; Adding this function last means it will be executed first.
+  (cl-loop for p in *y:my-packages* do
+	(if (package-installed-p p)
+	    (message "Package is already installed: %s" p)
+	  (message "Installing package: %s" p)
+	  (package-install p))))
+;; Adding this hook last means it will be executed first.
 (add-hook 'after-init-hook #'y:install-packages)
