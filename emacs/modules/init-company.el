@@ -6,7 +6,6 @@
 
 (eval-after-load 'company
   (lambda ()
-    (message "LOADING IRONY")
     (add-to-list 'company-backends 'company-irony)
     (add-to-list 'company-backends 'company-irony-c-headers)))
 
