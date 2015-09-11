@@ -2,11 +2,16 @@
 
 (require 'cl)
 
+;; +---------+
+;; | Globals |
+;; +---------+
 (defvar *y:modules-dir* "~/dotFiles/emacs/modules")
 (defvar *y:packages* '())
-(defvar *y:modules-off* '(init-ac))
+(defvar *y:modules-off* '(init-ac init-windows))
 
-;; First execute the pre script.
+;; +-------------------------+
+;; | Pre / post init scripts |
+;; +-------------------------+
 (defun y:check-and-load (name)
   (and (file-exists-p name)
        (load name)))
@@ -17,12 +22,14 @@
 (add-hook 'after-init-hook
 	  (lambda () (y:check-and-load "~/.emacs.d/init/post.el")))
 
+;; +------------------+
+;; | General settings |
+;; +------------------+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(abbrev-file-name "~/dotFiles/emacs/abbrev/abbrev_defs")
  '(ac-auto-start 0)
  '(backup-directory-alist (quote (("." . "~/.~"))))
  '(bs-attributes-list
@@ -71,7 +78,6 @@
 ;; | Stuff |
 ;; +-------+
 (defalias 'yes-or-no-p 'y-or-n-p)
-(setq-default abbrev-mode t)
 
 ;; +---------+
 ;; | Modules |
