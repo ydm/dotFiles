@@ -1,4 +1,5 @@
 ;;-*-coding: utf-8;-*-
+
 (define-abbrev-table 'Buffer-menu-mode-abbrev-table '())
 
 (define-abbrev-table 'change-log-mode-abbrev-table '())
@@ -31,9 +32,6 @@
     ("1printfunc" "from __future__ import print_function" nil 0)
     ("1ifmain" "if __name__ == '__main__':\n    main()")
     ("1stack" "import traceback; traceback.print_stack()")
-
-    ;; One day, when GNU/Linux takes over the world, my Emacs config
-    ;; will be way smaller.
    ))
 
 (define-abbrev-table 'inferior-python-mode-abbrev-table '())
