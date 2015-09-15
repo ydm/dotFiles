@@ -1,13 +1,13 @@
-(require 'dired)
 (require 'ido-goto-symbol)
 
 ;; Dependencies:
-;;   dired:
-;;     'dired-mode-map
 ;;   ido-goto-symbol:
 ;;     (ido-goto-symbol)
 ;;
 ;; Keys not listed here:
+;;   init-dired (local to dired-mode):
+;;     / (grep)
+;;     ^ (go up)
 ;;   init-smex:
 ;;     M-x
 
@@ -66,15 +66,5 @@
 ;; alternatives.
 (global-set-key (kbd "s-m")     (lambda () (interactive) (previous-line 5)))
 (global-set-key (kbd "s-f")     #'forward-whitespace)
-
-;; Specific commands for dired-mode
-(define-key dired-mode-map (kbd "/")
-  (lambda (regexp)
-    (interactive "sFind-grep (grep regexp): ")
-    (find-grep-dired default-directory regexp)))
-(define-key dired-mode-map (kbd "^")
-  (lambda ()
-    (interactive)
-    (find-alternate-file "..")))
 
 (provide 'init-keys)
