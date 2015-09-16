@@ -1,8 +1,11 @@
 (require 'ido-goto-symbol)
+(require 'init-zap-up-to-char)
 
 ;; Dependencies:
-;;   ido-goto-symbol:
+;;   ido-goto-symbol
 ;;     (ido-goto-symbol)
+;;   init-zap-up-to-char
+;;     (zap-up-to-char)
 ;;
 ;; Keys not listed here:
 ;;   init-dired (local to dired-mode):
@@ -42,10 +45,12 @@
 (global-unset-key (kbd "M-,"))          ; (tags-loop-continue)
 (global-unset-key (kbd "M-."))          ; (find-tag)
 (global-unset-key (kbd "C-x b"))        ; (ido-switch-buffer)
+(global-unset-key (kbd "M-z"))		; (zap-to-char)
 
 ;; Reuse system keys
 (global-set-key (kbd "C-o")     #'y:open-line)
 (global-set-key (kbd "C-x C-b") #'bs-show)
+(global-set-key (kbd "M-z")     #'zap-up-to-char)
 ;; (global-set-key (kbd "M-.")     #'etags-select-find-tag)
 
 ;; Remapp built-in commands
