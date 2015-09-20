@@ -53,7 +53,6 @@
  '(gdb-many-windows t)
  '(ido-enable-flex-matching t)
  '(ido-mode (quote both) nil (ido))
- '(indent-tabs-mode t)
  '(inhibit-startup-screen t)
  '(ispell-dictionary "english")
  '(line-move-visual nil)
