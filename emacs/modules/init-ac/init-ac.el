@@ -1,27 +1,30 @@
 (add-to-list '*y:packages* 'auto-complete)
 (add-to-list '*y:packages* 'auto-complete-c-headers)
 (add-to-list '*y:packages* 'auto-complete-clang)
+;; yasnippet works so nice with AC, I just have to include it here as
+;; part of this module.  ;)
+(add-to-list '*y:packages* 'yasnippet)
 
 (defun y:init-ac-sources-cpp ()
-  (message "y:init-ac-sources-cpp")
-  ;; (semantic-mode 1)
-  ;; (add-to-list 'ac-sources 'ac-source-semantic)
-  (add-to-list 'ac-sources 'ac-source-c-headers)
-  (add-to-list 'ac-sources 'ac-source-clang))
+  (setq ac-sources
+	'(ac-source-c-headers
+	  ac-source-clang
+	  ac-source-yasnippet)))
 
 (defun y:init-ac ()
-  (message "y:init-ac")
-  
   (require 'auto-complete-config)
   (require 'auto-complete-c-headers)
   (require 'auto-complete-clang)
-  ;; (require 'semantic)
 
+  ;; Configure yasnippet
+  (require 'yasnippet)
+  (yas-global-mode 1)
+
+  ;; Configure ac-sources
   (ac-config-default)
-  (add-to-list 'ac-dictionary-directories
-	       "~/dotFiles/emacs/modules/init-ac/dicts")
-  ;; (add-to-list 'c++-mode-hook #'y:init-ac-sources-cpp)
-  (add-hook 'c-mode-common-hook #'y:init-ac-sources-cpp))
+  (add-hook 'c++-mode-hook #'y:init-ac-sources-cpp)
+  (add-to-list 'ac-dictionary-directories "~/dotFiles/emacs/modules/init-ac/dicts")
+  (global-auto-complete-mode t))
 
 (add-hook 'after-init-hook #'y:init-ac)
 (provide 'init-ac)

@@ -6,7 +6,8 @@
   '("linux"
     (c-offsets-alist . ((arglist-close . 0)
 			(innamespace . 0)))
-    (indent-tabs-mode t)))
+    (indent-tabs-mode t)
+    (setq tab-width 4)))
 
 (c-add-style "chaos" chaos-c-style)
 ;; Add to ~/.emacs.d/init/post.el:
