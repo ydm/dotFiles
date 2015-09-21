@@ -30,6 +30,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(abbrev-file-name "~/dotFiles/emacs/modules/init-abbrev/defs.el")
  '(ac-auto-start 0)
  '(backup-directory-alist (quote (("." . "~/.~"))))
  '(bs-attributes-list
