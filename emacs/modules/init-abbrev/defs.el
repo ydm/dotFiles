@@ -32,6 +32,9 @@
     ("1printfunc" "from __future__ import print_function" nil 0)
     ("1ifmain" "if __name__ == '__main__':\n    main()")
     ("1stack" "import traceback; traceback.print_stack()")
+
+    ;; Maya 2016
+    ("1devkit" "usr/autodesk/maya2016/devkit/plug-ins")
    ))
 
 (define-abbrev-table 'inferior-python-mode-abbrev-table '())

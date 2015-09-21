@@ -7,7 +7,5 @@
   (lambda ()
     (add-to-list 'company-backends 'company-c-headers)))
 
-(add-hook 'after-init-hook (lambda ()
-			     (semantic-mode 1)
-			     (global-company-mode 1)))
+(add-hook 'after-init-hook (lambda () (global-company-mode 1)))
 (provide 'init-company)
