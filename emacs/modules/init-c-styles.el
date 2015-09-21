@@ -11,5 +11,6 @@
 (c-add-style "chaos" chaos-c-style)
 ;; Add to ~/.emacs.d/init/post.el:
 ;; (setq c-default-style "chaos")
+;; (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
 
 (provide 'init-c-styles)
