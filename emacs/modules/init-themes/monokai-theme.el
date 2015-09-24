@@ -1294,56 +1294,60 @@ Also affects 'linum-mode' background."
                                     :weight bold
                                     :underline t))))
 
+   ;;
+   ;; ydm TODO: Commented this out because there are some coloring
+   ;; issues here ;)
+   ;;
    ;; company-mode
-   `(company-tooltip
-     ((,class (:background ,monokai-hl
-                           :foreground ,cyan))
-      (,terminal-class (:background ,terminal-monokai-hl
-                                    :foreground ,terminal-cyan))))
+   ;; `(company-tooltip
+   ;;   ((,class (:background ,monokai-hl
+   ;;                         :foreground ,cyan))
+   ;;    (,terminal-class (:background ,terminal-monokai-hl
+   ;;                                  :foreground ,terminal-cyan))))
 
-   `(company-tooltip-selection
-     ((,class (:background ,cyan-lc
-                           :foreground ,cyan-hc))
-      (,terminal-class (:background ,terminal-cyan-lc
-                                    :foreground ,terminal-cyan-hc))))
+   ;; `(company-tooltip-selection
+   ;;   ((,class (:background ,cyan-lc
+   ;;                         :foreground ,cyan-hc))
+   ;;    (,terminal-class (:background ,terminal-cyan-lc
+   ;;                                  :foreground ,terminal-cyan-hc))))
 
-   `(company-tooltip-mouse
-     ((,class (:background ,cyan-hc
-                           :foreground ,cyan-lc))
-      (,terminal-class (:background ,terminal-cyan-hc
-                                    :foreground ,terminal-cyan-lc))))
+   ;; `(company-tooltip-mouse
+   ;;   ((,class (:background ,cyan-hc
+   ;;                         :foreground ,cyan-lc))
+   ;;    (,terminal-class (:background ,terminal-cyan-hc
+   ;;                                  :foreground ,terminal-cyan-lc))))
 
-   `(company-tooltip-common
-     ((,class (:foreground ,monokai-emph
-                           :underline t))
-      (,terminal-class (:foreground ,terminal-monokai-emph
-                                    :underline t))))
+   ;; `(company-tooltip-common
+   ;;   ((,class (:foreground ,monokai-emph
+   ;;                         :underline t))
+   ;;    (,terminal-class (:foreground ,terminal-monokai-emph
+   ;;                                  :underline t))))
 
-   `(company-tooltip-common-selection
-     ((,class (:foreground ,monokai-emph
-                           :underline t))
-      (,terminal-class (:foreground ,terminal-monokai-emph
-                                    :underline t))))
+   ;; `(company-tooltip-common-selection
+   ;;   ((,class (:foreground ,monokai-emph
+   ;;                         :underline t))
+   ;;    (,terminal-class (:foreground ,terminal-monokai-emph
+   ;;                                  :underline t))))
 
-   `(company-preview
-     ((,class (:background ,monokai-hl
-                           :foreground ,cyan))
-      (,terminal-class (:background ,terminal-monokai-hl
-                                    :foreground ,terminal-cyan))))
+   ;; `(company-preview
+   ;;   ((,class (:background ,monokai-hl
+   ;;                         :foreground ,cyan))
+   ;;    (,terminal-class (:background ,terminal-monokai-hl
+   ;;                                  :foreground ,terminal-cyan))))
 
-   `(company-preview-common
-     ((,class (:foreground ,monokai-emph
-                           :underline t))
-      (,terminal-class (:foreground ,terminal-monokai-emph
-                                    :underline t))))
+   ;; `(company-preview-common
+   ;;   ((,class (:foreground ,monokai-emph
+   ;;                         :underline t))
+   ;;    (,terminal-class (:foreground ,terminal-monokai-emph
+   ;;                                  :underline t))))
 
-   `(company-scrollbar-bg
-     ((,class (:background ,gray-l))
-      (,terminal-class (:background ,terminal-gray-l))))
+   ;; `(company-scrollbar-bg
+   ;;   ((,class (:background ,gray-l))
+   ;;    (,terminal-class (:background ,terminal-gray-l))))
 
-   `(company-scrollbar-fg
-     ((,class (:background ,yellow-d))
-      (,terminal-class (:background ,terminal-yellow-d))))
+   ;; `(company-scrollbar-fg
+   ;;   ((,class (:background ,yellow-d))
+   ;;    (,terminal-class (:background ,terminal-yellow-d))))
 
    ;; cscope
    `(cscope-file-face

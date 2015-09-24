@@ -1,0 +1,4 @@
+#!/bin/bash
+
+rm -f TAGS
+find . -type f -iname "*.[ch]" -o -iname "*.[ch]pp" -print | etags -

@@ -5,6 +5,15 @@
 
 (eval-after-load 'company
   (lambda ()
+    (delete 'comapny-cmake company-backends)
+    (delete 'company-bbdb company-backends)
+    (delete 'company-css company-backends)
+    (delete 'company-dabbrev company-backends)
+    (delete 'company-eclim company-backends)
+    (delete 'company-nxml company-backends)
+    (delete 'company-oddmuse company-backends)
+    (delete 'company-semantic company-backends)
+    (delete 'company-xcode company-backends)
     (add-to-list 'company-backends 'company-c-headers)))
 
 (add-hook 'after-init-hook (lambda () (global-company-mode 1)))

@@ -13,8 +13,9 @@
 ;; | Pre / post init scripts |
 ;; +-------------------------+
 (defun y:check-and-load (name)
-  (and (file-exists-p name)
-       (load name)))
+  (when (file-exists-p name)
+    (message "Executing %s" name)
+    (load name)))
 
 (y:check-and-load "~/.emacs.d/init/pre.el")
 ;; The post script should be executed last.  Being the first thing to
@@ -51,6 +52,7 @@
  '(delete-selection-mode t)
  '(dired-dwim-target t)
  '(dired-recursive-copies (quote always))
+ '(enable-local-variables :all)
  '(gdb-many-windows t)
  '(ido-enable-flex-matching t)
  '(ido-mode (quote both) nil (ido))
@@ -66,6 +68,7 @@
  '(save-place-file "~/.emacs.d/places")
  '(scroll-bar-mode nil)
  '(show-paren-mode t)
+ '(tags-add-tables t)
  '(tool-bar-mode nil)
  '(tool-bar-position (quote right))
  '(tool-bar-style nil)
