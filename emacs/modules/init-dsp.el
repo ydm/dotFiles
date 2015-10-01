@@ -1,14 +1,23 @@
 (require 'cl)
 
 (defun y:dsp-fix-include-path (dir path)
-  "Replace backslashes with slashes and truncate multiple slashes
-to just one"
+  "Replaces backslashes with slashes and truncate multiple
+slashes to just one.  Also applies Chaos specific stuff:
+- replaces [kK]:\ with proper SDK path
+- replaces maya70 with maya2016"
   (let* ((first (replace-regexp-in-string "\\\\" "/" path))
-	 (second (replace-regexp-in-string "/+" "/" first))
-	 (third (if (string-prefix-p "." second)
-		    (concat (file-name-as-directory dir) second)
-		  second)))
-    (expand-file-name third)))
+	 (second (if (string-prefix-p "k:/" (downcase first))
+		     (concat "~/cgrepo/sdk/linux/" (substring first 3))
+		   first))
+	 (third (replace-regexp-in-string "/+" "/" second))
+	 (fourth (if (string-prefix-p "." third)
+		     (concat (file-name-as-directory dir) second)
+		   third))
+	 (fifth (replace-regexp-in-string "maya70" "maya2016" fourth))
+	 (fixed (expand-file-name fifth)))
+    (unless (file-directory-p fixed)
+      (message "Include directory %s doesn't exist" fixed))
+    fixed))
 
 (defun y:dsp-read-includes (dsp)
   "Parse a DSP file and return a list of all the include
@@ -31,18 +40,22 @@ filepaths"
 	  (y:dsp-read-includes dsp)))
 
 (defun y:dsp-search-parents (start)
-  "Searches for a *.dsp file.  works for at most 5 directory
+  "Searches for a *.dsp file.  Works for at most 7 directory
 levels above the current buffer's file"
   (interactive)
   (cl-labels ((d (f) (file-name-directory (directory-file-name f))))
-    (cl-loop repeat 5
+    (cl-loop repeat 7
 	     for dir = (d start) then (d dir)
-	     for dsp = (file-expand-wildcards (concat dir "*.el"))
+	     for dsp = (file-expand-wildcards (concat dir "*.dsp"))
 	     do (if (not (null dsp))
-		    (return dsp)))))
+		    (return (car dsp))))))
 
-;; ydm TODO: Test with (add-hook 'find-file-hook #'y:dsp-on-find-file)
-(defun y:dsp-on-find-file ()
-  (message "search result: %s" (y:dsp-search-parents (buffer-file-name))))
+(defun y:dsp-parse-includes-for-file (&optional file)
+  (let* ((file (or file (buffer-file-name)))
+	 (dsp (y:dsp-search-parents file))
+	 (dirs (y:dsp-read-includes2 dsp)))
+    (message "Parsing include directories for %s: dsp=%s, #dirs=%d"
+	     file dsp (length dirs))
+    dirs))
 
 (provide 'init-dsp)
