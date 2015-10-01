@@ -6,7 +6,8 @@
   '("linux"
     (c-offsets-alist . ((arglist-close . 0)
 			(inline-open . 0)
-			(innamespace . 0)))
+			(innamespace . 0)
+			(member-init-intro . 0)))
     (indent-tabs-mode t)
     (setq tab-width 4)))
 
