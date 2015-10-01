@@ -23,7 +23,14 @@
 	 (dirs (append syst user)))
     (setq company-c-headers-path-system syst)
     (setq company-c-headers-path-user user)
-    (setq company-clang-arguments (mapcar (lambda (d) (concat "-I" d)) dirs))))
+    (setq company-clang-arguments
+	  (append
+	   (mapcar (lambda (d) (concat "-I" d)) dirs)
+	   '("-DLINUX"
+	     "-I/usr/include/qt4"
+	     "-fpermissive"
+	     "-include/usr/include/GL/gl.h"
+	     "-std=c++1y")))))
 
 (add-hook 'after-init-hook (lambda () (global-company-mode 1)))
 (add-hook 'c++-mode-hook #'y:company-set-include-paths)
