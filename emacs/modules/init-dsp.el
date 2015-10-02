@@ -6,7 +6,7 @@ slashes to just one.  Also applies Chaos specific stuff:
 - replaces [kK]:\ with proper SDK path
 - replaces maya70 with maya2016"
   (let* ((first (replace-regexp-in-string "\\\\" "/" path))
-	 (second (if (string-prefix-p "k:/" (downcase (substring first 3)))
+	 (second (if (string-prefix-p "k:/" (downcase first))
 		     (concat "~/cgrepo/sdk/linux/" (substring first 3))
 		   first))
 	 (third (replace-regexp-in-string "/+" "/" second))
@@ -38,7 +38,8 @@ argument and fixes filepaths"
     (mapcar (lambda (fn)
 	      (let ((path (y:dsp-fix-include-path (file-name-directory dsp) fn)))
 		(unless (file-directory-p path)
-		  (message "Include directory %s doesn't exist" path))))
+		  (message "Include directory %s doesn't exist" path))
+		path))
 	    (y:dsp-read-includes dsp))))
 
 (defun y:dsp-search-parents (start)
