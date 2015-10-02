@@ -4,6 +4,13 @@
 (add-to-list '*y:packages* 'company)
 (add-to-list '*y:packages* 'company-c-headers)
 
+(defvar *y:company-clang-hard-coded-flags*
+  '("-DLINUX"
+    "-fpermissive"
+    "-std=c++1y"
+    "-include/usr/include/GL/gl.h"
+    "-I/usr/include/qt4"))
+
 (eval-after-load 'company
   (lambda ()
     (delete 'comapny-cmake company-backends)
@@ -26,11 +33,7 @@
     (setq company-clang-arguments
 	  (append
 	   (mapcar (lambda (d) (concat "-I" d)) dirs)
-	   '("-DLINUX"
-	     "-I/usr/include/qt4"
-	     "-fpermissive"
-	     "-include/usr/include/GL/gl.h"
-	     "-std=c++1y")))))
+	   *y:company-clang-hard-coded-flags*))))
 
 (add-hook 'after-init-hook (lambda () (global-company-mode 1)))
 (add-hook 'c++-mode-hook #'y:company-set-include-paths)
