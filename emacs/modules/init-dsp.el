@@ -31,8 +31,8 @@ directories supplied to the compiler"
     res))
 
 (defun y:dsp-read-includes2 (dsp)
-  "Does the same as y:dsp-read-includes, but also checks for
-empty DSP and fixes filepaths"
+  "Does the same as y:dsp-read-includes, but also checks the DSP
+argument and fixes filepaths"
   (if (null dsp)
       '()
     (mapcar (lambda (fn)

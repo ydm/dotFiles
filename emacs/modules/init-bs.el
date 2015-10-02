@@ -1,4 +1,4 @@
-(defun y:should-kill-buffer-p (b)
+(defun y:bs-should-kill-buffer-p (b)
   "Returns t for buffer that should be killed.
 
 Conditions are:
@@ -9,9 +9,9 @@ Conditions are:
        (not (member (buffer-name b) '("*Messages*" "*Packages*" "*scratch*")))
        (null (get-buffer-process b))))
 
-(defadvice bs-show (before y:kill-system-buffers-before-bs-show activate)
+(defadvice bs-show (before y:bs-kill-system-buffers-before-bs-show activate)
   (cl-loop for b in (buffer-list)
-	   when (y:should-kill-buffer-p b)
+	   when (y:bs-should-kill-buffer-p b)
 	   do (kill-buffer b)))
 
 (provide 'init-bs)

@@ -14,6 +14,7 @@
 ;;   init-smex:
 ;;     M-x
 
+;; TODO: Prefix these funcs or move them to init-cmd.el
 (defun y:open-line ()
   (interactive)
   (move-beginning-of-line nil)
