@@ -149,11 +149,8 @@ bar {
         status_command i3status
 }
 
-# y: Because I like Bulgarian more than I like your mom! ;)
+# ydm: Because I like Bulgarian more than I like your mom! ;)
 bindsym $mod+Shift+Return exec switchxkbmap
 
-# y: Make Python Gui applications always load in floating mode
-for_window [class="Ipython2"] floating enable
-
-# y: Make Kivy windows floatable
-for_window [title="Kivy"] floating enable
+# ydm: Make some windows floating
+for_window [title="V-Ray frame buffer*"] floating enable
