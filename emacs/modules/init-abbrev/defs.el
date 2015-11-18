@@ -20,8 +20,8 @@
     ("1beta" "β" nil 0)
     ("1coding" "-*- coding: utf-8 -*-" nil 1)
     ("1copyright" "©" nil 0)
-    ("1dj" "/usr/lib/python2.7/site-packages/django" nil 3)
     ("1interpunct" "·" nil 0)
+    ("1runhs", "#!/usr/bin/env runhaskell" nil 0)
 
     ;; Python specific abbreviations (python-mode-abbrev-table doesn't work...)
     ("1ubinenv" "#!/usr/bin/env python")
