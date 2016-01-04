@@ -153,4 +153,8 @@ bar {
 bindsym $mod+Shift+Return exec switchxkbmap
 
 # ydm: Make some windows floating
-for_window [title="V-Ray frame buffer*"] floating enable
+for_window [title="Cancel confirmation"] floating enable
+for_window [title="Confirm"] floating enable
+for_window [title="Pixel information"] floating enable
+for_window [title="V-Ray*"] floating enable
+# assign [title="V-Ray frame buffer*"] 9
