@@ -67,6 +67,7 @@
  '(save-place t nil (saveplace))
  '(save-place-file "~/.emacs.d/places")
  '(scroll-bar-mode nil)
+ '(set-mark-command-repeat-pop t)
  '(show-paren-mode t)
  '(tags-add-tables t)
  '(tool-bar-mode nil)
