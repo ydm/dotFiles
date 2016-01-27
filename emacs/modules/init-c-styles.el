@@ -18,4 +18,6 @@
 ;; (add-to-list 'c-default-style '(c++-mode . "chaos"))
 
 (add-hook 'c-mode-common-hook (lambda () (subword-mode 1)))
+(add-hook 'c-mode-common-hook (lambda () (hs-minor-mode)))
+
 (provide 'init-c-styles)

@@ -12,4 +12,3 @@
 (setq w32-lwindow-modifier 'super)
 
 (provide 'init-windows)
-

@@ -7,7 +7,7 @@
 ;; +---------+
 (defvar *y:modules-dir* "~/dotFiles/emacs/modules")
 (defvar *y:packages* '())
-(defvar *y:modules-off* '(init-company init-windows))
+(defvar *y:modules-off* '(init-ac init-dsp init-gcc init-windows))
 
 ;; +-------------------------+
 ;; | Pre / post init scripts |
