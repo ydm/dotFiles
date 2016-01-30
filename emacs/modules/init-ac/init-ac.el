@@ -1,6 +1,6 @@
-(add-to-list '*y:packages* 'auto-complete)
-(add-to-list '*y:packages* 'auto-complete-c-headers)
-(add-to-list '*y:packages* 'auto-complete-clang)
+(add-to-list '*y:packages* '(init-ac auto-complete))
+(add-to-list '*y:packages* '(init-ac auto-complete-c-headers))
+(add-to-list '*y:packages* '(init-ac auto-complete-clang))
 ;; yasnippet works so nice with AC, I just have to include it here as
 ;; part of this module.  ;)
 (add-to-list '*y:packages* 'yasnippet)

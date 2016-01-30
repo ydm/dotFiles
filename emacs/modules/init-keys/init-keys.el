@@ -54,9 +54,11 @@
 (global-set-key (kbd "M-z")     #'zap-up-to-char)
 ;; (global-set-key (kbd "M-.")     #'etags-select-find-tag)
 
-;; Remapp built-in commands
+;; Bind built-in commands to my own keys
 (global-set-key (kbd "<f5>")    #'sort-lines)
 (global-set-key (kbd "<f6>")    #'replace-string)
+(global-set-key (kbd "<f11>")   #'whitespace-mode)
+(global-set-key (kbd "<f12>")   #'hs-toggle-hiding)
 (global-set-key (kbd "C-M-z")   (lambda () (interactive) (other-window -1)))
 (global-set-key (kbd "C-z")     (lambda () (interactive) (other-window  1)))
 (global-set-key (kbd "s-z")     #'repeat)

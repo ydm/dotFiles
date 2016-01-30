@@ -1,5 +1,5 @@
-(add-to-list '*y:packages* 'ace-jump-mode)
-(add-to-list '*y:packages* 'key-chord)
+(add-to-list '*y:packages* '(init-keychords ace-jump-mode))
+(add-to-list '*y:packages* '(init-keychords key-chord))
 
 (defun y:keychords-init ()
   (let ((chords '(("jj" . y:switch-to-last-buffer)

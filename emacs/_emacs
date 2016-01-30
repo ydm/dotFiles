@@ -104,10 +104,10 @@ installed."
   (package-initialize t)
   (unless package-archive-contents
     (package-refresh-contents))
-  (cl-loop for p in *y:packages* do
+  (cl-loop for (m p) in *y:packages* do
 	   (if (package-installed-p p)
-	       (message "[Packages] Already installed: %s" p)
-	     (message "[Packages] Installing: %s" p)
+	       (message "[Packages] Already installed: %30s | %s" p m)
+	     (message   "[Packages] Installing:        %30s | %s" p m)
 	     (package-install p))))
 
 ;; Adding this function last means it will be executed first.
