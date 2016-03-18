@@ -94,3 +94,7 @@ else
 	install_$arg
     done
 fi
+
+# TODO: Hm, let's automatically install some packages!
+# TODO: pacman -S emacs
+# TODO: pacman -S urxvt-perls
