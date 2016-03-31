@@ -1,3 +1,9 @@
+! Scrolling
+URxvt.saveLines:            16384
+URxvt.scrollTtyKeypress:    true
+URxvt.scrollTtyOutput:      false
+URxvt.scrollWithBuffer:     true
+
 ! Appearance
 URxvt.font:                 xft:InconsolataLGC:pixelsize=16:antialias=true:hinting=true
 URxvt.scrollBar:            false
