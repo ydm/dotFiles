@@ -21,9 +21,7 @@
     (indent-tabs-mode . nil)))
 (c-add-style "ydm" ydm-c-style)
 
-(add-hook 'c-mode-common-hook
-	  (lambda ()
-	    (hs-minor-mode 1)
-	    (subword-mode 1)))
+;; (add-hook 'c-mode-common-hook
+;; 	  (lambda () (hs-minor-mode 1)))
 
 (provide 'init-c-styles)
