@@ -58,6 +58,8 @@
  '(dired-recursive-copies (quote always))
  '(enable-local-variables :all)
  '(gdb-many-windows t)
+ '(global-prettify-symbols-mode t)
+ '(global-subword-mode t)
  '(ido-enable-flex-matching t)
  '(ido-mode (quote both) nil (ido))
  '(inhibit-startup-screen t)

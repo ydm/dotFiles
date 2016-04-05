@@ -8,4 +8,5 @@
 	   (snippets (concat dir "snippets")))
       (add-to-list 'yas-snippet-dirs snippets))))
 
+(add-hook 'after-init-hook (lambda () (yas-global-mode 1)))
 (provide 'init-yasnippet)
