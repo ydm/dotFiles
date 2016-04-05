@@ -1,10 +1,8 @@
-;; (require 'tomorrow-night-theme)
-(load "monokai-theme.el")
+(y:install-packages caroline-theme)
 
-(cl-loop for theme in custom-enabled-themes do (disable-theme theme))
-
-(load-theme 'monokai t)
-;; (load-theme 'tomorrow-night t)
-;; (load-theme 'deeper-blue t)
+(add-hook 'after-init-hook
+	  (lambda ()
+	    (mapcar #'disable-theme custom-enabled-themes)
+	    (load-theme 'caroline t)))
 
 (provide 'init-themes)

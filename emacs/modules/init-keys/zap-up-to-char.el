@@ -6,4 +6,4 @@
   \(fn arg char)"
   'interactive)
 
-(provide 'init-zap-up-to-char)
+(provide 'zap-up-to-char)

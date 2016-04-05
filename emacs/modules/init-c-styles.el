@@ -21,14 +21,9 @@
     (indent-tabs-mode . nil)))
 (c-add-style "ydm" ydm-c-style)
 
-;; Add to ~/.emacs.d/init/post.el:
-;; (add-to-list 'c-default-style '(c++-mode . "chaos|ydm"))
-;;
-;; Add this if tabs should be used instead of spaces
-;; (custom-set-variables
-;;  '(indent-tabs-mode t))
-
-(add-hook 'c-mode-common-hook (lambda () (subword-mode 1)))
-(add-hook 'c-mode-common-hook (lambda () (hs-minor-mode)))
+(add-hook 'c-mode-common-hook
+	  (lambda ()
+	    (hs-minor-mode 1)
+	    (subword-mode 1)))
 
 (provide 'init-c-styles)

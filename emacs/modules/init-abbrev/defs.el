@@ -16,25 +16,25 @@
 
 (define-abbrev-table 'global-abbrev-table
   '(
-    ("1alpha" "α" nil 0)
-    ("1beta" "β" nil 0)
-    ("1coding" "-*- coding: utf-8 -*-" nil 1)
-    ("1copyright" "©" nil 0)
-    ("1interpunct" "·" nil 0)
-    ("1runhs", "#!/usr/bin/env runhaskell" nil 0)
+    ("1alpha" "α")
+    ("1beta" "β")
+    ("1delta" "Δ")
+    ("1lambda" "λ")
+    ("1phi" "φ")
+    ("1coding" "-*- coding: utf-8 -*-")
+    ("1copyright" "©")
+    ("1interpunct" "·")
+    ("1runhs" "#!/usr/bin/env runhaskell")
 
     ;; Python specific abbreviations (python-mode-abbrev-table doesn't work...)
     ("1ubinenv" "#!/usr/bin/env python")
     ("1ubinenv2" "#!/usr/bin/env python2")
     ("1ubinenv3" "#!/usr/bin/env python3")
-    ("1pdb" "import pdb; pdb.set_trace()" nil 2)
-    ("1unilit" "from __future__ import unicode_literals" nil 0)
-    ("1printfunc" "from __future__ import print_function" nil 0)
-    ("1ifmain" "if __name__ == '__main__':\n    main()")
+    ("1pdb" "import pdb; pdb.set_trace()")
+    ("1unilit" "from __future__ import unicode_literals")
+    ("1printfunc" "from __future__ import print_function")
+    ("1ifmain" "if __name__ == '__main__':\n    main()" nil 2)
     ("1stack" "import traceback; traceback.print_stack()")
-
-    ;; Maya 2016
-    ("1devkit" "usr/autodesk/maya2016/devkit/plug-ins")
    ))
 
 (define-abbrev-table 'inferior-python-mode-abbrev-table '())

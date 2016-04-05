@@ -1,10 +1,10 @@
 (require 'ido-goto-symbol)
-(require 'init-zap-up-to-char)
+(require 'zap-up-to-char)
 
 ;; Dependencies:
 ;;   ido-goto-symbol
 ;;     (ido-goto-symbol)
-;;   init-zap-up-to-char
+;;   zap-up-to-char
 ;;     (zap-up-to-char)
 ;;
 ;; Keys not listed here:
@@ -15,27 +15,24 @@
 ;;     M-x
 
 ;; TODO: Prefix these funcs or move them to init-cmd.el
-(defun y:open-line ()
+(defun y:init-keys/open-line ()
   (interactive)
   (move-beginning-of-line nil)
   (open-line 1)
   (indent-for-tab-command))
 
-(defun y:switch-to-last-buffer ()
-  (interactive)
-  (switch-to-buffer (other-buffer)))
-
-(defun y:wrap-in-double-quotes ()
+(defun y:init-keys/wrap-in-double-quotes ()
   (interactive)
   (insert-char ?\")
   (move-end-of-line 1)
   (insert-char ?\"))
 
-(defun y:wrap-in-parentheses ()
+(defun y:init-keys/wrap-in-parentheses ()
   (interactive)
   (insert-char ?()
   (move-end-of-line 1)
   (insert-char ?)))
+
 
 ;; Unset system keys
 (global-unset-key (kbd "C-o"))          ; (open-line)
@@ -49,13 +46,14 @@
 (global-unset-key (kbd "M-z"))		; (zap-to-char)
 
 ;; Reuse system keys
-(global-set-key (kbd "C-o")     #'y:open-line)
+(global-set-key (kbd "C-o")     #'y:init-keys/open-line)
 (global-set-key (kbd "C-x C-b") #'bs-show)
 (global-set-key (kbd "M-z")     #'zap-up-to-char)
 ;; (global-set-key (kbd "M-.")     #'etags-select-find-tag)
 
 ;; Bind built-in commands to my own keys
 (global-set-key (kbd "<f5>")    #'replace-string)
+(global-set-key (kbd "S-<f5>")  #'replace-regexp)
 (global-set-key (kbd "<f6>")    #'sort-lines)
 (global-set-key (kbd "<f11>")   #'whitespace-mode)
 (global-set-key (kbd "<f12>")   #'hs-toggle-hiding)
@@ -64,8 +62,8 @@
 (global-set-key (kbd "s-z")     #'repeat)
 
 ;; My commands mapped here and there
-(global-set-key (kbd "C-(")     #'y:wrap-in-parentheses)
-(global-set-key (kbd "C-\"")    #'y:wrap-in-double-quotes)
+(global-set-key (kbd "C-(")     #'y:init-keys/wrap-in-parentheses)
+(global-set-key (kbd "C-\"")    #'y:init-keys/wrap-in-double-quotes)
 (global-set-key (kbd "C-c i")   #'ido-goto-symbol)
 (global-set-key (kbd "s-n")     (lambda () (interactive) (next-line     5)))
 (global-set-key (kbd "s-o")     #'forward-whitespace)

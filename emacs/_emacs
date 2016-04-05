@@ -9,19 +9,24 @@
 (defvar *y:packages* '())
 (defvar *y:modules-off* '(init-ac init-dsp init-gcc init-windows))
 
-;; +-------------------------+
-;; | Pre / post init scripts |
-;; +-------------------------+
+(defmacro y:install-packages (&rest ps)
+  (cl-loop for p in ps do (add-to-list '*y:packages* p)))
+
+
+;; +-----------------------+
+;; | Pre/post init scripts |
+;; +-----------------------+
 (defun y:check-and-load (name)
   (when (file-exists-p name)
-    (message "Executing %s" name)
+    (message "[Y] Executing %s" name)
     (load name)))
 
 (y:check-and-load "~/.emacs.d/init/pre.el")
-;; The post script should be executed last.  Being the first thing to
-;; add in the after-init-hook will do exactly that.
+;; The post script should be executed last.  Being the first thing
+;; added in the after-init-hook will do exactly that.
 (add-hook 'after-init-hook
 	  (lambda () (y:check-and-load "~/.emacs.d/init/post.el")))
+
 
 ;; +------------------+
 ;; | General settings |
@@ -31,8 +36,6 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(abbrev-file-name "~/dotFiles/emacs/modules/init-abbrev/defs.el")
- '(ac-auto-start 0)
  '(backup-directory-alist (quote (("." . "~/.~"))))
  '(bs-attributes-list
    (quote
@@ -48,6 +51,7 @@
  '(bs-default-sort-name "by mode")
  '(calendar-week-start-day 1)
  '(column-number-mode t)
+ '(company-rtags-use-async nil)
  '(default-input-method "bulgarian-alt-phonetic")
  '(delete-selection-mode t)
  '(dired-dwim-target t)
@@ -69,19 +73,19 @@
  '(scroll-bar-mode nil)
  '(set-mark-command-repeat-pop t)
  '(show-paren-mode t)
- '(tags-add-tables t)
  '(tool-bar-mode nil)
  '(tool-bar-position (quote right))
  '(tool-bar-style nil)
  '(uniquify-buffer-name-style (quote post-forward) nil (uniquify))
- '(visible-bell t)
  '(which-function-mode t)
  '(x-gtk-use-system-tooltips nil))
+
 
 ;; +-------+
 ;; | Stuff |
 ;; +-------+
 (defalias 'yes-or-no-p 'y-or-n-p)
+
 
 ;; +---------+
 ;; | Modules |
@@ -92,8 +96,9 @@
 	 when (not (member symbol *y:modules-off*)) do
 	 (if (file-directory-p path)
 	     (add-to-list 'load-path path))
-	 (message "[Modules ] Requiring %s" symbol)
+	 (message "[Y] Requiring %s" symbol)
 	 (require symbol))
+
 
 ;; +----------+
 ;; | Packages |
@@ -104,10 +109,10 @@ installed."
   (package-initialize t)
   (unless package-archive-contents
     (package-refresh-contents))
-  (cl-loop for (m p) in *y:packages* do
+  (cl-loop for p in *y:packages* do
 	   (if (package-installed-p p)
-	       (message "[Packages] Already installed: %30s | %s" p m)
-	     (message   "[Packages] Installing:        %30s | %s" p m)
+	       (message "[Y] Already installed: %s" p)
+	     (message   "[Y] Installing:        %s" p)
 	     (package-install p))))
 
 ;; Adding this function last means it will be executed first.

@@ -1,5 +1,6 @@
 (autoload 'mel-mode "mel-mode" nil t)
 (add-to-list 'auto-mode-alist '("\\.mel$" . mel-mode))
+
 (add-hook 'mel-mode-hook
 	  (lambda ()
 	    ;; 1. Subword mode

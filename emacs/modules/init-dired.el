@@ -1,5 +1,5 @@
-(require 'dired-x)
 (require 'dired)
+(require 'dired-x)
 
 ;; Dired: allow nav in dired buffer.
 (put 'dired-find-alternate-file 'disabled nil)

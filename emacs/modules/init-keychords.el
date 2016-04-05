@@ -1,14 +1,16 @@
-(add-to-list '*y:packages* '(init-keychords ace-jump-mode))
-(add-to-list '*y:packages* '(init-keychords key-chord))
+(y:install-packages ace-jump-mode key-chord)
 
-(defun y:keychords-init ()
-  (let ((chords '(("jj" . y:switch-to-last-buffer)
-		  ("hh" . ace-jump-mode)
-		  ("vv" . ido-switch-buffer))))
-    (key-chord-mode 1)
-    (cl-loop for (chord . fn) in chords do
-	     (key-chord-define-global chord fn))))
+(defun y:init-keychords/switch-to-last-buffer ()
+  (interactive)
+  (switch-to-buffer (other-buffer)))
 
-(add-hook 'after-init-hook #'y:keychords-init)
+(add-hook 'after-init-hook
+	  (lambda ()
+	    (let ((chords '(("jj" y:init-keychords/switch-to-last-buffer)
+			    ("hh" ace-jump-mode)
+			    ("vv" ido-switch-buffer))))
+	      (key-chord-mode 1)
+	      (cl-loop for (chord fn) in chords do
+		       (key-chord-define-global chord fn)))))
 
 (provide 'init-keychords)

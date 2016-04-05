@@ -1,4 +1,4 @@
-(defun vray/render-vrscene ()
+(defun y:vray-render-vrscene ()
   "Renders a V-Ray scene using V-Ray Standalone"
   (interactive)
   (let* ((vray "/usr/autodesk/maya2016/vray/bin/vray")

@@ -1,9 +1,4 @@
-(add-to-list '*y:packages* '(init-ac auto-complete))
-(add-to-list '*y:packages* '(init-ac auto-complete-c-headers))
-(add-to-list '*y:packages* '(init-ac auto-complete-clang))
-;; yasnippet works so nice with AC, I just have to include it here as
-;; part of this module.  ;)
-(add-to-list '*y:packages* 'yasnippet)
+(y:install-packages auto-complete auto-complete-c-headers auto-complete-clang yasnippet)
 
 (defun y:init-ac-sources-cpp ()
   (setq ac-sources
