@@ -23,22 +23,28 @@
 ;; You should have received a copy of the GNU General Public License
 ;; along with RTags.  If not, see <http://www.gnu.org/licenses/>.
 
-(eval-when-compile (require' cl))
-(require 'auto-complete)
+;;; Commentary:
+
+;;; Code:
+
 (require 'rtags)
+
+(require 'auto-complete)
+(eval-when-compile (require 'cl))
+
+(defgroup rtags-ac nil
+  "Auto completion back-end for RTags."
+  :prefix "rtags-"
+  :group 'ac
+  :group 'rtags
+  :link '(url-link :tag "Website" "http://rtags.net"))
 
 (defconst rtags-location-regx "\\([^:]*\\):\\([0-9]*\\):\\([0-9]*\\)")
 
 (defcustom rtags-ac-expand-functions t
-  "Whether to expand function parameter lists in auto-complete mode"
-  :group 'rtags
+  "Whether to expand function parameter lists in `auto-complete' mode."
+  :group 'rtags-ac
   :type 'boolean)
-
-(defmacro rtags-parse-location (locstr)
-  `(when (string-match rtags-location-regx ,locstr)
-     (list (match-string 1 ,locstr)
-           (match-string 2 ,locstr)
-           (match-string 3 ,locstr))))
 
 (defun rtags-ac-trim-leading-trailing-whitespace (argstr)
   (replace-regexp-in-string
@@ -47,37 +53,24 @@
 
 (defun rtags-ac-candidates ()
   ;; locstr is fullpath_srcfile:row#:col#
-  (let* ((locstr (or (and rtags-last-completions
-                          (car rtags-last-completions))
-                     ""))
-         (locinfo (rtags-parse-location locstr))
-         (complpt (rtags-calculate-completion-point))
-         filefull file row col)
-
-    (when locinfo
-      (setq filefull (car locinfo)
-            row (caddr locinfo)
-            col (cadddr locinfo)
-            file (file-name-nondirectory filefull)))
+  (if (and rtags-last-completions
+           (let ((pos (rtags-calculate-completion-point)))
+             (and pos (string= (car rtags-last-completions)
+                               (rtags-current-location pos t)))))
 
     ;; if last completion was in this src file @ last completion pos
     ;; build a list of completion strings; example format:
     ;; #("word" 'rtags-ac-full "void word(int x)" 'rtags-ac-type "FunctionDecl")
-    (if (and (string= (buffer-name (current-buffer)) file)
-             complpt
-             (cdr-safe rtags-last-completion-position)
-             (= complpt (cdr rtags-last-completion-position)))
-        (mapcar #'(lambda (elem)
-                    (propertize (car elem)
-                                'rtags-ac-full (cadr elem)
-                                'rtags-ac-type (caddr elem)))
-                (cadr rtags-last-completions))
+      (mapcar #'(lambda (elem)
+                  (propertize (car elem)
+                              'rtags-ac-full (cadr elem)
+                              'rtags-ac-type (caddr elem)))
+              (cadr rtags-last-completions))
       ;; else forcefully update completions if the compl pos has changed
       ;; checking compl pos helps keep the process buffer from getting slammed
-      (rtags-update-completions (not (= (or complpt -1)
-                                        (or (cdr-safe rtags-last-completion-position) -1))))
-      ;; return nil as `ac-update-greedy' expects us to return a list or nil
-      nil)))
+    (rtags-update-completions)
+    ;; return nil as `ac-update-greedy' expects us to return a list or nil
+    nil))
 
 (defun rtags-ac-document (item)
   (get-text-property 0 'rtags-ac-full item))
@@ -154,3 +147,5 @@
     (symbol . "r")))
 
 (provide 'rtags-ac)
+
+;;; rtags-ac.el ends here
