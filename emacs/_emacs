@@ -25,7 +25,7 @@
 ;; The post script should be executed last.  Being the first thing
 ;; added in the after-init-hook will do exactly that.
 (add-hook 'after-init-hook
-	  (lambda () (y:check-and-load "~/.emacs.d/init/post.el")))
+          (lambda () (y:check-and-load "~/.emacs.d/init/post.el")))
 
 
 ;; +------------------+
@@ -96,12 +96,12 @@
 ;; +---------+
 (add-to-list 'load-path *y:modules-dir*)
 (cl-loop for path in (directory-files *y:modules-dir* t "^[^\\.].*")
-	 for symbol = (intern (file-name-base path))
-	 when (not (member symbol *y:modules-off*)) do
-	 (if (file-directory-p path)
-	     (add-to-list 'load-path path))
-	 (message "[Y] Requiring %s" symbol)
-	 (require symbol))
+         for symbol = (intern (file-name-base path))
+         when (not (member symbol *y:modules-off*)) do
+         (if (file-directory-p path)
+             (add-to-list 'load-path path))
+         (message "[Y] Requiring %s" symbol)
+         (require symbol))
 
 
 ;; +----------+
@@ -114,10 +114,10 @@ installed."
   (unless package-archive-contents
     (package-refresh-contents))
   (cl-loop for p in *y:packages* do
-	   (if (package-installed-p p)
-	       (message "[Y] Already installed: %s" p)
-	     (message   "[Y] Installing:        %s" p)
-	     (package-install p))))
+           (if (package-installed-p p)
+               (message "[Y] Already installed: %s" p)
+             (message   "[Y] Installing:        %s" p)
+             (package-install p))))
 
 ;; Adding this function last means it will be executed first.
 (add-hook 'after-init-hook #'y:install-packages)
