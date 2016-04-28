@@ -17,5 +17,5 @@ switchxkbmap () {
 
 switchxkbmap
 
-# Used in my Emacs config to start M-x
+# Used in my Emacs config to start M-x -- right shift now equals F13
 xmodmap -e "keycode 62 = F13"
