@@ -2554,7 +2554,8 @@ This includes both declarations and definitions."
                                                  (list (buffer-substring-no-properties (point-min) (point-max)))))))))))))
           (cond ((not (listp data)))
                 ((eq (car data) 'checkstyle)
-                 (rtags-parse-check-style (cdr data)))
+                 (when rtags-spellcheck-enabled
+                   (rtags-parse-check-style (cdr data))))
                 ((eq (car data) 'progress)
                  (setq rtags-last-index (nth 2 data)
                        rtags-last-total (nth 3 data)))
@@ -2874,6 +2875,8 @@ This includes both declarations and definitions."
                 (let ((rc-args '("-m" "--elisp")))
                   (when (> (length rtags-socket-file) 0)
                     (push (rtags--get-socket-file-switch) rc-args))
+                  (unless rtags-spellcheck-enabled
+                    (push "--no-spell-checking" rc-args))
                   (setq rtags-diagnostics-process
                         (apply #'start-file-process "RTags Diagnostics" buf rc rc-args)))
                 (set-process-filter rtags-diagnostics-process #'rtags-diagnostics-process-filter)

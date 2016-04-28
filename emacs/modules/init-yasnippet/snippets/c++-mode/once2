@@ -1,0 +1,10 @@
+#name : #ifndef XXX; #define XXX; #endif // XXX
+#key: once2
+#expand-env: ((tmp (upcase (subst-char-in-string ?. ?_ (file-name-nondirectory (buffer-file-name))))))
+# --
+#ifndef __${1:}`tmp`__
+#define __$1`tmp`__
+
+$0
+
+#endif  // __$1`tmp`__

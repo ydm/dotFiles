@@ -8,6 +8,12 @@ These include configuration for
 * i3
 * shell
 
-##Installation
+## Installation
 WARNING: thiis may override any present config files
 `$ ./install.sh`
+
+
+## Requires Following Arch GNU/Linux packages
+* (TODO)
+* xorg-xev
+* xorg-xmodmap

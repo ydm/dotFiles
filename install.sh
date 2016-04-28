@@ -72,8 +72,8 @@ function install_i3 {
 
 function install_shell {
     installing "shell settings"
-    cat "$BASE"/shell/path >> ~/.profile
-    cat "$BASE"/shell/aliases >> ~/.profile
+    cat "$BASE"/shell/path >> ~/.bashrc
+    cat "$BASE"/shell/aliases >> ~/.bashrc
 }
 
 function install_all {

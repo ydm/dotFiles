@@ -1,0 +1,11 @@
+# name: Constructor
+# key: constr
+# --
+${1:Name}::$1($2)
+$3{
+        $0
+}
+
+$1::~$1()
+{
+}

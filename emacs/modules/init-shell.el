@@ -8,7 +8,7 @@
           (kill-buffer)
         (comint-delchar-or-maybe-eof arg)))))
 
-(add-hook 'shell-mode-hook #'y:init-shell/del-eof-kill)
+(add-hook 'shell-mode-hook (function y:init-shell/del-eof-kill))
 (add-hook 'shell-mode-hook (lambda () (dirtrack-mode 1)))
 (add-hook 'shell-mode-hook (lambda () (shell-dirtrack-mode 0)))
 

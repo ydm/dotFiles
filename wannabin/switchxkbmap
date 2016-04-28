@@ -16,3 +16,6 @@ switchxkbmap () {
 }
 
 switchxkbmap
+
+# Used in my Emacs config to start M-x
+xmodmap -e "keycode 62 = F13"
