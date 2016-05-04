@@ -1,4 +1,4 @@
-(y:install-packages cmake-mode glsl-mode)
+(y:install-packages cmake-mode glsl-mode yaml-mode)
 
 (add-hook 'emacs-lisp-mode-hook
 	  (lambda ()
