@@ -3,7 +3,7 @@
 
 ;; Dependencies:
 ;;   ido-goto-symbol.el
-;;   (ido-goto-symbol)
+;;     (ido-goto-symbol)
 ;;   zap-up-to-char
 ;;     (zap-up-to-char)
 ;;
@@ -11,10 +11,11 @@
 ;;   init-dired (local to dired-mode):
 ;;     / (grep)
 ;;     ^ (go up)
-;;   init-smex:
+;;   init-smex (globals):
 ;;     M-x
+;;     F13
 
-;; TODO: Prefix these funcs or move them to init-cmd.el
+
 (defun y:init-keys/open-line ()
   (interactive)
   (move-beginning-of-line nil)
@@ -50,7 +51,7 @@
 (global-set-key (kbd "C-x C-b") (function bs-show))
 (global-set-key (kbd "M-z")     (function zap-up-to-char))
 
-;; Bind built-in commands (re)mapped on user-space keys
+;; Built-in commands (re)mapped on user-space keys
 (global-set-key (kbd "<f5>")    (function replace-string))
 (global-set-key (kbd "S-<f5>")  (function replace-regexp))
 (global-set-key (kbd "<f6>")    (function sort-lines))
@@ -67,10 +68,11 @@
 (global-set-key (kbd "s-n")     (lambda () (interactive) (next-line     5)))
 (global-set-key (kbd "s-o")     (function forward-whitespace))
 (global-set-key (kbd "s-p")     (lambda () (interactive) (previous-line 5)))
-
-;; Fucking Windows doesn't recognize s-p and s-o, so these two are
-;; alternatives.
 (global-set-key (kbd "s-m")     (lambda () (interactive) (previous-line 5)))
-(global-set-key (kbd "s-f")     (function forward-whitespace))
+
+;; Fucking Windows doesn't recognize s-p and s-o, so these two Windows
+;; are alternatives.
+;; (global-set-key (kbd "s-m")     (lambda () (interactive) (previous-line 5)))
+;; (global-set-key (kbd "s-f")     (function forward-whitespace))
 
 (provide 'init-keys)
