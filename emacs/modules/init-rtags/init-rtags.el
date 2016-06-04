@@ -6,10 +6,10 @@
 
 (add-hook 'after-init-hook
           (lambda ()
-            ;; (require 'rtags)
+            (require 'company-rtags)
             ;; (require 'flycheck)
             ;; (require 'flycheck-rtags)
-            ;; (setq flycheck-checkers '(rtags))
+            (setq flycheck-checkers '(rtags))
             ))
 
 (add-hook 'c-mode-common-hook   (function y:init-rtags))
