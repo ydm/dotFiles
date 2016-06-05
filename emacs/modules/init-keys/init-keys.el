@@ -11,6 +11,8 @@
 ;;   init-dired (local to dired-mode):
 ;;     / (grep)
 ;;     ^ (go up)
+;;   init-rtags (globals):
+;;     C-c r ; -- rtags-find-file
 ;;   init-smex (globals):
 ;;     M-x
 ;;     F13
