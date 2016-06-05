@@ -4,8 +4,8 @@
 ;; 			   ("rsync_proxy" . "$http_proxy")
 ;; 			   ("no_proxy" . "localhost,127.0.0.1,localaddress,.localdomain.com")))
 
+;; (custom-set-faces
+;;  '(default ((t (:family "Inconsolata LGC" :foundry "PfEd" :slant normal :weight normal :height 120 :width normal)))))
+
 ;; (custom-set-variables
 ;;  '(user-mail-address "yordan.miladinov@chaosgroup.com"))
-
-;; (custom-set-faces
-;;  '(default ((t (:family "Inconsolata LGC" :foundry "unknown" :slant normal :weight normal :height 122 :width normal)))))
