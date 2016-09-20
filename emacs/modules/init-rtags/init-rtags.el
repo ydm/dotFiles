@@ -20,7 +20,7 @@
 ;; This makes it easier to detect and debug any rtags problems.
 (custom-set-variables
  '(company-rtags-max-wait 1000)  ;; Hmm...
- '(company-rtags-use-async nil)
+ ;; '(company-rtags-use-async nil)
  '(rtags-completions-enabled t))
 
 (provide 'init-rtags)
