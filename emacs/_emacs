@@ -51,6 +51,7 @@
  '(bs-default-sort-name "by mode")
  '(calendar-week-start-day 1)
  '(column-number-mode t)
+ '(company-rtags-max-wait 1000)
  '(company-rtags-use-async nil)
  '(default-input-method "bulgarian-alt-phonetic")
  '(delete-selection-mode t)
