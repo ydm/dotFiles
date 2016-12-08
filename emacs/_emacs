@@ -7,7 +7,12 @@
 ;; +---------+
 (defvar *y:modules-dir* "~/dotFiles/emacs/modules")
 (defvar *y:packages* '())
-(defvar *y:modules-off* '(init-ac init-dsp init-gcc init-windows))
+(defvar *y:modules-off*
+  '(init-abbrev
+    init-ac
+    init-dsp
+    init-gcc
+    init-windows))
 
 (defmacro y:install-packages (&rest ps)
   (cl-loop for p in ps do (add-to-list '*y:packages* p)))
