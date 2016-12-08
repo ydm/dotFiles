@@ -59,18 +59,18 @@
 (global-set-key (kbd "<f6>")    (function sort-lines))
 (global-set-key (kbd "<f11>")   (function whitespace-mode))
 (global-set-key (kbd "<f12>")   (function hs-toggle-hiding))
-(global-set-key (kbd "C-M-z")   (lambda () (interactive) (other-window -1)))
-(global-set-key (kbd "C-z")     (lambda () (interactive) (other-window  1)))
+(global-set-key (kbd "C-M-z")   (apply-partially #'other-window -1))
+(global-set-key (kbd "C-z")     (apply-partially #'other-window  1))
 (global-set-key (kbd "s-z")     (function repeat))
 
 ;; My own commands mapped on user-space keys
 (global-set-key (kbd "C-(")     (function y:init-keys/wrap-in-parentheses))
 (global-set-key (kbd "C-\"")    (function y:init-keys/wrap-in-double-quotes))
 (global-set-key (kbd "C-c i")   (function ido-goto-symbol))
-(global-set-key (kbd "s-n")     (lambda () (interactive) (next-line     5)))
+(global-set-key (kbd "s-n")     (apply-partially #'next-line 5)
 (global-set-key (kbd "s-o")     (function forward-whitespace))
-(global-set-key (kbd "s-p")     (lambda () (interactive) (previous-line 5)))
-(global-set-key (kbd "s-m")     (lambda () (interactive) (previous-line 5)))
+(global-set-key (kbd "s-p")     (apply-partially #'previous-line 5))
+(global-set-key (kbd "s-m")     (apply-partially #'previous-line 5)))
 
 ;; Fucking Windows doesn't recognize s-p and s-o, so these two Windows
 ;; are alternatives.
