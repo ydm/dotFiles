@@ -49,28 +49,28 @@
 (global-unset-key (kbd "M-z"))		; (zap-to-char)
 
 ;; Reuse system keys
-(global-set-key (kbd "C-o")     (function y:init-keys/open-line))
-(global-set-key (kbd "C-x C-b") (function bs-show))
-(global-set-key (kbd "M-z")     (function zap-up-to-char))
+(global-set-key (kbd "C-o")     #'y:init-keys/open-line)
+(global-set-key (kbd "C-x C-b") #'bs-show)
+(global-set-key (kbd "M-z")     #'zap-up-to-char)
 
 ;; Built-in commands (re)mapped on user-space keys
-(global-set-key (kbd "<f5>")    (function replace-string))
-(global-set-key (kbd "S-<f5>")  (function replace-regexp))
-(global-set-key (kbd "<f6>")    (function sort-lines))
-(global-set-key (kbd "<f11>")   (function whitespace-mode))
-(global-set-key (kbd "<f12>")   (function hs-toggle-hiding))
+(global-set-key (kbd "<f5>")    #'replace-string)
+(global-set-key (kbd "S-<f5>")  #'replace-regexp)
+(global-set-key (kbd "<f6>")    #'sort-lines)
+(global-set-key (kbd "<f11>")   #'whitespace-mode)
+(global-set-key (kbd "<f12>")   #'hs-toggle-hiding)
 (global-set-key (kbd "C-M-z")   (apply-partially #'other-window -1))
 (global-set-key (kbd "C-z")     (apply-partially #'other-window  1))
-(global-set-key (kbd "s-z")     (function repeat))
+(global-set-key (kbd "s-z")     #'repeat)
 
 ;; My own commands mapped on user-space keys
-(global-set-key (kbd "C-(")     (function y:init-keys/wrap-in-parentheses))
-(global-set-key (kbd "C-\"")    (function y:init-keys/wrap-in-double-quotes))
-(global-set-key (kbd "C-c i")   (function ido-goto-symbol))
-(global-set-key (kbd "s-n")     (apply-partially #'next-line 5)
-(global-set-key (kbd "s-o")     (function forward-whitespace))
+(global-set-key (kbd "C-(")     #'y:init-keys/wrap-in-parentheses)
+(global-set-key (kbd "C-\"")    #'y:init-keys/wrap-in-double-quotes)
+(global-set-key (kbd "C-c i")   #'ido-goto-symbol)
+(global-set-key (kbd "s-n")     (apply-partially #'next-line 5))
+(global-set-key (kbd "s-o")     #'forward-whitespace)
 (global-set-key (kbd "s-p")     (apply-partially #'previous-line 5))
-(global-set-key (kbd "s-m")     (apply-partially #'previous-line 5)))
+(global-set-key (kbd "s-m")     (apply-partially #'previous-line 5))
 
 ;; Fucking Windows doesn't recognize s-p and s-o, so these two Windows
 ;; are alternatives.
