@@ -78,6 +78,7 @@
    (quote
     (("gnu" . "http://elpa.gnu.org/packages/")
      ("melpa" . "http://melpa.org/packages/"))))
+ '(prettify-symbols-unprettify-at-point (quote right-edge))
  '(save-place t nil (saveplace))
  '(save-place-file "~/.emacs.d/places")
  '(scroll-bar-mode nil)

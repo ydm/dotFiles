@@ -5,7 +5,7 @@
 (put 'dired-find-alternate-file 'disabled nil)
 
 ;; Dired-x: ignore certain files from listing.
-(add-to-list 'dired-omit-extensions ".pyc")
+(setq dired-omit-extensions (delete ".so" dired-omit-extensions))
 (setq-default dired-omit-files-p t)
 
 ;; New dired commands mapped on keys
