@@ -1,11 +1,16 @@
+(require 'hideshow)
 (require 'ido-goto-symbol)
 (require 'zap-up-to-char)
+
+(require 'init-misc)
 
 ;; Dependencies:
 ;;   ido-goto-symbol.el
 ;;     (ido-goto-symbol)
 ;;   zap-up-to-char
 ;;     (zap-up-to-char)
+;;   init-misc
+;;     (y:locate-breakpoint)
 ;;
 ;; Keys not listed here:
 ;;   init-dired (local to dired-mode):
@@ -57,6 +62,7 @@
 (global-set-key (kbd "<f5>")    #'replace-string)
 (global-set-key (kbd "S-<f5>")  #'replace-regexp)
 (global-set-key (kbd "<f6>")    #'sort-lines)
+(global-set-key (kbd "<f8>")    #'y:locate-breakpoint)
 (global-set-key (kbd "<f11>")   #'whitespace-mode)
 (global-set-key (kbd "<f12>")   #'hs-toggle-hiding)
 (global-set-key (kbd "C-M-z")   (lambda () (interactive) (other-window -1)))
@@ -76,5 +82,10 @@
 ;; are alternatives.
 ;; (global-set-key (kbd "s-m")     (lambda () (interactive) (previous-line 5)))
 ;; (global-set-key (kbd "s-f")     (function forward-whitespace))
+
+;; Local keys
+(define-key hs-minor-mode-map (kbd "C-c C-2 C-s") #'hs-show-block)
+(define-key hs-minor-mode-map (kbd "C-c C-2 C-h") #'hs-hide-block)
+(define-key hs-minor-mode-map (kbd "C-c C-2 C-c") #'hs-toggle-hiding)
 
 (provide 'init-keys)

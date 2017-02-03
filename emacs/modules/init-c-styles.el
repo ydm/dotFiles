@@ -23,5 +23,7 @@
 
 ;; (add-hook 'c-mode-common-hook
 ;; 	  (lambda () (hs-minor-mode 1)))
+(add-hook 'c++-mode-hook
+          (lambda () (hs-minor-mode 1)))
 
 (provide 'init-c-styles)

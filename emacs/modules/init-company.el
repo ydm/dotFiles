@@ -9,6 +9,7 @@
 (add-hook 'after-init-hook
           (lambda ()
             (global-company-mode 1)
-            (setq company-backends '(company-files))))
+            ;; (setq company-backends '(company-files))
+            ))
 
 (provide 'init-company)
