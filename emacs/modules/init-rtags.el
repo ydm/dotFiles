@@ -1,3 +1,5 @@
+;; rtags may also be installed, but to me it sounds better to compile
+;; it using the github repository
 (y:install-packages flycheck)
 
 (defun y:init-rtags ()
