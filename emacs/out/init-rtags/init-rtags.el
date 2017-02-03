@@ -1,4 +1,6 @@
-;; (y:install-packages flycheck)
+(y:install-packages flycheck)
+
+;; TODO:  '(rtags-completions-enabled t)
 
 (defun y:init-rtags ()
   (rtags-start-process-unless-running)
@@ -7,9 +9,7 @@
 (add-hook 'after-init-hook
           (lambda ()
             (require 'company-rtags)
-            ;; (require 'flycheck)
-            ;; (require 'flycheck-rtags)
-            (setq flycheck-checkers '(rtags))
+            (require 'flycheck-rtags)
             ))
 
 (add-hook 'c-mode-common-hook   (function y:init-rtags))
