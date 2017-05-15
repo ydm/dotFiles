@@ -3,7 +3,7 @@
   (interactive)
   (let* ((vray "/usr/autodesk/maya2016/vray/bin/vray")
 	 (scene (buffer-file-name))
-         (cmd (format "%s -sceneFile=%s &" vray scene)))
+         (cmd (format "%s -numThreads=0 -sceneFile=%s 1>/tmp/vray.log 2>&1 &" vray scene)))
 	 ;; (cmd (format "%s -sceneFile=%s -imgFile=/tmp/output.png &" vray scene)))
     (shell-command cmd)))
 
