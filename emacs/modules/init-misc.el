@@ -7,6 +7,27 @@
          (output (shell-command-to-string cmd)))
     (message output)))
 
+(defun y:create-patch-from-buffers (a b)
+  "Run Ediff on a pair of buffers, A B."
+  (interactive
+   (let (bf)
+     (list (setq bf (read-buffer "Buffer A to compare: "
+				 (ediff-other-buffer "") t))
+	   (read-buffer "Buffer B to compare: "
+			(progn
+			  ;; realign buffers so that two visible bufs will be
+			  ;; at the top
+			  (save-window-excursion (other-window 1))
+			  (ediff-other-buffer bf))
+			t))))
+  (let ((fa (buffer-file-name (get-buffer a)))
+        (fb (buffer-file-name (get-buffer b))))
+    (with-current-buffer-window (generate-new-buffer "Patch") nil nil
+                                (toggle-read-only)
+                                (setq buffer-read-only nil)
+                                (insert (shell-command-to-string           
+                                         (format "diff '%s' '%s'" fa fb))))))
+
 (defun y:push-filename-line ()
   "Push the current buffer's filename:line into the kill ring."
   (interactive)

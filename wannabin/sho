@@ -1,0 +1,8 @@
+#!/bin/bash
+
+DEST="/home/y/boyan/dok/"
+NAME="$1"
+: ${NAME:=something}
+
+import -window root /tmp/a3cbe59c8.png
+convert -extract 1473x1120+445+59 +repage /tmp/a3cbe59c8.png "$DEST/$NAME.png"
