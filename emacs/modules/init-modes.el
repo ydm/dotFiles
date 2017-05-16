@@ -27,7 +27,7 @@
             (flymake-haskell-multi-load)
 
             (y:init-modes/pretty "->"   ?→)
-            (y:init-modes/pretty "/"    ?÷)
+            ;; (y:init-modes/pretty "/"    ?÷)
             (y:init-modes/pretty "/="   ?≠)
             (y:init-modes/pretty "<="   ?≤)
             (y:init-modes/pretty ">="   ?≥)
