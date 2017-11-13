@@ -10,8 +10,10 @@
 (defvar *y:modules-off*
   '(init-abbrev
     init-ac
+    init-company
     init-dsp
     init-gcc
+    init-rtags
     init-windows))
 
 (defmacro y:install-packages (&rest ps)
@@ -21,16 +23,16 @@
 ;; +-----------------------+
 ;; | Pre/post init scripts |
 ;; +-----------------------+
-(defun y:check-and-load (name)
+(defun y:load (name)
   (when (file-exists-p name)
     (message "[Y] Executing %s" name)
     (load name)))
 
-(y:check-and-load "~/.emacs.d/init/pre.el")
+(y:load "~/.emacs.d/init/pre.el")
 ;; The post script should be executed last.  Being the first thing
 ;; added in the after-init-hook will do exactly that.
 (add-hook 'after-init-hook
-          (lambda () (y:check-and-load "~/.emacs.d/init/post.el")))
+          (lambda () (y:load "~/.emacs.d/init/post.el")))
 
 
 ;; +------------------+
@@ -56,8 +58,6 @@
  '(bs-default-sort-name "by mode")
  '(calendar-week-start-day 1)
  '(column-number-mode t)
- '(company-rtags-max-wait 1000)
- '(company-rtags-use-async nil)
  '(compilation-always-kill t)
  '(compilation-scroll-output (quote first-error))
  '(default-input-method "bulgarian-alt-phonetic")
