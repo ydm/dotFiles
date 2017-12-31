@@ -1,5 +1,4 @@
-/* Remove the annoying status line (the one popping in when you move your mouse
-   over a link. */
-.statuspanel-label {
-    display: none;
+@namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
+#TabsToolbar {
+    visibility: collapse !important;
 }

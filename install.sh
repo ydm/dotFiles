@@ -54,7 +54,7 @@ function install_git {
     git config --global color.diff auto
     git config --global color.status auto
     git config --global core.editor 'emacs'
-    git config --global user.email 'yordan@4web.bg'
+    git config --global user.email 'jordanMiladinov@gmail.com'
     git config --global user.name 'Yordan Miladinov'
 
     # ...and copy the global gitignore that makes git happy to work
