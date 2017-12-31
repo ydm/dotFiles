@@ -1,4 +1,4 @@
-;; Very mode, such Emacs, Wow!
+;; Very mode, such Emacs, wow
 
 (y:install-packages encourage-mode)
 

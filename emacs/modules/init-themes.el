@@ -1,4 +1,6 @@
-(y:install-packages caroline-theme molokai-theme)
+;; caroline-theme is a nice one too
+
+(y:install-packages molokai-theme)
 
 (add-hook 'after-init-hook
 	  (lambda ()

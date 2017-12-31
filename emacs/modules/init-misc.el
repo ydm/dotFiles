@@ -15,8 +15,8 @@
 				 (ediff-other-buffer "") t))
 	   (read-buffer "Buffer B to compare: "
 			(progn
-			  ;; realign buffers so that two visible bufs will be
-			  ;; at the top
+			  ;; Realign buffers so that two visible bufs
+			  ;; will be at the top.
 			  (save-window-excursion (other-window 1))
 			  (ediff-other-buffer bf))
 			t))))
@@ -27,16 +27,6 @@
                                 (setq buffer-read-only nil)
                                 (insert (shell-command-to-string           
                                          (format "diff '%s' '%s'" fa fb))))))
-
-(defun y:push-filename-line ()
-  "Push the current buffer's filename:line into the kill ring."
-  (interactive)
-  (let* ((filename (buffer-file-name))
-           (line (line-number-at-pos))
-           (cmd (format "%s:%d" filename line)))
-    (with-temp-buffer
-      (insert cmd)
-      (kill-ring-save (point-min) (point-max)))))
 
 (defun y:locate-breakpoint ()
   "When you ask gdb for your breakpoints, you may also want to
@@ -50,5 +40,15 @@
          (lineno (string-to-number (cadr split))))
     (ffap filename)
     (goto-line lineno)))
+
+(defun y:push-filename-line ()
+  "Push the current buffer's filename:line into the kill ring."
+  (interactive)
+  (let* ((filename (buffer-file-name))
+           (line (line-number-at-pos))
+           (cmd (format "%s:%d" filename line)))
+    (with-temp-buffer
+      (insert cmd)
+      (kill-ring-save (point-min) (point-max)))))
 
 (provide 'init-misc)

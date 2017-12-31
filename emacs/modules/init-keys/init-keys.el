@@ -20,7 +20,7 @@
 ;;     C-c r ; -- rtags-find-file
 ;;   init-smex (globals):
 ;;     M-x
-;;     F13
+;;     F13 (which is then remapped to my right Shift)
 
 
 (defun y:init-keys/open-line ()
@@ -84,8 +84,9 @@
 ;; (global-set-key (kbd "s-f")     (function forward-whitespace))
 
 ;; Local keys
-(define-key hs-minor-mode-map (kbd "C-c C-2 C-s") #'hs-show-block)
-(define-key hs-minor-mode-map (kbd "C-c C-2 C-h") #'hs-hide-block)
+(define-key hs-minor-mode-map (kbd "C-c C-2 C-a") #'hs-hide-all)
 (define-key hs-minor-mode-map (kbd "C-c C-2 C-c") #'hs-toggle-hiding)
+(define-key hs-minor-mode-map (kbd "C-c C-2 C-h") #'hs-hide-block)
+(define-key hs-minor-mode-map (kbd "C-c C-2 C-s") #'hs-show-block)
 
 (provide 'init-keys)
