@@ -43,6 +43,8 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(aw-ignore-current t)
+ '(aw-keys (quote (49 50 51 113 119 101 97 115 100)))
  '(backup-directory-alist (quote (("." . "~/.~"))))
  '(bs-attributes-list
    (quote
