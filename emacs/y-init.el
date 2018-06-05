@@ -3,6 +3,7 @@
 
 (custom-set-variables
  '(backup-directory-alist '(("." . "~/.~")))
+ '(column-number-mode t)
  '(global-display-line-numbers-mode t)
  '(ido-enable-flex-matching t)
  '(ido-mode 'both nil (ido))
@@ -34,13 +35,19 @@
 	((not (car xs)) nil)
 	(t (y:all (cdr xs)))))
 
+(defun y:installed-p (p)
+  (unless package--initialized (package-initialize t))
+  (let ((installed (package-installed-p p)))
+    (message "[Y] Package '%s' is %sinstalled" p (if installed "" "not "))
+    installed))
+
 (defun y:install-packages ()
   (unless package--initialized (package-initialize t))
-  (when (not (y:all (mapcar #'package-installed-p package-selected-packages)))
+  (when (not (y:all (mapcar #'y:installed-p package-selected-packages)))
     (package-refresh-contents)
     (package-install-selected-packages)))
 
 ;; Registering last means executing first.
 (add-hook 'after-init-hook #'y:install-packages)
-	
+
 (provide 'y-init)
