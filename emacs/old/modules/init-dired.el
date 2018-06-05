@@ -6,7 +6,7 @@
 (put 'dired-find-alternate-file 'disabled nil)
 
 ;; Dired-x: ignore certain files from listing.
-(cl-delete ".so" dired-omit-extensions)
+;; (cl-delete ".so" dired-omit-extensions)
 (add-hook 'dired-mode-hook
           (lambda () (dired-omit-mode 1)))
 

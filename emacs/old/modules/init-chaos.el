@@ -13,4 +13,8 @@
                       vray scene)))
     (shell-command cmd)))
 
+(defun y:debug-maya ()
+  (interactive)
+  (gdb "/usr/autodesk/maya2017/bin/maya -d gdb -dbgArg -i=mi"))
+
 (provide 'init-chaos)
