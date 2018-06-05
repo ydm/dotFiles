@@ -30,6 +30,16 @@ function install_emacs {
     ln -s "$BASE"/emacs/_emacs ~/.emacs
 }
 
+function install_firefox {
+    DIR="$(echo ~/.mozilla/firefox/*.default)"
+    mkdir -p "$DIR"/chrome
+    set -x
+    (
+        cp -t "$DIR"/chrome/ "$BASE"/firefox/userChrome.css
+    )
+    set +x
+}
+
 function install_fonts {
     installing fonts
 
