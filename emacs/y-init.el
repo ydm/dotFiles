@@ -3,14 +3,24 @@
 
 (custom-set-variables
  '(backup-directory-alist '(("." . "~/.~")))
+ '(calendar-week-start-day 1)
  '(column-number-mode t)
+ '(company-tooltip-align-annotations t)
+ '(default-input-method "bulgarian-alt-phonetic")
+ '(gdb-many-windows t)
  '(global-display-line-numbers-mode t)
+ '(delete-selection-mode t)
+ '(dired-dwim-target t)
+ '(global-subword-mode t)
  '(ido-enable-flex-matching t)
  '(ido-mode 'both nil (ido))
  '(inhibit-startup-screen t)
+ '(mouse-yank-at-point t)
  '(package-archives
    '(("gnu" . "https://elpa.gnu.org/packages/")
-     ("melpa" . "http://melpa.org/packages/"))))
+     ("melpa" . "http://melpa.org/packages/")))
+ '(scroll-bar-mode nil)
+ '(show-paren-mode t))
 (put 'dired-find-alternate-file 'disabled nil)
 
 (require 'package)
@@ -36,7 +46,7 @@
 	(t (y:all (cdr xs)))))
 
 (defun y:installed-p (p)
-  (unless package--initialized (package-initialize t))
+  ;; (unless package--initialized (package-initialize t))
   (let ((installed (package-installed-p p)))
     (message "[Y] Package '%s' is %sinstalled" p (if installed "" "not "))
     installed))

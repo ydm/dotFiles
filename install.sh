@@ -15,8 +15,9 @@ function install_firefox() {
 }
 
 function install_packages() {
-    # TODO
-    # pacman -S 
+    # TODO: Install fonts, etc.
+    sudo pacman -S firefox
+    sudo pacman -S ttf-hack
 }
 
 if [ $# -eq 0 ] ; then

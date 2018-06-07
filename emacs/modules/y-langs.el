@@ -1,6 +1,2 @@
-(y:module
- '(cmake-mode
-   haskell-mode
-   rust-mode))
-
+(y:module '(cmake-mode haskell-mode))
 (provide 'y-langs)

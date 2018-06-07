@@ -1,0 +1,18 @@
+(defun y:block-comment (comment)
+  (interactive "sLabel: ")
+  (cl-labels ((insert-commented (str wrapper filling)
+				(indent-according-to-mode)
+				(insert (comment-padright comment-start (comment-add nil)))
+				(insert-char wrapper)
+				(insert-char filling)
+				(insert str)
+				(insert-char filling)
+				(insert-char wrapper)
+				(insert-char ?\n)))
+    (let ((rule (make-string (length comment) ?-)))
+      (save-excursion
+	(insert-commented rule ?+ ?-)
+	(insert-commented comment ?| ? )
+	(insert-commented rule ?+ ?-)))))
+
+(provide 'y-interactive)
