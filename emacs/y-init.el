@@ -1,3 +1,7 @@
+;; +---------+
+;; | General |
+;; +---------+
+
 ;; Add (require 'y-init "~/dotFiles/emacs/y-init.el") to the end of
 ;; ~/.emacs (or at least after custom-set-variables)
 
@@ -21,7 +25,14 @@
      ("melpa" . "http://melpa.org/packages/")))
  '(scroll-bar-mode nil)
  '(show-paren-mode t))
+
+(defalias 'yes-or-no-p 'y-or-n-p)
 (put 'dired-find-alternate-file 'disabled nil)
+
+
+;; +---------+
+;; | Modules |
+;; +---------+
 
 (require 'package)
 
@@ -34,6 +45,7 @@
      (mapcar #'y:select-package ,packages)
      (add-hook 'after-init-hook (lambda () ,(cons 'progn body)))))
 
+;; TODO: Un-hard-code the path!
 (let ((dir "~/dotFiles/emacs/modules/"))
   (mapcar (lambda (p)
 	    (message "[Y] Requiring %s" p)
@@ -57,7 +69,14 @@
     (package-refresh-contents)
     (package-install-selected-packages)))
 
+(defun y:boot ()
+  (y:install-packages)
+  (let ((post "~/.emacs.d/init/post.el"))
+    (when (file-exists-p post)
+      (message "[Y] Loading %s" post)
+      (load post))))
+
 ;; Registering last means executing first.
-(add-hook 'after-init-hook #'y:install-packages)
+(add-hook 'after-init-hook #'y:boot)
 
 (provide 'y-init)
