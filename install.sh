@@ -3,15 +3,17 @@
 ROOT="$(readlink -f "$(dirname "${BASH_SOURCE[0]}")")"
 
 function install_emacs() {
-    rm -f ~/.emacs.org
-    [ -e ~/.emacs ] && mv ~/.emacs ~/.emacs.org
-    ln -s "$ROOT"/emacs/_emacs ~/.emacs
+    if [ ! -e ~/.emacs ] ; then
+	echo '(custom-set-variables)' # > ~/.emacs
+    fi
+    path="$ROOT"/emacs/y-init.el
+    echo "(load \"$path\")" # >> ~/.emacs
 }
 
 function install_firefox() {
     DIR="$(echo ~/.mozilla/firefox/*.default)"
     mkdir -p "$DIR"/chrome
-    cp -t "$DIR"/chrome/ "$ROOT"/firefox/userChrome.css
+    cp "$ROOT"/firefox/userChrome.css "$DIR"/chrome/
 }
 
 function install_packages() {
