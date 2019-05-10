@@ -5,7 +5,7 @@
   (indent-for-tab-command))
 
 (y:module
- nil
+ '()
 
  ;; Unset system keys
  (global-unset-key (kbd "C-o"))		; open-line
