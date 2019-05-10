@@ -1,3 +1,5 @@
+(y:module '(ag))
+
 (defun y:push-filename-line ()
   "Push the current buffer's filename:line into the kill ring."
   (interactive)
@@ -11,7 +13,6 @@
 (defun y:ag (directory regexp)
   (interactive (list (read-directory-name "Directory: ")
 		     (ag/read-from-minibuffer "Search regexp")))
-  (message "directory=%s regexp=%s" directory regexp)
   (ag/search regexp directory :regexp t))
 
 (provide 'y-misc)

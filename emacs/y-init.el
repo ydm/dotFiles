@@ -11,10 +11,10 @@
  '(column-number-mode t)
  '(company-tooltip-align-annotations t)
  '(default-input-method "bulgarian-alt-phonetic")
- '(gdb-many-windows t)
- '(global-display-line-numbers-mode t)
  '(delete-selection-mode t)
  '(dired-dwim-target t)
+ '(gdb-many-windows t)
+ '(global-display-line-numbers-mode t)
  '(global-subword-mode t)
  '(ido-enable-flex-matching t)
  '(ido-mode 'both nil (ido))
@@ -45,7 +45,7 @@
      (mapcar #'y:select-package ,packages)
      (add-hook 'after-init-hook (lambda () ,(cons 'progn body)))))
 
-;; TODO: Un-hard-code the path!
+;; TODO: Un-hard-code the path?
 (let ((dir "~/dotFiles/emacs/modules/"))
   (mapcar (lambda (p)
 	    (message "[Y] Requiring %s" p)
@@ -76,7 +76,7 @@
       (message "[Y] Loading %s" post)
       (load post))))
 
-;; Registering last means executing first.
+;; Registered last means executed first.
 (add-hook 'after-init-hook #'y:boot)
 
 (provide 'y-init)

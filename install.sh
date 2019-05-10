@@ -6,8 +6,8 @@ function install_emacs() {
     if [ ! -e ~/.emacs ] ; then
 	echo '(custom-set-variables)' # > ~/.emacs
     fi
-    path="$ROOT"/emacs/y-init.el
-    echo "(load \"$path\")" # >> ~/.emacs
+    PATH="$ROOT"/emacs/y-init.el
+    echo "(load \"$PATH\")" # >> ~/.emacs
 }
 
 function install_firefox() {

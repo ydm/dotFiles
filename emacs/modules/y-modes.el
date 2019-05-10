@@ -1,2 +1,2 @@
 (y:module '(cmake-mode haskell-mode))
-(provide 'y-langs)
+(provide 'y-modes)
