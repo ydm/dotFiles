@@ -25,5 +25,4 @@
       (insert cmd)
       (kill-ring-save (point-min) (point-max)))))
 
-
 (provide 'y-interactive)
