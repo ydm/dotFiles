@@ -5,7 +5,7 @@
 (defun y:vray-render-vrscene ()
   "Renders a V-Ray scene using V-Ray Standalone"
   (interactive)
-  (let* ((vray "/usr/autodesk/maya2017/vray/bin/vray")
+  (let* ((vray "/usr/autodesk/maya2019/vray/bin/vray")
 	 (scene (buffer-file-name))
          (cmd (format (concat
                        "%s "
