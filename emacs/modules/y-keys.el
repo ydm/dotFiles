@@ -5,11 +5,11 @@
  (require 'y-interactive)                ; y:ido-imenu
  (require 'y-lib)                        ; y:project-root
 
- (defun y:find-file ()
+ (defun y:find-file (prefix)
    "If there's a project root, use (find-file-in-project).
 Otherwise fallback to (ido-find-file)."
-   (interactive)
-   (if (y:project-root)
+   (interactive "P")
+   (if (and (null prefix) (y:project-root))
        (find-file-in-project)
      (ido-find-file)))
 
