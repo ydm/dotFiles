@@ -18,6 +18,7 @@
  '(global-subword-mode t)
  '(ido-enable-flex-matching t)
  '(ido-mode 'both nil (ido))
+ '(indent-tabs-mode nil)
  '(inhibit-startup-screen t)
  '(mouse-yank-at-point t)
  '(package-archives
