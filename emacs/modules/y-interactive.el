@@ -85,4 +85,11 @@ the completion list."
       (insert cmd)
       (kill-ring-save (point-min) (point-max)))))
 
+;; TODO:
+;; (defun y:replace-last-sexp ()
+;;   (interactive)
+;;   (let ((value (eval (preceding-sexp))))
+;;     (backward-kill-sexp)
+;;     (insert (format "%s" value))))
+
 (provide 'y-interactive)
