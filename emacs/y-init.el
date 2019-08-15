@@ -10,6 +10,7 @@
  '(calendar-week-start-day 1)
  '(column-number-mode t)
  '(company-tooltip-align-annotations t)
+ '(compilation-scroll-output t)
  '(default-input-method "bulgarian-alt-phonetic")
  '(delete-selection-mode t)
  '(dired-dwim-target t)
