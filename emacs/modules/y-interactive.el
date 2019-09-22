@@ -127,10 +127,9 @@ to (backward-kill-sexp), but *deletes* the sexp instead of
   (file-name-directory (directory-file-name dir)))
 
 (defun y:locate-top-dominating-file (file name)
-  (let ((loc (locate-dominating-file file name)))
-    (when loc
-      (or (y:locate-top-dominating-file (y:parent-directory file) name)
-          loc))))
+  (when-let ((current (locate-dominating-file file name))
+             (parent (y:parent-directory current)))
+    (or (y:locate-top-dominating-file parent name) current)))
 
 (defun y:project-root ()
   (y:locate-top-dominating-file default-directory ".git"))
