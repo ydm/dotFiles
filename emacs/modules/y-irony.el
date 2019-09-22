@@ -11,3 +11,6 @@
 ;;           (lambda ()
 ;;             (define-key c++-mode-map (kbd "C-.") #'completion-at-point))
 ;;           (flycheck-mode 1))
+
+(provide 'y-irony)
+
