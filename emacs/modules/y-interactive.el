@@ -119,6 +119,22 @@ to (backward-kill-sexp), but *deletes* the sexp instead of
                (insert-char ?)))
 
 
+;; +---------+
+;; | Helpers |
+;; +---------+
+
+(defun y:parent-directory (dir)
+  (file-name-directory (directory-file-name dir)))
+
+(defun y:locate-top-dominating-file (file name)
+  (let ((loc (locate-dominating-file file name)))
+    (when loc
+      (or (y:locate-top-dominating-file (y:parent-directory file) name)
+          loc))))
+
+(defun y:project-root ()
+  (y:locate-top-dominating-file default-directory ".git"))
+
 ;; +--------+
 ;; | Module |
 ;; +--------+
@@ -126,7 +142,9 @@ to (backward-kill-sexp), but *deletes* the sexp instead of
 (y:module
  '(find-file-in-project)
 
- (require 'find-file-in-project)         ; -> y:find-file
+ (require 'find-file-in-project)        ; -> y:find-file
+
+ (setq ffip-project-root-function #'y:project-root)
 
  (defun y:find-file (prefix)
    "If there's a project root, use (find-file-in-project).
@@ -135,24 +153,6 @@ Otherwise fallback to (ido-find-file)."
    (if (and (null prefix) (y:project-root))
        (find-file-in-project)
      (ido-find-file)))
-
- (defun y:project-root ()
-   "Copy of (ffip-project-root), but returns nil if there's no
-project root found.  The standard (ffip-project-root) returns
-default-directory instead."
-   (let* ((project-root (or ffip-project-root
-                            (cond
-                             ((functionp ffip-project-root-function)
-                              (funcall ffip-project-root-function))
-                             ((listp ffip-project-file)
-                              (ffip--some (apply-partially
-                                           #'locate-dominating-file
-                                           default-directory)
-                                          ffip-project-file))
-                             (t
-                              (locate-dominating-file default-directory
-                                                      ffip-project-file))))))
-     project-root))
  )
 
 (provide 'y-interactive)
