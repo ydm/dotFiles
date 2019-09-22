@@ -4,7 +4,7 @@ ROOT="$(readlink -f "$(dirname "${BASH_SOURCE[0]}")")"
 
 function install_emacs() {
     if [ ! -e ~/.emacs ] ; then
-        cat <<EOF
+        cat >~/.emacs <<EOF
 (custom-set-variables)
 (custom-set-faces)
 EOF
