@@ -6,7 +6,7 @@
 ;; ~/.emacs (or at least after custom-set-variables)
 
 (custom-set-variables
- '(backup-directory-alist '(("." . "~/.~")))
+ '(backup-directory-alist '(("." . "~/.emacs.d/backup")))
  '(calendar-week-start-day 1)
  '(column-number-mode t)
  '(company-tooltip-align-annotations t)
