@@ -1,4 +1,4 @@
-(defun y:init-bs/kill-buffer-p (b)
+(defun y:bs/kill-buffer-p (b)
   "\
 Returns t for buffer that should be killed.
 
@@ -18,8 +18,9 @@ Conditions are:
 
 (defadvice bs-show (before y:bs-kill-system-buffers-before-bs-show activate)
   "Clean up buffer list before showing bs"
+  ;; (apply #'kill-buffer (mapcar #'p (buffer-list)))?
   (cl-loop for b in (buffer-list)
-	   when (y:init-bs/kill-buffer-p b)
+	   when (y:bs/kill-buffer-p b)
 	   do (kill-buffer b)))
 
 (provide 'y-bs)
