@@ -11,7 +11,11 @@ alias s=sudo
 # Git
 alias glg="git log --graph --pretty=format:'%Cblue%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative"
 alias glp="git log --pretty=tformat:'%h %Cblue%cr%Creset %cn %Cgreen%s%Creset'"
-alias gst='git st | head -n20'
+alias gp='git push origin'
+alias gl='git pull origin --rebase'
+alias gs='git status'
+alias ga='git add'
+alias gc='git commit'
 
 # Navigation
 alias ....='cd ../../..'
