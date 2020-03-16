@@ -1,13 +1,12 @@
-# +---------------------------------+
-# | Start of dotFiles/shell/aliases |
-# +---------------------------------+
+# echo 'source ~/dotFiles/shell/aliases.sh' >> ~/.bashrc
 
 # Colors
 alias grep='grep --color=auto'
-alias ls='ls --color=auto --block-size=M'
+alias ls='ls -h'
 
-# Editing
-alias e='emacs'
+# Shortcuts
+alias e=emacs
+alias s=sudo
 
 # Git
 alias glg="git log --graph --pretty=format:'%Cblue%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative"
@@ -27,10 +26,6 @@ alias ll='ls -l'
 alias upgrade='sudo pacman -Syu --noconfirm'
 
 # Utilities
-alias mountcd='sudo mount -t iso9660'
-alias playcd='mplayer -cdrom-device /dev/sr0 cdda:// -cache 5000'
+# alias mountcd='sudo mount -t iso9660'
+# alias playcd='mplayer -cdrom-device /dev/sr0 cdda:// -cache 5000'
 alias t='tree -Ca -I ".git"'
-
-# +---------------------------------+
-# | End of dotFiles/shell/aliases   |
-# +---------------------------------+
