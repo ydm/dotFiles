@@ -13,6 +13,10 @@ EOF
     echo "(load \"$PATH\")" # >> ~/.emacs
 }
 
+# TODO: This function doesn't work anymore for new Firefoxes!
+#
+# TODO: Is there a way to automate that?
+# https://medium.com/@Aenon/firefox-hide-native-tabs-and-titlebar-f0b00bdbb88b
 function install_firefox() {
     DIR="$(echo ~/.mozilla/firefox/*.default)"
     mkdir -p "$DIR"/chrome
