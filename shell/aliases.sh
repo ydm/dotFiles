@@ -2,20 +2,23 @@
 
 # Colors
 alias grep='grep --color=auto'
-alias ls='ls -h'
+alias ls='ls --color=auto -h'
 
 # Shortcuts
 alias e=emacs
 alias s=sudo
 
 # Git
+alias ga='git add'
+alias gb='git branch'
+alias gc='git commit'
+alias gco='git checkout'
+alias gd='git diff'
+alias gl='git pull --rebase origin'
 alias glg="git log --graph --pretty=format:'%Cblue%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative"
 alias glp="git log --pretty=tformat:'%h %Cblue%cr%Creset %cn %Cgreen%s%Creset'"
 alias gp='git push origin'
-alias gl='git pull origin --rebase'
 alias gs='git status'
-alias ga='git add'
-alias gc='git commit'
 
 # Navigation
 alias ....='cd ../../..'
