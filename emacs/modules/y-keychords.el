@@ -3,7 +3,7 @@
   (switch-to-buffer (other-buffer)))
 
 (y:module
- '(ace-jump-mode ace-window key-chord)
+ '((packages ace-jump-mode ace-window key-chord))
 
  (key-chord-mode 1)
  (key-chord-define-global "ww" #'ace-window)

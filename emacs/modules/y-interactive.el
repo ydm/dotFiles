@@ -139,7 +139,7 @@ to (backward-kill-sexp), but *deletes* the sexp instead of
 ;; +--------+
 
 (y:module
- '(find-file-in-project)
+ '((packages find-file-in-project))
 
  (require 'find-file-in-project)        ; -> y:find-file
 

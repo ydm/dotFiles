@@ -43,17 +43,31 @@
   (unless (package--user-selected-p p)
     (add-to-list 'package-selected-packages p)))
 
-(defmacro y:module (packages &rest body)
+(defmacro y:module (props &rest body)
+  "PROPS is an alist with the following keys:
+- hookvar
+- packages"
   `(progn
-     (mapcar #'y:select-package ,packages)
-     (add-hook 'after-init-hook (lambda () ,(cons 'progn body)))))
+     (mapcar #'y:select-package (cdr (assoc 'packages ,props)))
+     (add-hook 'after-init-hook
+               (lambda ()
+                 ,@body
+                 (let ((hookvar (cdr (assoc 'hookvar ,props))))
+                   (and hookvar (run-hooks hookvar)))))))
 
-;; TODO: Un-hard-code the path?
+;; XXX: Un-hard-code path?
 (let ((dir "~/dotFiles/emacs/modules/"))
   (mapcar (lambda (p)
 	    (message "[Y] Requiring %s" p)
-	    (require (intern (file-name-base p)) p))
+	    (require (intern (file-name-base p)) p)
+            
+            )
 	  (directory-files dir t "\\.el$")))
+
+
+;; +------+
+;; | Boot |
+;; +------+
 
 (defun y:all (xs)
   (cond ((null xs) t)

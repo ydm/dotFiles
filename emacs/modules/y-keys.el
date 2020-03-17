@@ -1,5 +1,5 @@
 (y:module
- '(smex)
+ '((packages smex))
 
  (require 'y-interactive)
 
