@@ -1,3 +1,5 @@
+(require 'bs)
+
 (defun y:bs/kill-buffer-p (b)
   "\
 Returns t for buffer that should be killed.
