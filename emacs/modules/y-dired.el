@@ -1,8 +1,7 @@
-(require 'dired)
+(y:module
+ '((packages ag))
 
-(define-key dired-mode-map (kbd "/")
-  (lambda (regexp)
-    (interactive "sFind-grep (grep regexp): ")
-    (find-grep-dired default-directory regexp)))
+ (require 'dired)
+ (define-key dired-mode-map (kbd "/") #'ag))
 
 (provide 'y-dired)
