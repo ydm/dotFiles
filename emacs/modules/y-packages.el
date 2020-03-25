@@ -1,6 +1,6 @@
 (y:module
- '((packages ag
-             cmake-mode
+ '((packages cmake-mode
+             go-mode
              haskell-mode
              meson-mode
              yaml-mode)))
