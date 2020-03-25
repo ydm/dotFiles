@@ -1,9 +1,15 @@
+;; Add (load "/home/y/dotFiles/emacs/y-init.el") to the TOP of .emacs
+
+;; Added by Package.el.  This must come before configurations of
+;; installed packages.  Don't delete this line.  If you don't want it,
+;; just comment it out by adding a semicolon to the start of the line.
+;; You may delete these explanatory comments.
+(package-initialize)
+
+
 ;; +---------+
 ;; | General |
 ;; +---------+
-
-;; Add (require 'y-init "~/dotFiles/emacs/y-init.el") to the end of
-;; ~/.emacs (or at least after custom-set-variables)
 
 (custom-set-variables
  '(backup-directory-alist '(("." . "~/.emacs.d/backup")))
@@ -35,35 +41,34 @@
 (put 'dired-find-alternate-file 'disabled nil)
 (put 'downcase-region 'disabled nil)
 
+
 ;; +---------+
 ;; | Modules |
 ;; +---------+
 
-(require 'package)
+(defvar *y:selected-packages* '())
 
-(defun y:select-package (p)
-  (unless (package--user-selected-p p)
-    (add-to-list 'package-selected-packages p)))
-
-(defmacro y:module (props &rest body)
-  "PROPS is an alist with the following keys:
-- hookvar
-- packages"
+(defmacro y:module (assoc &rest body)
+  "ASSOC is an association list that may optionally provide the
+following keys:
+- hookvar: hook variable to run a hook on once the module body gets
+           executed
+- packages: packages to install on booting"
   `(progn
-     (mapcar #'y:select-package (cdr (assoc 'packages ,props)))
+     ;; Add the packages prop 
+     (mapcar (lambda (x) (add-to-list '*y:selected-packages* x))
+             (cdr (assoc 'packages ,assoc)))
      (add-hook 'after-init-hook
                (lambda ()
                  ,@body
-                 (let ((hookvar (cdr (assoc 'hookvar ,props))))
+                 (let ((hookvar (cdr (assoc 'hookvar ,assoc))))
                    (and hookvar (run-hooks hookvar)))))))
 
 ;; XXX: Un-hard-code path?
 (let ((dir "~/dotFiles/emacs/modules/"))
   (mapcar (lambda (p)
 	    (message "[Y] Requiring %s" p)
-	    (require (intern (file-name-base p)) p)
-            
-            )
+	    (require (intern (file-name-base p)) p))
 	  (directory-files dir t "\\.el$")))
 
 
@@ -71,29 +76,12 @@
 ;; | Boot |
 ;; +------+
 
-(defun y:all (xs)
-  (cond ((null xs) t)
-	((not (car xs)) nil)
-	(t (y:all (cdr xs)))))
-
-(defun y:installed-p (p)
-  ;; (unless package--initialized (package-initialize t))
-  (let ((installed (package-installed-p p)))
-    (message "[Y] Package '%s' is %sinstalled" p (if installed "" "not "))
-    installed))
-
-(defun y:install-packages ()
-  (unless package--initialized (package-initialize t))
-  (when (not (y:all (mapcar #'y:installed-p package-selected-packages)))
-    (package-refresh-contents)
-    (package-install-selected-packages)))
-
 (defun y:boot ()
-  (y:install-packages)
-  (let ((post "~/.emacs.d/init/post.el"))
-    (when (file-exists-p post)
-      (message "[Y] Loading %s" post)
-      (load post))))
+  (let ((xs (seq-remove #'package-installed-p *y:selected-packages*)))
+    (when xs
+      (package-refresh-contents)
+      (mapcar #'package-install *y:selected-packages*)))
+  (load "~/.emacs.d/init/post" t))
 
 ;; Registered last means executed first.
 (add-hook 'after-init-hook #'y:boot)
