@@ -114,9 +114,9 @@ to (backward-kill-sexp), but *deletes* the sexp instead of
 
 (defun y:wrap-in-parentheses ()
   (interactive)
-  (insert-char ?()
-               (move-end-of-line 1)
-               (insert-char ?)))
+  (insert-char ?\()
+  (move-end-of-line 1)
+  (insert-char ?\)))
 
 
 ;; +---------+
