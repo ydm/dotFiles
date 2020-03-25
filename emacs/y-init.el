@@ -15,6 +15,7 @@
  '(default-input-method "bulgarian-alt-phonetic")
  '(delete-selection-mode t)
  '(dired-dwim-target t)
+ '(dired-listing-switches "-alh")
  '(gdb-many-windows t)
  '(global-display-line-numbers-mode t)
  '(global-subword-mode t)
@@ -27,11 +28,12 @@
    '(("gnu" . "https://elpa.gnu.org/packages/")
      ("melpa" . "http://melpa.org/packages/")))
  '(scroll-bar-mode nil)
- '(show-paren-mode t))
+ '(show-paren-mode t)
+ '(truncate-lines t))
 
 (defalias 'yes-or-no-p 'y-or-n-p)
 (put 'dired-find-alternate-file 'disabled nil)
-
+(put 'downcase-region 'disabled nil)
 
 ;; +---------+
 ;; | Modules |
