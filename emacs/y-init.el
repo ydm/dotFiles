@@ -80,7 +80,7 @@ following keys:
   (let ((xs (seq-remove #'package-installed-p *y:selected-packages*)))
     (when xs
       (package-refresh-contents)
-      (mapcar #'package-install *y:selected-packages*)))
+      (mapcar #'package-install xs)))
   (load "~/.emacs.d/init/post" t))
 
 ;; Registered last means executed first.
