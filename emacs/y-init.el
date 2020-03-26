@@ -49,7 +49,15 @@
 (defvar *y:selected-packages* '())
 
 (defmacro y:module (assoc &rest body)
-  "ASSOC is an association list that may optionally provide the
+  "Execute the module body after Emacs initializes.
+
+If there are packages needed to be installed for this module to
+work, they may be specified in ASSOC.
+
+There's also an optional hook variable this module can specify
+that gets ran after the execution of BODY.
+
+ASSOC is an association list that may optionally provide the
 following keys:
 - hookvar: hook variable to run a hook on once the module body gets
            executed
