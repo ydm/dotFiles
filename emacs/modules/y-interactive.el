@@ -107,10 +107,10 @@ to (backward-kill-sexp), but *deletes* the sexp instead of
 
 (defun y:revisit-with-sudo (&optional file)
   (interactive)
-  (or file (setq file (buffer-file-name)))
-  (if file
-      (find-alternate-file (format "/sudo:root@localhost:%s" file))
-    (user-error "This buffer is not visiting a file")))
+  (let ((x (or file (buffer-file-name))))
+    (if x
+        (find-alternate-file (format "/sudo:root@localhost:%s" x))
+      (user-error "This buffer is not visiting a file"))))
 
 (defun y:wrap-in-parentheses ()
   (interactive)
@@ -118,6 +118,9 @@ to (backward-kill-sexp), but *deletes* the sexp instead of
   (move-end-of-line 1)
   (insert-char ?\)))
 
+;; TODO: Write a function that I can bind on C-', C-", C-(, C-{ and
+;; whatever else there is that wraps a region in quotes, double
+;; quotes, parentheses and whatever else that comes in pairs.
 
 ;; +---------+
 ;; | Helpers |
