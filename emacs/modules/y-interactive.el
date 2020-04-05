@@ -152,7 +152,9 @@ to (backward-kill-sexp), but *deletes* the sexp instead of
    "If there's a project root, use (find-file-in-project).
 Otherwise fallback to (ido-find-file)."
    (interactive "P")
-   (if (and (null prefix) (y:project-root))
+   (if (and (null prefix)
+            (not (string-equal system-type "windows-nt"))
+            (y:project-root))
        (find-file-in-project)
      (ido-find-file)))
  )
