@@ -1,9 +1,9 @@
 (y:module
- '((packages atom-dark-theme)
+ '((packages atom-one-dark-theme)
    (hookvar . y-theme-hook))
 
  (mapcar #'disable-theme custom-enabled-themes)
- (load-theme 'atom-dark t))
+ (load-theme 'atom-one-dark t))
 
 ;; Once my theme is loaded, this hook gets fired (see y:module).  It
 ;; invokes (custom-theme-set-faces) for the currently enabled theme
