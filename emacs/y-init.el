@@ -34,6 +34,7 @@
    '(("gnu" . "https://elpa.gnu.org/packages/")
      ("melpa" . "http://melpa.org/packages/")))
  '(scroll-bar-mode nil)
+ '(scroll-error-top-bottom t)
  '(show-paren-mode t)
  '(truncate-lines t))
 
