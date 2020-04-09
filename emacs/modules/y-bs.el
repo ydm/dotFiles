@@ -1,3 +1,5 @@
+;; TODO: Check if this is actually needed or emacs loads bs
+;; automatically beforehand!
 (require 'bs)
 
 (defun y:bs/kill-buffer-p (b)

@@ -38,3 +38,6 @@ alias upgrade='sudo pacman -Syu --noconfirm'
 # alias playcd='mplayer -cdrom-device /dev/sr0 cdda:// -cache 5000'
 alias t='tree -Ca -I ".git"'
 alias make='make -j8'
+
+# Theia
+alias theia='docker run -it --init -p 3000:3000 -v "$(pwd):/home/project:cached" theiaide/theia:latest'
