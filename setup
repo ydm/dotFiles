@@ -1,0 +1,26 @@
+#!/bin/bash
+
+# ~/.bash_profile
+# ---
+# if [[ -z $DISPLAY ]] && [[ $(tty) = /dev/tty1 ]]; then
+#   XKB_DEFAULT_LAYOUT=us exec sway
+# fi
+
+function wat {
+    echo 'source ~/dotFiles/shell/aliases.sh' >> ~/.bashrc
+
+    cp /etc/sway/config ~/.config/sway/config
+    echo 'include ~/dotFiles/sway/*.conf' >> ~/.config/sway/config
+}
+
+function config_sway {
+    mkdir -p ~/.config/sway
+    ~/dotFiles/sway/gen.py > ~/.config/sway/input.conf
+
+    cp -f /etc/sway/config ~/.config/sway/config
+    echo "include $HOME/.config/sway/input.conf" >> ~/.config/sway/config
+}
+
+config_sway
+
+# TODO: Packages

@@ -1,0 +1,14 @@
+font:
+  normal:
+    family: Cascadia Code
+    style: Regular
+  bold:
+    family: Cascadia Code
+    style: Bold
+  italic:
+    family: Cascadia Code
+    style: Italic
+  bold_italic:
+    family: Cascadia Code
+    style: Bold Italic
+  size: 14.0
