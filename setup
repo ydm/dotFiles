@@ -1,9 +1,27 @@
 #!/bin/bash
 
 ROOT=$(readlink -f $(dirname ${BASH_SOURCE[0]}))
+COMMANDS=( config_alacritty
+           config_bash
+           config_emacs
+           config_sway
+           config_sway_startup
+           install_packages
+           install_wayland
+           install_x )
 
 out() { printf "$1 $2\n" "${@:3}"; }
-info() { out '' "$@"; }
+error() { out "==> ERROR:" "$@"; } >&2
+die() { error "$@"; exit 1; }
+
+usage() {
+    out "Usage: $0 <command>..."
+    out
+    out "Commands:"
+    for c in ${COMMANDS[@]} ; do
+        out '  ' $c
+    done
+}
 
 config_alacritty() {
     rm -rf ~/.config/alacritty
@@ -40,8 +58,8 @@ EOF
 
 install_packages() {
 
-    pacman -Sy --noconfirm alacritty base-devel clang cmake dhcpcd dmenu \
-           docker emacs firefox gdb git git gnu-free-fonts pacman-contrib \
+    pacman -Sy --noconfirm alacritty aspell-en base-devel clang cmake dhcpcd \
+           dmenu emacs firefox gdb git git gnu-free-fonts pacman-contrib \
            pavucontrol pkgconf qt5-base sudo tree ttf-cascadia-code \
            ttf-dejavu ttf-hack ttf-ubuntu-font-family valgrind wpa_supplicant
 
@@ -58,19 +76,14 @@ install_x() {
 # TODO: AUR packages: ttf-monaco ttf-google-fonts-git ttf-courier-prime
 # ttf-ms-fonts
 
-if [ $# -eq 0 ] ; then
-    info "Usage: $0 <command>..."
-    info
-    info "Commands:"
-    info "  config_alacritty"
-    info "  config_bash"
-    info "  config_emacs"
-    info "  config_sway"
-    info "  config_sway_startup"
-    info "  install_wayland"
-    info "  install_x"
+if [ $# -eq 0 ] || [ $1 = "help" ] ; then
+    usage
 else
     for arg in $@ ; do
-        $arg
+        if [[ "${COMMANDS[*]}" =~ "$arg" ]]; then
+            $arg
+        else
+            die "unrecognized command: %s" "$arg"
+        fi
     done
 fi
