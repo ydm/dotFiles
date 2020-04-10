@@ -1,3 +1,7 @@
+colors:
+  primary:
+    background: '0x2c2c2c'
+
 font:
   normal:
     family: Cascadia Code

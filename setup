@@ -1,26 +1,76 @@
 #!/bin/bash
 
-# ~/.bash_profile
-# ---
-# if [[ -z $DISPLAY ]] && [[ $(tty) = /dev/tty1 ]]; then
-#   XKB_DEFAULT_LAYOUT=us exec sway
-# fi
+ROOT=$(readlink -f $(dirname ${BASH_SOURCE[0]}))
 
-function wat {
-    echo 'source ~/dotFiles/shell/aliases.sh' >> ~/.bashrc
+out() { printf "$1 $2\n" "${@:3}"; }
+info() { out '' "$@"; }
 
-    cp /etc/sway/config ~/.config/sway/config
-    echo 'include ~/dotFiles/sway/*.conf' >> ~/.config/sway/config
+config_alacritty() {
+    rm -rf ~/.config/alacritty
+    mkdir -p ~/.config/alacritty
+    cp $ROOT/alacritty/alacritty.yml ~/.config/alacritty/
 }
 
-function config_sway {
+config_bash() {
+    echo "source $ROOT/shell/aliases.sh" >> ~/.bashrc
+}
+
+config_emacs() {
+    PATH="$ROOT"/emacs/y-init.el
+    echo "(load \"$PATH\")"
+}
+
+config_sway() {
+    rm -rf ~/.config/sway
     mkdir -p ~/.config/sway
-    ~/dotFiles/sway/gen.py > ~/.config/sway/input.conf
+    $ROOT/sway/gen.py > ~/.config/sway/input.conf
 
     cp -f /etc/sway/config ~/.config/sway/config
     echo "include $HOME/.config/sway/input.conf" >> ~/.config/sway/config
 }
 
-config_sway
+config_sway_startup() {
+    cat >>~/.bash_profile <<EOF
 
-# TODO: Packages
+if [[ -z \$DISPLAY ]] && [[ \$(tty) = /dev/tty1 ]]; then
+    XKB_DEFAULT_LAYOUT=us exec sway
+fi
+EOF
+}
+
+install_packages() {
+
+    pacman -Sy --noconfirm alacritty base-devel clang dhcpcd dmenu \
+           docker emacs firefox git git gnu-free-fonts pacman-contrib \
+           pavucontrol pkgconf sudo ttf-cascadia-code ttf-dejavu \
+           ttf-hack ttf-ubuntu-font-family wpa_supplicant
+
+}
+
+install_wayland() {
+    pacman -Sy --noconfirm sway wayland
+}
+
+install_x() {
+    pacman -Sy i3 xorg xorg-xclock xorg-xinit xterm
+}
+
+# TODO: AUR packages: ttf-monaco ttf-google-fonts-git ttf-courier-prime
+# ttf-ms-fonts
+
+if [ $# -eq 0 ] ; then
+    info "Usage: $0 <command>..."
+    info
+    info "Commands:"
+    info "  config_alacritty"
+    info "  config_bash"
+    info "  config_emacs"
+    info "  config_sway"
+    info "  config_sway_startup"
+    info "  install_wayland"
+    info "  install_x"
+else
+    for arg in $@ ; do
+        $arg
+    done
+fi

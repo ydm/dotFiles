@@ -1,19 +1,18 @@
 My dotFiles
 ===========
 
-These include configuration for
-* X
-* emacs
-* git
-* i3
-* shell
-
-## Installation
-WARNING: thiis may override any present config files
-`$ ./install.sh`
+These include:
+- alacritty
+- bash aliases
+- emacs config
+- some X
+- sway config
 
 
-## Requires Following Arch GNU/Linux packages
-* (TODO)
-* xorg-xev
-* xorg-xmodmap
+## Setup
+`$ ./setup` prints available commands
+`$ ./setup config_emacs >> ~/.emacs` loads the emacs config
+
+
+## Arch GNU/Linux packages
+`$ sudo ./setup install_packages`
