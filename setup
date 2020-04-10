@@ -60,8 +60,8 @@ install_packages() {
 
     pacman -Sy --confirm aspell-en base-devel clang cmake dhcpcd emacs \
            firefox gdb git git gnu-free-fonts pacman-contrib pavucontrol \
-           pkgconf qt5-base sudo tree ttf-cascadia-code ttf-dejavu ttf-hack \
-           ttf-ubuntu-font-family valgrind wpa_supplicant
+           pkgconf qt5-base sudo the_silver_searcher tree ttf-cascadia-code \
+           ttf-dejavu ttf-hack ttf-ubuntu-font-family valgrind wpa_supplicant
 
 }
 
