@@ -105,12 +105,27 @@ to (backward-kill-sexp), but *deletes* the sexp instead of
     (delete-region opoint (point))
     (insert (format "%s" value))))
 
-(defun y:revisit-with-sudo (&optional file)
-  (interactive)
-  (let ((x (or file (buffer-file-name))))
-    (if x
-        (find-alternate-file (format "/sudo:root@localhost:%s" x))
-      (user-error "This buffer is not visiting a file"))))
+(defun y:revisit-with-sudo (prefix &optional file)
+  "If this function gets called without a prefix argument argument:
+- and a file: open that file with sudo
+- and no file: revisit the current buffer file with sudo
+
+If there is a prefix argument, ask the user for a file to visit."
+  (interactive (list
+                current-prefix-arg
+                (when current-prefix-arg
+                  (ido-read-file-name "[SUDO] Find file: "))))
+  (defun f (x) (format "/sudo:root@localhost:%s" x))
+  (if (or prefix file)
+      (find-file (f file))
+    (find-alternate-file (f (buffer-file-name)))))
+
+;; (defun y:revisit-with-sudo (prefix &optional file)
+;;   (interactive "P\nf")
+;;   (let ((x (or file (buffer-file-name))))
+;;     (if x
+;;         (find-alternate-file (format "/sudo:root@localhost:%s" x))
+;;       (user-error "This buffer is not visiting a file"))))
 
 (defun y:wrap-in-parentheses ()
   (interactive)
