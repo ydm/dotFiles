@@ -7,7 +7,7 @@ COMMANDS=( config_alacritty
            config_sway
            config_sway_startup
            install_packages
-           install_wayland
+           install_sway
            install_x )
 
 out() { printf "$1 $2\n" "${@:3}"; }
@@ -58,15 +58,18 @@ EOF
 
 install_packages() {
 
-    pacman -Sy --noconfirm alacritty aspell-en base-devel clang cmake dhcpcd \
-           dmenu emacs firefox gdb git git gnu-free-fonts pacman-contrib \
-           pavucontrol pkgconf qt5-base sudo tree ttf-cascadia-code \
-           ttf-dejavu ttf-hack ttf-ubuntu-font-family valgrind wpa_supplicant
+    pacman -Sy --confirm aspell-en base-devel clang cmake dhcpcd emacs \
+           firefox gdb git git gnu-free-fonts pacman-contrib pavucontrol \
+           pkgconf qt5-base sudo tree ttf-cascadia-code ttf-dejavu ttf-hack \
+           ttf-ubuntu-font-family valgrind wpa_supplicant
 
 }
 
-install_wayland() {
-    pacman -Sy --noconfirm sway wayland
+install_sway() {
+
+    pacman -Sy --confirm alacritty dmenu grim i3status mako slurp sway \
+           swayidle swaylock wallutils waybar wayland
+
 }
 
 install_x() {
