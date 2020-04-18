@@ -9,11 +9,12 @@ alias pacman='pacman --noconfirm'
 # Shortcuts
 alias e=emacs
 alias s=sudo
+alias spacman='sudo pacman'
 
 # Git
 alias ga='git add'
 alias gb='git branch'
-alias gc='git commit'
+alias gc='git commit -m'
 alias gco='git checkout'
 alias gd='git diff'
 alias gl='git pull --rebase origin'
