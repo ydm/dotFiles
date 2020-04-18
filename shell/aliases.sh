@@ -33,7 +33,6 @@ alias la='ls -a'
 alias lal='ls -al'
 alias ll='ls -l'
 
-
 # Utilities
 alias t='tree -Ca -I ".git"'
 alias theia='docker run -it --init -p 3000:3000 -v "$(pwd):/home/project:cached" theiaide/theia:latest'
