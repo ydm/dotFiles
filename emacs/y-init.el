@@ -37,6 +37,7 @@
  '(scroll-error-top-bottom t)
  '(scroll-preserve-screen-position t)
  '(show-paren-mode t)
+ '(tool-bar-mode nil)
  '(truncate-lines t))
 
 (defalias 'yes-or-no-p 'y-or-n-p)
