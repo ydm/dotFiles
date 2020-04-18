@@ -5,6 +5,7 @@
              go-mode
              haskell-mode
              meson-mode
+             pkgbuild-mode
              yaml-mode)))
 
 (provide 'y-packages)
