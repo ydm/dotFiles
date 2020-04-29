@@ -1,12 +1,13 @@
 ;; Here's a table of all my keys defined in OTHER files and where
 ;; exactly
 ;;
-;; |-----+-----------------+------------|
-;; | key | map             | file       |
-;; |-----+-----------------+------------|
-;; | "/" | vc-dir-mode-map | y-vc.el    |
-;; | "/" | dired-mode-map  | y-dired.el |
-;; |-----+-----------------+------------|
+;; |-----+-----------------+---------|
+;; | key | map             | file    |
+;; |-----+-----------------+---------|
+;; | "/" | vc-dir-mode-map | y-vc.el |
+;; | "/" | dired-mode-map  | y-ag.el |
+;; | "q" | ag-mode-map     | y-ag.el |
+;; |-----+-----------------+---------|
 
 
 (y:module
