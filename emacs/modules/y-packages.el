@@ -4,6 +4,7 @@
              feature-mode
              go-mode
              haskell-mode
+             hy-mode
              meson-mode
              pkgbuild-mode
              yaml-mode)))
