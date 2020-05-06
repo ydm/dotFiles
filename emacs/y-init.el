@@ -64,7 +64,13 @@ ASSOC is an association list that may optionally provide the
 following keys:
 - hookvar: hook variable to run a hook on once the module body gets
            executed
-- packages: packages to install on booting"
+- packages: packages to install on booting
+
+(y:module
+ '((packages atom-one-dark-theme)
+   (hookvar . y-theme-hook))
+  ...)
+"
   `(progn
      ;; Add the packages prop 
      (mapcar (lambda (x) (add-to-list '*y:selected-packages* x))

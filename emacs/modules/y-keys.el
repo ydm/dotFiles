@@ -21,8 +21,11 @@
  ;;   (mwheel-scroll 'mouse-4))
 
  (require 'y-interactive)
+ (require 'y-window)
 
  ;; Unset system keys
+ (global-unset-key (kbd "C-<delete>"))   ; kill-word
+ (global-unset-key (kbd "C-<insert>"))   ; kill-ring-save
  (global-unset-key (kbd "C-o"))          ; open-line
  (global-unset-key (kbd "C-x C-b"))      ; list-buffers
  (global-unset-key (kbd "C-x C-f"))      ; find-file
@@ -34,6 +37,8 @@
  ;; (global-unset-key (kbd "M-v"))          ; scroll-down-command
 
  ;; Reuse system keys
+ (global-set-key (kbd "C-<delete>")      #'window-swap-states)
+ (global-set-key (kbd "C-<insert>")      #'y:restore-windows)
  (global-set-key (kbd "C-o")             #'y:open-line)
  (global-set-key (kbd "C-x C-b")         #'bs-show)
  (global-set-key (kbd "C-x C-f")         #'y:find-file)

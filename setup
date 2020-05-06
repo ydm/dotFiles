@@ -75,11 +75,35 @@ EOF
 
 install_packages() {
 
-    pacman -Sy --confirm aspell-en base-devel clang cmake dhcpcd emacs \
-           firefox gdb git git gnu-free-fonts man-pages pacman-contrib \
-           pavucontrol pkgconf qt5-base sudo the_silver_searcher tree \
-           ttf-cascadia-code ttf-dejavu ttf-hack ttf-ubuntu-font-family \
-           valgrind wpa_supplicant
+    pacman -Sy --confirm \
+           aspell-en \
+           base-devel \
+           clang \
+           cmake \
+           dhcpcd \
+           emacs \
+           firefox \
+           gdb \
+           git \
+           git \
+           gnu-free-fonts \
+           man-pages \
+           mg \
+           pacman-contrib \
+           pavucontrol \
+           pkgconf \
+           qt5-base \
+           sudo \
+           the_silver_searcher \
+           transmission-gtk \
+           tree \
+           ttf-cascadia-code \
+           ttf-dejavu \
+           ttf-hack \
+           ttf-ubuntu-font-family \
+           unzip \
+           valgrind \
+           wpa_supplicant
 
 }
 

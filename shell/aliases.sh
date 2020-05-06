@@ -4,12 +4,11 @@
 alias grep='grep --color=auto'
 alias ls='ls --color=auto -h'
 alias make='make -j8'
-alias pacman='pacman --noconfirm'
 
 # Shortcuts
 alias e=emacs
 alias s=sudo
-alias spacman='sudo pacman'
+alias spac='sudo pacman --noconfirm'
 
 # Git
 alias ga='git add'

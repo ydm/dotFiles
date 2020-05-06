@@ -27,8 +27,7 @@ Conditions are:
 (defadvice bs-show (before y:bs-kill-system-buffers-before-bs-show activate)
   "Clean up buffer list before showing bs"
   ;; (apply #'kill-buffer (mapcar #'p (buffer-list)))?
-  (cl-loop for b in (buffer-list)
-	   when (y:bs/kill-buffer-p b)
-	   do (kill-buffer b)))
+  (mapc (lambda (b) (and (y:bs/kill-buffer-p b) (kill-buffer b)))
+        (buffer-list)))
 
 (provide 'y-bs)
