@@ -1,5 +1,6 @@
 (y:module
- '((packages cmake-mode
+ '((packages btc-ticker
+             cmake-mode
              dockerfile-mode
              feature-mode
              go-mode
