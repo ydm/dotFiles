@@ -38,7 +38,8 @@
  '(scroll-preserve-screen-position t)
  '(show-paren-mode t)
  '(tool-bar-mode nil)
- '(truncate-lines t))
+ '(truncate-lines t)
+ '(yas-global-mode t))
 
 (defalias 'yes-or-no-p 'y-or-n-p)
 (put 'dired-find-alternate-file 'disabled nil)
