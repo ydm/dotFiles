@@ -174,4 +174,21 @@ Otherwise fallback to (ido-find-file)."
      (ido-find-file)))
  )
 
+
+;; +-----+
+;; | WIP |
+;; +-----+
+
+(defun y:read-numpy ()
+  (interactive)
+  (save-excursion
+    (let ((start (point))
+          (end (save-excursion (forward-list) (point))))
+      (goto-char end) (insert ")")
+      (replace-regexp "\\[[[:space:]]*" "[" nil start end)
+      (replace-regexp "[[:space:]]*\\]" "]" nil start end)
+      (replace-regexp "\n?[[:space:]]+" ", " nil start end)
+      (goto-char start) (insert "np.array(")
+      (fill-paragraph))))
+
 (provide 'y-interactive)
