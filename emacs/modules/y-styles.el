@@ -5,10 +5,11 @@
  (defconst *y:my-cpp-style*
    '("bsd"
      (c-basic-offset . 4)
-     (tab-width . 4)
-     (c-offsets-alist . ((arglist-close . ?-)
-                         (member-init-intro . 0)
-                         (innamespace . 0)))))
+     (tab-width . 8)
+     ;; (c-offsets-alist . ((arglist-close . ?-)
+     ;;                     (member-init-intro . 0)
+     ;;                     (innamespace . 0)))
+     ))
  (c-add-style "mine" *y:my-cpp-style*)
 
  ;; Use // comments for C-mode
