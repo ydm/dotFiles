@@ -3,26 +3,20 @@
 (require 'bs)
 
 (defun y:bs/kill-buffer-p (b)
-  "\
-Returns t for buffer that should be killed.
-
-TODO: SPECIFY CONDITIONS BETTER, THE LIST ISN'T ACCURATE
-
-Conditions are:
-  1. Buffer starts with star
-  2. Buffer is neither one of *Messages*, *Packages* or *scratch*
-  3. Buffer doesn't have an associated process running
-  4. Buffer is not int dired-mode
-"
-  (let ((mode (with-current-buffer b major-mode))
+  "Given a buffer, return t if it should be killed and nil otherwise."
+  (let ((mode (buffer-local-value 'major-mode b))
         (name (buffer-name b))
         (protected '("*Messages*" "*Packages*" "*scratch*")))
-    (cond ((eq b (current-buffer)) nil)
-          ((eq mode 'dired-mode) nil)
-          ((and (string-prefix-p "*" name)
-                (not (member name protected))
-                (null (get-buffer-process b))))
-          (t nil))))
+    ;; Don't kill buffer in any of the following conditions
+    (not (or
+          ;; This is the current buffer
+          (eq b (current-buffer))
+          ;; The buffer is displayed in a window
+          (get-buffer-window b)
+          ;; The buffer has an associated process
+          (get-buffer-process b)
+          ;; Buffer is protected
+          (member name protected)))))
 
 (defadvice bs-show (before y:bs-kill-system-buffers-before-bs-show activate)
   "Clean up buffer list before showing bs"
