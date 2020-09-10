@@ -5,6 +5,7 @@ COMMANDS=( config_alacritty
            config_bash
            config_git
            config_emacs
+           config_git
            config_sway
            config_sway_startup
            install_packages
@@ -47,6 +48,11 @@ config_emacs() {
     echo "(load \"$PATH\")" > ~/.emacs
 }
 
+config_git() {
+    # Needed for go get to work
+    git config --global url.git@github.com:.insteadOf https://github.com/
+}
+
 config_sway() {
     SWAY=$HOME/.config/sway
     TMP=/tmp/c8bd855267bd
@@ -86,17 +92,18 @@ EOF
 }
 
 install_packages() {
-
+    # TODO: Check if dhcpcd is not preinstalled.
+    # qt5-base
+    # dhcpcd
+    # mg
     pacman -Sy --confirm \
            aspell-en \
            base-devel \
            clang \
            cmake \
-           dhcpcd \
            emacs \
            firefox \
            gdb \
-           git \
            git \
            gnu-free-fonts \
            go \
@@ -106,7 +113,6 @@ install_packages() {
            pacman-contrib \
            pavucontrol \
            pkgconf \
-           qt5-base \
            sudo \
            the_silver_searcher \
            tmux \
