@@ -51,6 +51,9 @@
  (define-key prog-mode-map (kbd "C-c i") #'y:ido-imenu)
  (global-set-key (kbd "<f13>")           #'smex)
  (global-set-key (kbd "C-(")             #'y:wrap-in-parentheses)
- (global-set-key (kbd "s-o")             #'forward-whitespace))
+ (global-set-key (kbd "s-o")             #'forward-whitespace)
+ (global-set-key (kbd "M-n")           (lambda () (interactive) (next-line 5)))
+ (global-set-key (kbd "M-p")           (lambda () (interactive) (previous-line 5))))
+ 
 
 (provide 'y-keys)
