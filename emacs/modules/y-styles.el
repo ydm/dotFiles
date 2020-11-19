@@ -6,6 +6,8 @@
    '("bsd"
      (c-basic-offset . 4)
      (tab-width . 8)
+     (c-offsets-alist . ((member-init-intro . 0)
+                         (innamespace . 0)))
      ;; (c-offsets-alist . ((arglist-close . ?-)
      ;;                     (member-init-intro . 0)
      ;;                     (innamespace . 0)))
@@ -18,7 +20,7 @@
  ;; an elegant way to do that.
  (add-hook 'c-mode-hook (lambda () (c-toggle-comment-style -1)))
 
-  ;; Set my style as the default for C++-mode and also turn on the
+ ;; Set my style as the default for C++-mode and also turn on the
  ;; Hide Show minor mode.
  ;;
  ;; XXX: Again, I should read the cc-mode documentation!
