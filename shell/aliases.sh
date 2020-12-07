@@ -3,7 +3,7 @@
 # Rewrite system commands
 alias grep='grep --color=auto'
 alias ls='ls --color=auto -h'
-alias make='make -j8'
+alias make='make -j4'
 
 # Shortcuts
 alias e=emacs

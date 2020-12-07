@@ -7,10 +7,9 @@
      (c-basic-offset . 4)
      (tab-width . 8)
      (c-offsets-alist . ((member-init-intro . 0)
-                         (innamespace . 0)))
-     ;; (c-offsets-alist . ((arglist-close . ?-)
-     ;;                     (member-init-intro . 0)
-     ;;                     (innamespace . 0)))
+                         (innamespace . 0)
+                         ;; (arglist-close . ?-)
+                         ))
      ))
  (c-add-style "mine" *y:my-cpp-style*)
 
@@ -34,4 +33,3 @@
  )
 
 (provide 'y-styles)
-

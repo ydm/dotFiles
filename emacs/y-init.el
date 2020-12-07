@@ -4,7 +4,10 @@
 ;; installed packages.  Don't delete this line.  If you don't want it,
 ;; just comment it out by adding a semicolon to the start of the line.
 ;; You may delete these explanatory comments.
-(package-initialize)
+;; (package-initialize)
+;;
+;; y: Commented out.  I think package is now automatically
+;;    initialized.  I should double-check.
 
 
 ;; +---------+
