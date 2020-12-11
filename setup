@@ -3,6 +3,7 @@
 ROOT=$(readlink -f $(dirname ${BASH_SOURCE[0]}))
 COMMANDS=( config_alacritty
            config_bash
+           config_git
            config_emacs
            config_sway
            config_sway_startup
@@ -30,17 +31,26 @@ config_alacritty() {
 }
 
 config_bash() {
+    echo >> ~/.bashrc
     echo "source $ROOT/shell/aliases.sh" >> ~/.bashrc
+}
+
+config_git() {
+    git config --global user.email "jordanMiladinov@gmail.com"
+    git config --global user.name "Yordan Miladinov"
 }
 
 config_emacs() {
     PATH="$ROOT"/emacs/y-init.el
-    echo "(load \"$PATH\")"
+    echo "(load \"$PATH\")" > ~/.emacs
 }
 
 config_sway() {
     SWAY=$HOME/.config/sway
     TMP=/tmp/c8bd855267bd
+
+    # Make sure ~/.config/sway exists
+    mkdir -p ~/.config/sway
 
     # First, copy existing conf files
     rm -rf $TMP
@@ -95,6 +105,7 @@ install_packages() {
            qt5-base \
            sudo \
            the_silver_searcher \
+           tmux \
            transmission-gtk \
            tree \
            ttf-cascadia-code \
@@ -103,6 +114,7 @@ install_packages() {
            ttf-ubuntu-font-family \
            unzip \
            valgrind \
+	   vlc \
            wpa_supplicant
 
 }
@@ -110,7 +122,7 @@ install_packages() {
 install_sway() {
 
     pacman -Sy --confirm alacritty dmenu grim i3status mako slurp sway \
-           swayidle swaylock wallutils waybar wayland
+           swayidle swaylock wallutils waybar wayland xorg-xwayland
 
 }
 
