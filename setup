@@ -102,6 +102,7 @@ install_packages() {
            go \
            man-pages \
            mg \
+           openssh \
            pacman-contrib \
            pavucontrol \
            pkgconf \
@@ -117,7 +118,7 @@ install_packages() {
            ttf-ubuntu-font-family \
            unzip \
            valgrind \
-	   vlc \
+           vlc \
            wpa_supplicant
 
 }
