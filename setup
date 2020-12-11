@@ -38,6 +38,7 @@ config_bash() {
 config_git() {
     git config --global user.email "jordanMiladinov@gmail.com"
     git config --global user.name "Yordan Miladinov"
+    git config --global url.git@github.com:.insteadOf https://github.com/
 }
 
 config_emacs() {
