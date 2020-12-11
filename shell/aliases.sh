@@ -7,7 +7,7 @@ alias make='make -j8'
 
 # Shortcuts
 alias e=emacs
-alias s=sudo
+# alias s=sudo  # conflicts with fasd
 alias spac='sudo pacman --noconfirm'
 
 # Git
@@ -35,5 +35,5 @@ alias ll='ls -l'
 
 # Utilities
 alias t='tree -Ca -I ".git"'
-alias theia='docker run -it --init -p 3000:3000 -v "$(pwd):/home/project:cached" theiaide/theia:latest'
+# alias theia='docker run -it --init -p 3000:3000 -v "$(pwd):/home/project:cached" theiaide/theia:latest'
 alias upgrade='sudo pacman -Syu --noconfirm'
