@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+sudo pkill wpa_supplicant
+
+CONF=${1:-/home/y/wifi/default.wpa}
+INTERFACE=$(ip address | grep -Poe '^\d+:\s+w[^:]+' | sed 's/^[[:digit:]]\+:[[:space:]]\+//')
+
+sudo wpa_supplicant -c$CONF -i$INTERFACE &

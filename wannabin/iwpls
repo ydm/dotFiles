@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+INTERFACE=$(ip address | grep -Poe '^\d+:\s+w[^:]+' | sed 's/^[[:digit:]]\+:[[:space:]]\+//')
+sudo iw dev $INTERFACE connect $1
