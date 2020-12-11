@@ -97,6 +97,7 @@ install_packages() {
            git \
            git \
            gnu-free-fonts \
+           go \
            man-pages \
            mg \
            pacman-contrib \
