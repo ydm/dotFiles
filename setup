@@ -32,7 +32,8 @@ config_alacritty() {
 
 config_bash() {
     echo >> ~/.bashrc
-    echo "source $ROOT/shell/aliases.sh" >> ~/.bashrc
+    echo 'source $ROOT/shell/aliases.sh' >> ~/.bashrc
+    echo 'PATH=$PATH:~/dotFiles/wannabin' >> ~/.bashrc
 }
 
 config_git() {
