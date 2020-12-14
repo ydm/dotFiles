@@ -127,6 +127,10 @@ install_packages() {
            vlc \
            wpa_supplicant
 
+    # Secondary packages
+    pacman -Sy --confirm \
+           postgresql-libs
+
 }
 
 install_sway() {
