@@ -8,6 +8,7 @@ COMMANDS=( config_alacritty
            config_git
            config_sway
            config_sway_startup
+           install_go
            install_packages
            install_sway
            install_x )
@@ -91,6 +92,12 @@ fi
 EOF
 }
 
+install_go() {
+
+    go get -u github.com/rogpeppe/godef
+
+}
+
 install_packages() {
     # TODO: Check if dhcpcd is not preinstalled.
     # qt5-base
@@ -125,7 +132,8 @@ install_packages() {
            unzip \
            valgrind \
            vlc \
-           wpa_supplicant
+           wpa_supplicant \
+           xorg-apps
 
     # Secondary packages
     pacman -Sy --confirm \
