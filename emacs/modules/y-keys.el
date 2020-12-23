@@ -53,7 +53,9 @@
  (global-set-key (kbd "C-(")             #'y:wrap-in-parentheses)
  (global-set-key (kbd "s-o")             #'forward-whitespace)
  (global-set-key (kbd "M-n")           (lambda () (interactive) (next-line 5)))
- (global-set-key (kbd "M-p")           (lambda () (interactive) (previous-line 5))))
+ (global-set-key (kbd "M-p")           (lambda () (interactive) (previous-line 5)))
+ (global-set-key (kbd "s-n")           (lambda () (interactive) (next-line 5)))
+ (global-set-key (kbd "s-p")           (lambda () (interactive) (previous-line 5))))
  
 
 (provide 'y-keys)
