@@ -97,6 +97,8 @@ following keys:
 ;; | Boot |
 ;; +------+
 
+(require 'package)
+
 (defun y:boot ()
   (let ((xs (seq-remove #'package-installed-p *y:selected-packages*)))
     (when xs
