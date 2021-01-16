@@ -3,12 +3,11 @@
 ROOT=$(readlink -f $(dirname ${BASH_SOURCE[0]}))
 COMMANDS=( config_alacritty
            config_bash
-           config_git
            config_emacs
            config_git
            config_sway
            config_sway_startup
-           install_go
+           install_go_tools
            install_packages
            install_sway
            install_x )
@@ -34,11 +33,12 @@ config_alacritty() {
 
 config_bash() {
     echo >> ~/.bashrc
-    echo 'source $ROOT/shell/aliases.sh' >> ~/.bashrc
+    echo "source $ROOT/shell/aliases.sh" >> ~/.bashrc
     echo 'PATH=$PATH:~/dotFiles/wannabin' >> ~/.bashrc
 }
 
 config_git() {
+    # TODO: This doesn't seem to work...
     git config --global user.email "jordanMiladinov@gmail.com"
     git config --global user.name "Yordan Miladinov"
     git config --global url.git@github.com:.insteadOf https://github.com/
@@ -92,7 +92,7 @@ fi
 EOF
 }
 
-install_go() {
+install_go_tools() {
 
     go get -u github.com/rogpeppe/godef
 
