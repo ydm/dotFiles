@@ -16,3 +16,8 @@ These include:
 
 ## Arch GNU/Linux packages
 `$ sudo ./setup install_packages`
+
+## Notes
+
+https://unix.stackexchange.com/questions/473788/simple-swaybar-example#473789
+pacman -S noto-fonts-emoji

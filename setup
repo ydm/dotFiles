@@ -7,6 +7,7 @@ COMMANDS=( config_alacritty
            config_git
            config_sway
            config_sway_startup
+           install_fasd
            install_go_tools
            install_packages
            install_sway
@@ -32,9 +33,13 @@ config_alacritty() {
 }
 
 config_bash() {
-    echo >> ~/.bashrc
-    echo "source $ROOT/shell/aliases.sh" >> ~/.bashrc
-    echo 'PATH=$PATH:~/dotFiles/wannabin' >> ~/.bashrc
+    cat >>~/.bashrc <<EOF
+
+# config_bash
+source $ROOT/shell/aliases.sh
+PATH=\$PATH:~/dotFiles/wannabin
+EOF
+
 }
 
 config_git() {
@@ -59,7 +64,9 @@ config_sway() {
 
     # Make a backup
     if [ -d $SWAY ] ; then
-        cp -r $SWAY $HOME/.config/sway.backup
+        BACKUP=$HOME/.config/sway.backup
+        rm -rf $BACKUP
+        cp -r $SWAY $BACKUP
     fi
 
     # Make sure ~/.config/sway exists.
@@ -86,6 +93,20 @@ fi
 EOF
 }
 
+install_fasd() {
+
+    sudo pacman -Sy --confirm fasd
+
+    if [ $? -eq 0 ]  ; then
+        cat >>~/.bashrc <<EOF
+
+# install_fasd
+eval "\$(fasd --init auto)"
+EOF
+    fi
+
+}
+
 install_go_tools() {
 
     go get -u github.com/rogpeppe/godef
@@ -96,57 +117,58 @@ install_packages() {
 
     # On new systems I absolutely need: dhcpcd, git, wpa_supplicant
 
-    pacman -Sy --confirm \
-           aspell-en \
-           base-devel \
-           clang \
-           cmake \
-           dhcpcd \
-           emacs \
-           firefox \
-           gdb \
-           git \
-           gnu-free-fonts \
-           go \
-           man \
-           man-pages \
-           mg \
-           openssh \
-           pacman-contrib \
-           pavucontrol \
-           pkgconf \
-           pulseaudio \
-           sudo \
-           the_silver_searcher \
-           tmux \
-           transmission-gtk \
-           tree \
-           ttf-cascadia-code \
-           ttf-dejavu \
-           ttf-hack \
-           ttf-ubuntu-font-family \
-           unzip \
-           valgrind \
-           vlc \
-           wpa_supplicant \
-           xclip \
-           xorg-apps
+    sudo pacman -Sy --confirm \
+         aspell-en \
+         base-devel \
+         clang \
+         cmake \
+         dhcpcd \
+         emacs \
+         firefox \
+         gdb \
+         git \
+         gnu-free-fonts \
+         go \
+         man \
+         man-pages \
+         mg \
+         openssh \
+         pacman-contrib \
+         pavucontrol \
+         pkgconf \
+         pulseaudio \
+         sudo \
+         the_silver_searcher \
+         tmux \
+         transmission-gtk \
+         tree \
+         ttf-cascadia-code \
+         ttf-dejavu \
+         ttf-hack \
+         ttf-ubuntu-font-family \
+         unzip \
+         valgrind \
+         vlc \
+         wpa_supplicant \
+         xclip \
+         xorg-apps
 
     # Secondary packages
-    pacman -Sy --confirm \
-           postgresql-libs
+    sudo pacman -Sy --confirm \
+         postgresql-libs
 
 }
 
 install_sway() {
 
-    pacman -Sy --confirm alacritty dmenu grim i3status mako slurp sway \
-           swayidle swaylock wallutils waybar wayland xorg-xwayland
+    sudo pacman -Sy --confirm alacritty dmenu grim i3status mako \
+         slur sway swayidle swaylock wallutils waybar wayland \
+         xorg-xwayland
 
 }
 
 install_x() {
-    pacman -Sy i3 xorg xorg-xclock xorg-xinit xterm
+    sudo pacman -Sy i3 xorg xorg-xclock xorg-xinit xterm
 }
 
 # TODO: AUR packages: ttf-monaco ttf-google-fonts-git ttf-courier-prime
