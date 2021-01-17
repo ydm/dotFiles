@@ -73,6 +73,8 @@ config_sway() {
 
     # Copy additional config files.
     cp -t $SWAY $ROOT/sway/*.conf
+
+    # TODO: Check ctrl:swapcaps
 }
 
 config_sway_startup() {
