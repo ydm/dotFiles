@@ -37,7 +37,7 @@ config_bash() {
 
 # config_bash
 source $ROOT/shell/aliases.sh
-PATH=\$PATH:~/dotFiles/wannabin
+PATH=\$PATH:$HOME/dotFiles/wannabin:$HOME/go/bin
 EOF
 
 }
@@ -109,7 +109,10 @@ EOF
 
 install_go_tools() {
 
+    go get -u github.com/dominikh/go-tools/cmd/staticcheck
+    go get -u github.com/kisielk/errcheck
     go get -u github.com/rogpeppe/godef
+    go get -u github.com/tetafro/godot/cmd/godot
 
 }
 
@@ -164,6 +167,9 @@ install_sway() {
     sudo pacman -Sy --confirm alacritty dmenu grim i3status mako \
          slur sway swayidle swaylock wallutils waybar wayland \
          xorg-xwayland
+
+    # This is neede for the fancy swaybar status.sh
+    sudo pacman -Sy --confirm noto-fonts-emoji
 
 }
 
