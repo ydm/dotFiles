@@ -129,6 +129,7 @@ install_packages() {
            valgrind \
            vlc \
            wpa_supplicant \
+           xclip \
            xorg-apps
 
     # Secondary packages
