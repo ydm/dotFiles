@@ -11,13 +11,27 @@ These include:
 
 ## Setup
 `$ ./setup` prints available commands
-`$ ./setup config_emacs >> ~/.emacs` loads the emacs config
 
+```bash
+$ ~/dotFiles/setup
+Usage: /home/y/dotFiles/setup <command>...
 
-## Arch GNU/Linux packages
-`$ sudo ./setup install_packages`
+Commands:
+   config_alacritty
+   config_bash
+   config_emacs
+   config_git
+   config_sway
+   config_sway_startup
+   install_fasd
+   install_go_tools
+   install_packages
+   install_sway
+   install_x
+```
 
-## Notes
-
-https://unix.stackexchange.com/questions/473788/simple-swaybar-example#473789
-pacman -S noto-fonts-emoji
+Some notes:
+- config_git: failed last time I tried it :)
+- install_sway: config's bar{} section has to be removed manually
+- install_fasd: appends to .bashrc
+- config_bash: appends to .bashrc
