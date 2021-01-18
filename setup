@@ -120,6 +120,9 @@ install_packages() {
 
     # On new systems I absolutely need: dhcpcd, git, wpa_supplicant
 
+    # TODO: Split in categories with packages in each category:
+    # system, programming, etc.
+
     sudo pacman -Sy --confirm \
          aspell-en \
          base-devel \
@@ -164,9 +167,9 @@ install_packages() {
 
 install_sway() {
 
-    sudo pacman -Sy --confirm alacritty dmenu grim i3status mako \
-         slur sway swayidle swaylock wallutils waybar wayland \
-         xorg-xwayland
+    sudo pacman -Sy --confirm alacritty brightnessctl dmenu grim \
+         i3status mako slur sway swayidle swaylock wallutils waybar \
+         wayland xorg-xwayland
 
     # This is neede for the fancy swaybar status.sh
     sudo pacman -Sy --confirm noto-fonts-emoji
