@@ -7,4 +7,4 @@ echo "INTERFACE=$INTERFACE"
 
 sudo ip link set wlo1 down
 sudo ip link set wlo1 up
-sudo iw dev $INTERFACE connect $1
+sudo iw dev "$INTERFACE" connect "$1"
