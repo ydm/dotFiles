@@ -136,6 +136,7 @@ install_packages() {
          git \
          gnu-free-fonts \
          go \
+         keepass \
          man \
          man-pages \
          mg \
