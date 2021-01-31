@@ -118,10 +118,11 @@ install_go_tools() {
 
 install_packages() {
 
-    # On new systems I absolutely need: dhcpcd, git, wpa_supplicant
+    # Some packages may already have been installed during the
+    # installation step, e.g. dhcpcd, git and wpa_supplicant, but they
+    # are also included here.
 
-    # TODO: Split in categories with packages in each category:
-    # system, programming, etc.
+    # TODO: Split in categories: system, programming, etc.
 
     sudo pacman -Sy --confirm \
          aspell-en \
@@ -171,8 +172,8 @@ install_sway() {
          i3status mako slur sway swayidle swaylock wallutils waybar \
          wayland xorg-xwayland
 
-    # This is neede for the fancy swaybar status.sh
-    sudo pacman -Sy --confirm noto-fonts-emoji
+    # These two are needed for the fancy swaybar status.sh.
+    sudo pacman -Sy --confirm acpi noto-fonts-emoji
 
 }
 
