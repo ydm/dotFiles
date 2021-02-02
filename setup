@@ -44,9 +44,10 @@ EOF
 
 config_git() {
     # TODO: This doesn't seem to work...
+    git config --global pull.rebase true
+    git config --global url.git@github.com:.insteadOf https://github.com/
     git config --global user.email "jordanMiladinov@gmail.com"
     git config --global user.name "Yordan Miladinov"
-    git config --global url.git@github.com:.insteadOf https://github.com/
 }
 
 config_emacs() {
@@ -163,7 +164,8 @@ install_packages() {
 
     # Secondary packages
     sudo pacman -Sy --confirm \
-         postgresql-libs
+         postgresql-libs \
+         python-pip
 
 }
 
