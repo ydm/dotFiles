@@ -125,11 +125,19 @@ install_packages() {
 
     # TODO: Split in categories: system, programming, etc.
 
+    # TODO: If I install also chromium, I should run:
+    #
+    # $ xdg-settings set default-web-browser firefox.desktop
+    #
+    # Taken from
+    # https://growworkinghard.altervista.org/default-web-browser-in-arch-linux-how-to-change-it/
+
     sudo pacman -Sy --confirm \
          aspell-en \
          base-devel \
          clang \
          cmake \
+         delve \
          dhcpcd \
          emacs \
          firefox \
@@ -164,6 +172,7 @@ install_packages() {
 
     # Secondary packages
     sudo pacman -Sy --confirm \
+         gimp \
          postgresql-libs \
          python-pip
 
