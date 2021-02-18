@@ -181,7 +181,7 @@ install_packages() {
 install_sway() {
 
     sudo pacman -Sy --confirm alacritty brightnessctl dmenu grim \
-         i3status mako slur sway swayidle swaylock wallutils waybar \
+         i3status mako slurp sway swayidle swaylock wallutils waybar \
          wayland xorg-xwayland
 
     # These two are needed for the fancy swaybar status.sh.
