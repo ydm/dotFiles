@@ -119,9 +119,10 @@ install_go_tools() {
 
 install_packages() {
 
-    # Some packages may already have been installed during the
-    # installation step, e.g. dhcpcd, git and wpa_supplicant, but they
-    # are also included here.
+    # Some packages have to be installed during the installation
+    # phase:
+    #
+    # $ pacstrap /mnt dhcpcd git sudo vi wpa_supplicant
 
     # TODO: Split in categories: system, programming, etc.
 
