@@ -154,6 +154,7 @@ install_packages() {
          pavucontrol \
          pkgconf \
          pulseaudio \
+         rustup \
          sudo \
          the_silver_searcher \
          tmux \

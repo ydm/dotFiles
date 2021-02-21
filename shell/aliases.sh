@@ -35,5 +35,6 @@ alias ll='ls -l'
 
 # Utilities
 alias t='tree -Ca -I ".git"'
+alias xclip='xclip -selection clipboard'
 # alias theia='docker run -it --init -p 3000:3000 -v "$(pwd):/home/project:cached" theiaide/theia:latest'
 alias upgrade='sudo pacman -Syu --noconfirm'
