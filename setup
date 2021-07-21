@@ -176,6 +176,7 @@ install_packages() {
     # Secondary packages
     sudo pacman -Sy --confirm \
          gimp \
+         imagemagick \
          postgresql-libs \
          python-pip
 
