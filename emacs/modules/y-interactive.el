@@ -185,7 +185,7 @@ If there is a prefix argument, ask the user for a file to visit."
 (y:module
  '((packages find-file-in-project))
 
- (require 'find-file-in-project)        ; -> y:find-file
+ (require 'projectile)                  ; -> y:find-file
 
  (setq ffip-project-root-function #'y:project-root)
 
@@ -196,7 +196,7 @@ Otherwise fallback to (ido-find-file)."
    (if (and (null prefix)
             (not (string-equal system-type "windows-nt"))
             (y:project-root))
-       (find-file-in-project)
+       (projectile-find-file)
      (ido-find-file)))
  )
 

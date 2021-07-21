@@ -23,19 +23,27 @@
  '(compilation-scroll-output 'first-error)
  '(default-input-method "bulgarian-alt-phonetic")
  '(delete-selection-mode t)
+ '(dired-auto-revert-buffer t)
+ '(dired-create-destination-dirs 'ask)
  '(dired-dwim-target t)
+ '(dired-hide-details-hide-symlink-targets nil)
  '(dired-listing-switches "-alh")
+ '(dired-recursive-copies 'always)
+ '(dired-recursive-deletes 'top)
+ '(gc-cons-threshold 1600000)
  '(gdb-many-windows t)
  '(global-display-line-numbers-mode t)
  '(global-subword-mode t)
  '(ido-enable-flex-matching t)
  '(ido-mode 'both nil (ido))
+ '(image-dired-thumb-size 150)
  '(indent-tabs-mode nil)
  '(inhibit-startup-screen t)
  '(mouse-yank-at-point t)
  '(package-archives
    '(("gnu" . "https://elpa.gnu.org/packages/")
      ("melpa" . "http://melpa.org/packages/")))
+ '(safe-local-variable-values '((git-commit-major-mode . git-commit-elisp-text-mode)))
  '(scroll-bar-mode nil)
  '(scroll-error-top-bottom t)
  '(scroll-preserve-screen-position t)
@@ -47,6 +55,23 @@
 (defalias 'yes-or-no-p 'y-or-n-p)
 (put 'dired-find-alternate-file 'disabled nil)
 (put 'downcase-region 'disabled nil)
+
+;; (setq dired-auto-revert-buffer t  ; don't prompt to revert; just do it
+;;         dired-dwim-target t  ; suggest a target for moving/copying intelligently
+;;         dired-hide-details-hide-symlink-targets nil
+;;         ;; Always copy/delete recursively
+;;         dired-recursive-copies  'always
+;;         dired-recursive-deletes 'top
+;;         ;; Ask whether destination dirs should get created when copying/removing files.
+;;         dired-create-destination-dirs 'ask
+;;         ;; Where to store image caches
+;;         image-dired-dir (concat doom-cache-dir "image-dired/")
+;;         image-dired-db-file (concat image-dired-dir "db.el")
+;;         image-dired-gallery-dir (concat image-dired-dir "gallery/")
+;;         image-dired-temp-image-file (concat image-dired-dir "temp-image")
+;;         image-dired-temp-rotate-image-file (concat image-dired-dir "temp-rotate-image")
+;;         ;; Screens are larger nowadays, we can afford slightly larger thumbnails
+;;         image-dired-thumb-size 150)
 
 
 ;; +---------+
