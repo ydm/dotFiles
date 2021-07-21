@@ -115,6 +115,8 @@ install_go_tools() {
     go get -u github.com/rogpeppe/godef
     go get -u github.com/tetafro/godot/cmd/godot
 
+    export GO111MODULE=on
+    go get golang.org/x/tools/gopls@latest
 }
 
 install_packages() {
@@ -123,6 +125,9 @@ install_packages() {
     # phase:
     #
     # $ pacstrap /mnt dhcpcd git sudo vi wpa_supplicant
+    #
+    # TODO: iwd is an amazing tool, I guess I can delete
+    #       wpa_supplicant from the list of installed packages?
 
     # TODO: Split in categories: system, programming, etc.
 
@@ -147,6 +152,7 @@ install_packages() {
          gnu-free-fonts \
          go \
          iw \
+         iwd \
          keepass \
          man \
          man-pages \
