@@ -83,11 +83,12 @@
 (defmacro y:module (assoc &rest body)
   "Execute the module body after Emacs initializes.
 
-If there are packages needed to be installed for this module to
-work, they may be specified in ASSOC.
+If there are packages needed to be installed as dependencies for this
+module to work, they may be specified in ASSOC.
 
 There's also an optional hook variable this module can specify
-that gets ran after the execution of BODY.
+that gets ran after the execution of BODY.  This way another actor may
+use this module as a dependency.
 
 ASSOC is an association list that may optionally provide the
 following keys:
@@ -98,7 +99,7 @@ following keys:
 (y:module
  '((packages atom-one-dark-theme)
    (hookvar . y-theme-hook))
-  ...)
+  BODY...)
 "
   `(progn
      ;; Add the packages prop 
