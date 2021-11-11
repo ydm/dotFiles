@@ -35,3 +35,6 @@ Some notes:
 - install_sway: config's bar{} section has to be removed manually
 - install_fasd: appends to .bashrc
 - config_bash: appends to .bashrc
+
+Some TODOs:
+- It's better to have `zap-up-to-char` (instead of `zap-to-char`) on `M-z`.
