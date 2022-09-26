@@ -7,24 +7,17 @@
   (let ((mode (buffer-local-value 'major-mode b))
         (name (buffer-name b))
         (protected '("*Messages*" "*scratch*")))
-    ;; (message "\
-    ;; mode=%s \
-    ;; name=%s \
-    ;; current=%s \
-    ;; window=%s \
-    ;; process=%s \
-    ;; protected=%s \
-    ;; modified=%s \
-    ;; file-name=%s"
-    ;;              mode
-    ;;              name
-    ;;              (eq b (current-buffer))
-    ;;              (get-buffer-window b)
-    ;;              (get-buffer-process b)
-    ;;              (member name protected)
-    ;;              (buffer-modified-p b)
-    ;;              (buffer-file-name b))
-      ;; Don't kill buffer in any of the following conditions
+    ;; (message "mode=%s name=%s current=%s window=%s process=%s protected=%s modified=%s file-name=%s"
+    ;;          mode
+    ;;          name
+    ;;          (eq b (current-buffer))
+    ;;          (get-buffer-window b)
+    ;;          (get-buffer-process b)
+    ;;          (member name protected)
+    ;;          (buffer-modified-p b)
+    ;;          (buffer-file-name b))
+    
+    ;; Don't kill buffer in any of the following conditions
     (not (or
           ;; This is the current buffer
           (eq b (current-buffer))

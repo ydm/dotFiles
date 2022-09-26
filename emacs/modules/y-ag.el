@@ -8,6 +8,7 @@
      (if prefix
          (kill-buffer-and-window)
        (kill-buffer))))
+
  (require 'dired)
  (define-key dired-mode-map (kbd "/") #'ag))
 
