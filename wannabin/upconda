@@ -1,0 +1,22 @@
+#!/bin/bash
+
+# Update conda
+conda update -n base -c defaults conda
+
+# TODO
+# conda create -n ten python=3.10 pandas numpy=1.20.3 lightgbm ta-lib graphviz -c conda-forge
+# create -n ten python=3.10 graphviz lightgbm numpy pandas scikit-learn ta-lib -c conda-forge
+
+# conda install jupyterlab matplotlib
+
+conda create -n asd \
+      python \
+      graphviz \
+      jupyterlab \
+      lightgbm \
+      matplotlib \
+      numpy \
+      pandas \
+      scikit-learn \
+      ta-lib \
+      -c conda-forge

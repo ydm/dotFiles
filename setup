@@ -35,19 +35,11 @@ config_alacritty() {
 config_bash() {
     cat >>~/.bashrc <<EOF
 
-# config_bash
+# ydm: config_bash
 source $ROOT/shell/aliases.sh
 PATH=\$PATH:$HOME/dotFiles/wannabin:$HOME/go/bin
 EOF
 
-}
-
-config_git() {
-    # TODO: This doesn't seem to work...
-    git config --global pull.rebase true
-    git config --global url.git@github.com:.insteadOf https://github.com/
-    git config --global user.email "jordanMiladinov@gmail.com"
-    git config --global user.name "Yordan Miladinov"
 }
 
 config_emacs() {
@@ -56,7 +48,13 @@ config_emacs() {
 }
 
 config_git() {
-    # Needed for go get to work
+    # TODO: This doesn't seem to work...
+    git config --global pull.rebase true
+    git config --global url.git@github.com:.insteadOf https://github.com/
+    git config --global user.email "yordanm@pm.me"
+    git config --global user.name "Yordan Miladinov"
+
+    # Needed for go get to work.  Breaks up cargo tho, but who cares.
     git config --global url.git@github.com:.insteadOf https://github.com/
 }
 
@@ -124,23 +122,15 @@ install_packages() {
     # Some packages have to be installed during the installation
     # phase:
     #
-    # $ pacstrap /mnt dhcpcd git sudo vi wpa_supplicant
+    # $ pacstrap /mnt dhcpcd git sudo vi iwd
     #
-    # TODO: iwd is an amazing tool, I guess I can delete
-    #       wpa_supplicant from the list of installed packages?
+    # TODO: iwd is an amazing tool, do I still need wpa_supplicant?
+    # TODO: Split into categories: system, programming, etc.
 
-    # TODO: Split in categories: system, programming, etc.
-
-    # TODO: If I install also chromium, I should run:
-    #
-    # $ xdg-settings set default-web-browser firefox.desktop
-    #
-    # Taken from
-    # https://growworkinghard.altervista.org/default-web-browser-in-arch-linux-how-to-change-it/
-
-    sudo pacman -Sy --confirm \
+    sudo pacman -Sy --noconfirm \
          aspell-en \
          base-devel \
+         chromium \
          clang \
          cmake \
          delve \
@@ -175,24 +165,41 @@ install_packages() {
          unzip \
          valgrind \
          vlc \
-         wpa_supplicant \
          xclip \
          xorg-apps
 
     # Secondary packages
-    sudo pacman -Sy --confirm \
+    sudo pacman -Sy --noconfirm \
          gimp \
          imagemagick \
-         postgresql-libs \
-         python-pip
+         postgresql-libs
+
+    xdg-settings set default-web-browser firefox.desktop
 
 }
 
 install_sway() {
 
-    sudo pacman -Sy --confirm alacritty brightnessctl dmenu grim \
-         i3status mako slurp sway swayidle swaylock wallutils waybar \
-         wayland xorg-xwayland
+    sudo pacman -Sy --confirm \
+         alacritty \
+         bemenu \
+         brightnessctl \
+         dmenu \
+         foot \
+         grim \
+         i3status \
+         mako \
+         slurp \
+         sway \
+         swaybg \
+         swayidle \
+         swaylock \
+         wallutils \
+         waybar \
+         wayland \
+         xorg-xwayland
+
+    # TODO: Install polkit?
 
     # These two are needed for the fancy swaybar status.sh.
     sudo pacman -Sy --confirm acpi noto-fonts-emoji
@@ -200,7 +207,7 @@ install_sway() {
 }
 
 install_x() {
-    sudo pacman -Sy i3 xorg xorg-xclock xorg-xinit xterm
+    sudo pacman -Sy --noconfirm i3 xorg xorg-xclock xorg-xinit xterm
 }
 
 # TODO: AUR packages: ttf-monaco ttf-google-fonts-git ttf-courier-prime

@@ -1,7 +1,5 @@
 # https://unix.stackexchange.com/questions/473788/simple-swaybar-example#473789
 
-
-
 # The Sway configuration file in ~/.config/sway/config calls this script.
 # You should see changes to the status bar after saving this script.
 # If not, do "killall swaybar" and $mod+Shift+c to reload the configuration.
@@ -22,5 +20,9 @@ battery_status=$(acpi | cut -d: -f2 | cut -d, -f1,2 | sed s'/^ //')
 
 # Emojis and characters for the status bar
 # 💎 💻 💡 🔌 ⚡ 📁 \|
-echo "$uptime_formatted ↑ | $battery_status 🔋 | $date_formatted 🕚"
-# echo ↑ $uptime_formatted 🔋 $battery_status 🕚 $date_formatted 
+
+if [ "$(acpi 2>&1)" != "No support for device type: power_supply" ] ; then
+    echo "$uptime_formatted ↑ | $battery_status 🔋 | $date_formatted 🕚"
+else
+    echo "$uptime_formatted ↑ | $date_formatted 🕚"
+fi
