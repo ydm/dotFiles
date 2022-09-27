@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 ROOT=$(readlink -f $(dirname ${BASH_SOURCE[0]}))
 
