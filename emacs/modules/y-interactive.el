@@ -167,8 +167,18 @@ If there is a prefix argument, ask the user for a file to visit."
 ;; | Helpers |
 ;; +---------+
 
+(defun d:parent-directories (dir)
+  (let* ((norm (y:normalize-directory dir))
+         (parent (y:parent-directory norm)))
+    (if (string-equal norm parent)
+        '()
+      (cons norm (d:parent-directories parent)))))
+
+(defun y:normalize-directory (dir)
+  (directory-file-name (expand-file-name dir)))
+
 (defun y:parent-directory (dir)
-  (file-name-directory (directory-file-name dir)))
+  (file-name-directory (y:normalize-directory dir)))
 
 (defun y:locate-top-dominating-file (file name)
   (when-let ((current (locate-dominating-file file name))
@@ -197,24 +207,6 @@ Otherwise fallback to (ido-find-file)."
             (not (string-equal system-type "windows-nt"))
             (y:project-root))
        (projectile-find-file)
-     (ido-find-file)))
- )
-
-
-;; +-----+
-;; | WIP |
-;; +-----+
-
-(defun y:read-numpy ()
-  (interactive)
-  (save-excursion
-    (let ((start (point))
-          (end (save-excursion (forward-list) (point))))
-      (goto-char end) (insert ")")
-      (replace-regexp "\\[[[:space:]]*" "[" nil start end)
-      (replace-regexp "[[:space:]]*\\]" "]" nil start end)
-      (replace-regexp "\n?[[:space:]]+" ", " nil start end)
-      (goto-char start) (insert "np.array(")
-      (fill-paragraph))))
+     (ido-find-file))))
 
 (provide 'y-interactive)
