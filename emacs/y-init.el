@@ -132,7 +132,7 @@ following keys:
       (mapcar #'package-install xs)))
   (load "~/.emacs.d/init/post" t))
 
-;; Registered last means executed first.
+;; Registered last means to get executed first.
 (add-hook 'after-init-hook #'y:boot)
 
 (provide 'y-init)

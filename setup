@@ -94,7 +94,7 @@ EOF
 
 install_fasd() {
 
-    sudo pacman -Sy --confirm fasd
+    sudo pacman -Sy --noconfirm fasd
 
     if [ $? -eq 0 ]  ; then
         cat >>~/.bashrc <<EOF
@@ -108,7 +108,8 @@ EOF
 
 install_go_tools() {
 
-    go get -u honnef.co/go/tools/cmd/staticcheck@latest
+    sudo pacman -Sy --noconfirm staticcheck
+
     go get -u github.com/kisielk/errcheck
     go get -u github.com/rogpeppe/godef
     go get -u github.com/tetafro/godot/cmd/godot
@@ -124,9 +125,16 @@ install_packages() {
     #
     # $ pacstrap /mnt dhcpcd git sudo vi iwd
     #
-    # TODO: iwd is an amazing tool, do I still need wpa_supplicant?
-    # TODO: Split into categories: system, programming, etc.
+    # TODO: Split in categories: system, programming, etc.
+    #
+    # TODO: If I install also chromium, I should run:
+    #
+    # $ xdg-settings set default-web-browser firefox.desktop
+    #
+    # Taken from
+    # https://growworkinghard.altervista.org/default-web-browser-in-arch-linux-how-to-change-it/
 
+>>>>>>> c104fed (setup: confirm --> noconfirm, pave the road to punk, nihilism and anarchy :))
     sudo pacman -Sy --noconfirm \
          aspell-en \
          base-devel \
@@ -202,7 +210,7 @@ install_sway() {
     # TODO: Install polkit?
 
     # These two are needed for the fancy swaybar status.sh.
-    sudo pacman -Sy --confirm acpi noto-fonts-emoji
+    sudo pacman -Sy --noconfirm acpi noto-fonts-emoji
 
 }
 
