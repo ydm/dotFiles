@@ -3,7 +3,7 @@
 # Rewrite system commands
 alias grep='grep --color=auto'
 alias ls='ls --color=auto -h'
-alias make='make -j4'
+alias make='make -j16'
 
 # Shortcuts
 alias e=emacs
@@ -34,7 +34,8 @@ alias lal='ls -al'
 alias ll='ls -l'
 
 # Utilities
+alias hh="npx hardhat"
 alias t='tree -Ca -I ".git"'
+alias upgrade='sudo pacman -Syu --noconfirm'
 alias xclip='xclip -selection clipboard'
 # alias theia='docker run -it --init -p 3000:3000 -v "$(pwd):/home/project:cached" theiaide/theia:latest'
-alias upgrade='sudo pacman -Syu --noconfirm'
