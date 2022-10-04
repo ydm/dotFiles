@@ -110,12 +110,12 @@ install_go_tools() {
 
     sudo pacman -Sy --noconfirm staticcheck
 
-    go get -u github.com/kisielk/errcheck
-    go get -u github.com/rogpeppe/godef
-    go get -u github.com/tetafro/godot/cmd/godot
+    go install github.com/kisielk/errcheck@latest
+    go install github.com/rogpeppe/godef@latest
+    go install github.com/tetafro/godot/cmd/godot@latest
 
     export GO111MODULE=on
-    go get golang.org/x/tools/gopls@latest
+    go install golang.org/x/tools/gopls@latest
 }
 
 install_packages() {
