@@ -1,6 +1,8 @@
 [[ -f ~/.Xresources ]] && xrdb -merge ~/.Xresources
 [[ -x ~/.fehbg ]] && sh ~/.fehbg
 
+feh --bg-scale ~/Downloads/wallpaper.jpg
+
 # Initially set map
 setxkbmap us -option ctrl:nocaps
 
