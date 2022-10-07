@@ -194,25 +194,22 @@ If there is a prefix argument, ask the user for a file to visit."
 (defun d:project-root ()
   (y:locate-top-dominating-file default-directory ".git"))
 
-;; +--------+
-;; | Module |
-;; +--------+
 
-;; (d:module
-;;  '((packages find-file-in-project))
+;; +---------+
+;; | Project |
+;; +---------+
 
-;;  (require 'projectile)                  ; -> y:find-file
+;; It's guaranteed to have all packages, described as (d:module)
+;; dependencies, already installed.
+(require 'helm-files)
+(require 'projectile)
 
-;;  (setq ffip-project-root-function #'d:project-root)
-
-;;  (defun y:find-file (prefix)
-;;    "If there's a project root, use (find-file-in-project).
-;; Otherwise fallback to (ido-find-file)."
-;;    (interactive "P")
-;;    (if (and (null prefix)
-;;             (not (string-equal system-type "windows-nt"))
-;;             (d:project-root))
-;;        (projectile-find-file)
-;;      (ido-find-file))))
+(defun d:find-file (&optional prefix)
+  (interactive "P")
+  (if (and (null prefix)
+           (not (string-equal system-type "windows-nt"))
+           (projectile-project-root))
+      (projectile-find-file)
+    (helm-find-files)))
 
 (provide 'd-library-interactives)

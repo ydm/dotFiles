@@ -37,4 +37,4 @@ Some notes:
 - config_bash: appends to .bashrc
 
 Some TODOs:
-- It's better to have `zap-up-to-char` (instead of `zap-to-char`) on `M-z`.
+- Can I use (use-package) for (d:module)?

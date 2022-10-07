@@ -1,6 +1,6 @@
 ;; -*- lexical-binding: t; -*-
 
-;; Here's a table of all my keys defined in OTHER files and where  
+;; Here's a table of all my keys defined in OTHER files and where
 ;; exactly
 ;;
 ;; |-----+-----------------+---------|
@@ -13,7 +13,7 @@
 
 
 (d:module
- '((packages smex))
+ '((packages helm))
 
  (require 'd-bootstrap)
  (d:load-library 'interactives)
@@ -24,21 +24,22 @@
  (global-unset-key (kbd "C-<insert>"))   ; kill-ring-save
  (global-unset-key (kbd "C-o"))          ; open-line
  (global-unset-key (kbd "C-x C-b"))      ; list-buffers
- ;; (global-unset-key (kbd "C-x b"))        ; 
- ;; (global-unset-key (kbd "C-x C-f"))      ; find-file
  (global-unset-key (kbd "C-x C-r"))      ; find-file-read-only
  (global-unset-key (kbd "C-x o"))        ; other-frame
  (global-unset-key (kbd "C-z"))          ; suspend-frame
  (global-unset-key (kbd "M-x"))          ; execute-extend-command
+ (global-unset-key (kbd "M-z"))          ; zap-to-char
+ (global-unset-key (kbd "C-x C-f"))      ; find-file
 
  ;; Reuse system keys
  (global-set-key (kbd "C-<delete>")      #'window-swap-states)
  (global-set-key (kbd "C-<insert>")      #'y:restore-windows)
  (global-set-key (kbd "C-o")             #'y:open-line)
  (global-set-key (kbd "C-x C-b")         #'bs-show)
- ;; (global-set-key (kbd "C-x C-f")         #'y:find-file)
  (global-set-key (kbd "C-x C-r")         #'y:revisit-with-sudo)
- (global-set-key (kbd "M-x")             #'smex)
+ (global-set-key (kbd "M-z")             #'zap-up-to-char)
+ (global-set-key (kbd "M-x")             #'helm-M-x)
+ (global-set-key (kbd "C-x C-f")         #'d:find-file)
 
  ;; New keys
  (define-key prog-mode-map (kbd "C-c i") #'d:ido-imenu)

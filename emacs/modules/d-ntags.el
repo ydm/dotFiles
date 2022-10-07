@@ -19,7 +19,8 @@
                (save-mark-and-excursion
                  (goto-line (1+ lineno))
                  (back-to-indentation)
-                 (point))))
+                 (point)))
+              (recenter-top-bottom))
      (message "[NTAGS] Could not find definition: root=%s thing=%s command=%s output=%s parts=%s filename=%s line=%s"
               root thing command output parts filename line)))
 

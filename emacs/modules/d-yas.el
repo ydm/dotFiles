@@ -1,4 +1,4 @@
-;; (d:module
-;;  '((packages yasnippet-snippets)))
+(d:module
+ '((packages yasnippet-snippets)))
 
 (provide 'd-yas)
