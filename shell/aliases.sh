@@ -7,6 +7,11 @@ alias make='make -j16'
 
 # Shortcuts
 alias e=emacs
+alias enw='emacs -nw'
+if ! $(command -v mg 1>/dev/null) ; then
+    alias mg="emacs -nw"
+fi
+
 # alias s=sudo  # conflicts with fasd
 alias spac='sudo pacman --noconfirm'
 
