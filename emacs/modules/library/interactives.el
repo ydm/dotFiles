@@ -23,8 +23,8 @@
         (insert-commented comment ?| ? )
         (insert-commented rule ?+ ?-)))))
 
-;; https://superuser.com/questions/601982/
-(defun y:ido-imenu ()
+;; Original taken from https://superuser.com/questions/601982/
+(defun d:ido-imenu ()
   "Update the imenu index and then use ido to select a symbol to
 navigate to. Symbols matching the text at point are put first in
 the completion list."
@@ -54,6 +54,7 @@ the completion list."
                          (add-to-list 'symbol-names name)
                          (add-to-list 'name-and-pos (cons name position))))))))
       (addsymbols imenu--index-alist))
+
     ;; If there are matching symbols at point, put them at the beginning
     ;; of `symbol-names'.
     (let ((symbol-at-point (thing-at-point 'symbol)))
@@ -153,11 +154,16 @@ If there is a prefix argument, ask the user for a file to visit."
           (select-window first-win)
           (if this-win-2nd (other-window 1))))))
 
-(defun y:wrap-in-parentheses ()
-  (interactive)
-  (insert-char ?\()
+;; TODO: Check if there is a region
+(defun d:wrap-in (opening closing)
+  (insert-char opening)
   (move-end-of-line 1)
-  (insert-char ?\)))
+  (insert-char closing))
+
+(defun d:wrap-in-curly-braces  () (interactive) (d:wrap-in ?{  ?}  ))
+(defun d:wrap-in-double-quotes () (interactive) (d:wrap-in ?\" ?\" ))
+(defun d:wrap-in-parenthesis   () (interactive) (d:wrap-in ?\( ?\) ))
+(defun d:wrap-in-single-quotes () (interactive) (d:wrap-in ?'  ?'  ))
 
 ;; TODO: Write a function that I can bind on C-', C-", C-(, C-{ and
 ;; whatever else there is that wraps a region in quotes, double
@@ -185,28 +191,28 @@ If there is a prefix argument, ask the user for a file to visit."
              (parent (y:parent-directory current)))
     (or (y:locate-top-dominating-file parent name) current)))
 
-(defun y:project-root ()
+(defun d:project-root ()
   (y:locate-top-dominating-file default-directory ".git"))
 
 ;; +--------+
 ;; | Module |
 ;; +--------+
 
-(y:module
- '((packages find-file-in-project))
+;; (y:module
+;;  '((packages find-file-in-project))
 
- (require 'projectile)                  ; -> y:find-file
+;;  (require 'projectile)                  ; -> y:find-file
 
- (setq ffip-project-root-function #'y:project-root)
+;;  (setq ffip-project-root-function #'d:project-root)
 
- (defun y:find-file (prefix)
-   "If there's a project root, use (find-file-in-project).
-Otherwise fallback to (ido-find-file)."
-   (interactive "P")
-   (if (and (null prefix)
-            (not (string-equal system-type "windows-nt"))
-            (y:project-root))
-       (projectile-find-file)
-     (ido-find-file))))
+;;  (defun y:find-file (prefix)
+;;    "If there's a project root, use (find-file-in-project).
+;; Otherwise fallback to (ido-find-file)."
+;;    (interactive "P")
+;;    (if (and (null prefix)
+;;             (not (string-equal system-type "windows-nt"))
+;;             (d:project-root))
+;;        (projectile-find-file)
+;;      (ido-find-file))))
 
-(provide 'y-interactive)
+(provide 'd-library-interactives)

@@ -34,6 +34,7 @@
  '(gdb-many-windows t)
  '(global-display-line-numbers-mode t)
  '(global-subword-mode t)
+ '(hs-hide-comments-when-hiding-all nil)
  '(ido-enable-flex-matching t)
  '(ido-mode 'both nil (ido))
  '(image-dired-thumb-size 150)
@@ -56,29 +57,11 @@
 (put 'dired-find-alternate-file 'disabled nil)
 (put 'downcase-region 'disabled nil)
 
-;; (setq dired-auto-revert-buffer t  ; don't prompt to revert; just do it
-;;         dired-dwim-target t  ; suggest a target for moving/copying intelligently
-;;         dired-hide-details-hide-symlink-targets nil
-;;         ;; Always copy/delete recursively
-;;         dired-recursive-copies  'always
-;;         dired-recursive-deletes 'top
-;;         ;; Ask whether destination dirs should get created when copying/removing files.
-;;         dired-create-destination-dirs 'ask
-;;         ;; Where to store image caches
-;;         image-dired-dir (concat doom-cache-dir "image-dired/")
-;;         image-dired-db-file (concat image-dired-dir "db.el")
-;;         image-dired-gallery-dir (concat image-dired-dir "gallery/")
-;;         image-dired-temp-image-file (concat image-dired-dir "temp-image")
-;;         image-dired-temp-rotate-image-file (concat image-dired-dir "temp-rotate-image")
-;;         ;; Screens are larger nowadays, we can afford slightly larger thumbnails
-;;         image-dired-thumb-size 150)
-
-
 ;; +---------+
 ;; | Modules |
 ;; +---------+
 
-(defvar *y:selected-packages* '())
+(defvar *d:selected-packages* '())
 
 (defmacro y:module (assoc &rest body)
   "Execute the module body after Emacs initializes.
@@ -103,7 +86,7 @@ following keys:
 "
   `(progn
      ;; Add the packages prop 
-     (mapcar (lambda (x) (add-to-list '*y:selected-packages* x))
+     (mapcar (lambda (x) (add-to-list '*d:selected-packages* x))
              (cdr (assoc 'packages ,assoc)))
      (add-hook 'after-init-hook
                (lambda ()
@@ -111,11 +94,11 @@ following keys:
                  (let ((hookvar (cdr (assoc 'hookvar ,assoc))))
                    (and hookvar (run-hooks hookvar)))))))
 
-;; XXX: Un-hard-code path?
 (let ((dir "~/dotFiles/emacs/modules/"))
-  (mapcar (lambda (p)
-	    (message "[Y] Requiring %s" p)
-	    (require (intern (file-name-base p)) p))
+  (mapcar (lambda (path)
+            (let ((symbol (intern (file-name-base path))))
+	      (message "[Y] Requiring %20s from %s" symbol path)
+	      (require symbol path)))
 	  (directory-files dir t "\\.el$")))
 
 
@@ -125,14 +108,14 @@ following keys:
 
 (require 'package)
 
-(defun y:boot ()
-  (let ((xs (seq-remove #'package-installed-p *y:selected-packages*)))
+(defun d:boot ()
+  (let ((xs (seq-remove #'package-installed-p *d:selected-packages*)))
     (when xs
       (package-refresh-contents)
       (mapcar #'package-install xs)))
   (load "~/.emacs.d/init/post" t))
 
 ;; Registered last means to get executed first.
-(add-hook 'after-init-hook #'y:boot)
+(add-hook 'after-init-hook #'d:boot)
 
-(provide 'y-init)
+(provide 'd-init)

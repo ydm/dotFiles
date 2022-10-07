@@ -13,4 +13,4 @@
             (setq *y:current-window-configuration*
                   (current-window-configuration))))
 
-(provide 'y-window)
+(provide 'd-library-windows)
