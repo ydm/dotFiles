@@ -43,7 +43,7 @@ EOF
 }
 
 config_emacs() {
-    PATH="$ROOT"/emacs/y-init.el
+    PATH="$ROOT"/emacs/d-init.el
     echo "(load \"$PATH\")" > ~/.emacs
 }
 
