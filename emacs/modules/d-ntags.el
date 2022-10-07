@@ -13,7 +13,11 @@
              (line (cadr parts))
              (lineno (string-to-number line)))
        (progn (find-file filename)
-              (goto-line lineno))
+              (goto-char
+               (save-mark-and-excursion
+                 (goto-line (1+ lineno))
+                 (back-to-indentation)
+                 (point))))
      (message "[NTAGS] Could not find definition: root=%s thing=%s command=%s output=%s parts=%s filename=%s line=%s"
               root thing command output parts filename line)))
 
