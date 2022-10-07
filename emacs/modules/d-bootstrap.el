@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t; -*-
+
 (setq *d:modules-directory* (file-name-directory load-file-name))
 
 (defun d:join-paths (&rest paths)

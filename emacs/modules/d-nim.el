@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t; -*-
+
 ;; (y:module
 ;;  '((packages markdown-mode nim-mode))
 

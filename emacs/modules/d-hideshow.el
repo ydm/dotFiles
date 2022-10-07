@@ -1,6 +1,6 @@
-(require 'hideshow)
+;; -*- lexical-binding: t; -*-
 
-(y:module
+(d:module
  '()
 
  (require 'hideshow)

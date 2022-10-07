@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t; -*-
+
 ;; '(lsp-modeline-code-action-fallback-icon "++")
 
 (y:module

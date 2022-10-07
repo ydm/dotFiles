@@ -198,7 +198,7 @@ If there is a prefix argument, ask the user for a file to visit."
 ;; | Module |
 ;; +--------+
 
-;; (y:module
+;; (d:module
 ;;  '((packages find-file-in-project))
 
 ;;  (require 'projectile)                  ; -> y:find-file

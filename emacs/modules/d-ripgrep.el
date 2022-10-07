@@ -1,8 +1,10 @@
-(y:module
+;; -*- lexical-binding: t; -*-
+
+(d:module
  '((packages ripgrep))
 
- (require 'ripgrep)
  (require 'dired)
+ (require 'ripgrep)
 
  (define-key dired-mode-map (kbd "/")
    (lambda (needle)

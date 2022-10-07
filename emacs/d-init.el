@@ -36,7 +36,7 @@
  '(global-subword-mode t)
  '(hs-hide-comments-when-hiding-all nil)
  '(ido-enable-flex-matching t)
- '(ido-mode 'both nil (ido))
+ '(ido-mode 'both nil (buffers))
  '(image-dired-thumb-size 150)
  '(indent-tabs-mode nil)
  '(inhibit-startup-screen t)
@@ -63,7 +63,7 @@
 
 (defvar *d:selected-packages* '())
 
-(defmacro y:module (assoc &rest body)
+(defmacro d:module (assoc &rest body)
   "Execute the module body after Emacs initializes.
 
 If there are packages needed to be installed as dependencies for this
@@ -79,9 +79,9 @@ following keys:
            executed
 - packages: packages to install on booting
 
-(y:module
- '((packages atom-one-dark-theme)
-   (hookvar . y-theme-hook))
+(d:module
+ '((packages challenger-theme)
+   (hookvar . d-theme-hook))
   BODY...)
 "
   `(progn
@@ -99,7 +99,7 @@ following keys:
             (let ((symbol (intern (file-name-base path))))
 	      (message "[Y] Requiring %20s from %s" symbol path)
 	      (require symbol path)))
-	  (directory-files dir t "\\.el$")))
+	  (directory-files dir t "^d-.*\\.el$")))
 
 
 ;; +------+

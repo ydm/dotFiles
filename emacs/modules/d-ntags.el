@@ -1,5 +1,7 @@
-(y:module
- '((packages markdown-mode nim-mode))
+;; -*- lexical-binding: t; -*-
+
+(d:module
+ '((packages nim-mode))
 
  (defun d:ntags-find-definition ()
    (interactive)

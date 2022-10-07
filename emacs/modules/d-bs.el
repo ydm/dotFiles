@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t; -*-
+
 (require 'bs)
 
 (defun y:bs/kill-buffer-p (b)

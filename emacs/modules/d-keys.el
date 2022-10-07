@@ -1,4 +1,6 @@
-;; Here's a table of all my keys defined in OTHER files and where
+;; -*- lexical-binding: t; -*-
+
+;; Here's a table of all my keys defined in OTHER files and where  
 ;; exactly
 ;;
 ;; |-----+-----------------+---------|
@@ -10,7 +12,7 @@
 ;; |-----+-----------------+---------|
 
 
-(y:module
+(d:module
  '((packages smex))
 
  (require 'd-bootstrap)
@@ -22,6 +24,7 @@
  (global-unset-key (kbd "C-<insert>"))   ; kill-ring-save
  (global-unset-key (kbd "C-o"))          ; open-line
  (global-unset-key (kbd "C-x C-b"))      ; list-buffers
+ ;; (global-unset-key (kbd "C-x b"))        ; 
  ;; (global-unset-key (kbd "C-x C-f"))      ; find-file
  (global-unset-key (kbd "C-x C-r"))      ; find-file-read-only
  (global-unset-key (kbd "C-x o"))        ; other-frame
@@ -47,4 +50,4 @@
  (global-set-key (kbd "M-p")             (lambda () (interactive) (previous-line 5)))
  (global-set-key (kbd "s-o")             #'forward-whitespace))
 
-(provide 'y-keys)
+(provide 'd-keys)

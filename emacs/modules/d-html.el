@@ -1,4 +1,6 @@
-(y:module
+;; -*- lexical-binding: t; -*-
+
+(d:module
  ()
 
  ;; Turn off the electric-indent-mode for the rare cases I have to
