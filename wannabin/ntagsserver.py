@@ -55,11 +55,7 @@ def find(tagsfn, tag):
 
 def generate_tags(tagsfn, path, force=True):
     if force or not tagsfn.exists() or is_older_than(tagsfn, hours=1):
-        # TODO: Use a real temporary directory!
-        with tempfile.TemporaryDirectory() as tmp:
-            subprocess.check_call(['ntags', '-R', path], cwd=tmp)
-            src = os.path.join(tmp, 'tags')
-            os.rename(src, tagsfn)
+        subprocess.check_call(['ntags', '-R', path, '-f', tagsfn])
 
 
 def is_older_than(filepath, **kw):
