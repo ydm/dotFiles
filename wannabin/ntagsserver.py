@@ -34,16 +34,18 @@ def binsearch(xs, prefix):
     return None
 
 
-def extract_filename(line):
-    a = line.index('\t') + 1
-    b = line.index('\t', a)
-    return line[a:b]
+class extract:
+    @staticmethod
+    def filename(line):
+        a = line.index('\t') + 1
+        b = line.index('\t', a)
+        return line[a:b]
 
-
-def extract_pattern(line):
-    a = line.index('/^') + 2
-    b = line.index('$/;\"\t', a)
-    return line[a:b]
+    @staticmethod
+    def pattern(line):
+        a = line.index('/^') + 2
+        b = line.index('$/;\"\t', a)
+        return line[a:b]
 
 
 def find(tagsfn, tag):
@@ -108,8 +110,8 @@ def main():
         return
 
     # Extract filename and pattern.
-    filename = extract_filename(line)
-    pattern = extract_pattern(line)
+    filename = extract.filename(line)
+    pattern = extract.pattern(line)
 
     # Use filename and pattern to find the precise line of the definition.
     lineno = locate_pattern(filename, pattern)
