@@ -9,6 +9,7 @@ import datetime
 import hashlib
 import os
 import pathlib
+import re
 import subprocess
 import tempfile
 
@@ -42,10 +43,22 @@ class extract:
         return line[a:b]
 
     @staticmethod
+    def lineno(line):
+        tagfields = extract.tagfields(line)
+        matches = re.findall(r'lineno:(\d+)', tagfields)
+        # Following line could throw IndexError or ValueError.
+        return int(matches[0])
+
+    @staticmethod
     def pattern(line):
         a = line.index('/^') + 2
         b = line.index('$/;\"\t', a)
         return line[a:b]
+
+    @staticmethod
+    def tagfields(line):
+        start = line.rindex('\t')
+        return line[start:].strip()
 
 
 def find(tagsfn, tag):
@@ -65,19 +78,6 @@ def is_older_than(filepath, **kw):
     mod = datetime.datetime.fromtimestamp(sec)
     now = datetime.datetime.now()
     return (now - mod) > datetime.timedelta(**kw)
-
-
-def locate_pattern(filename, pattern):
-    # Strip problematic characters.
-    strip = lambda s: s.replace('\\', '')
-    pattern = strip(pattern)
-    with open(filename, 'r', encoding='utf-8') as f:
-        for (i, line) in enumerate(f):
-            line = line[:-1]    # Strip newline at end.
-            line = strip(line)
-            if line == pattern:
-                return i
-    return -1
 
 
 def parse_args():
@@ -111,12 +111,9 @@ def main():
 
     # Extract filename and pattern.
     filename = extract.filename(line)
-    pattern = extract.pattern(line)
+    lineno = extract.lineno(line)
 
-    # Use filename and pattern to find the precise line of the definition.
-    lineno = locate_pattern(filename, pattern)
-
-    #
+    # Output.
     print(f'{filename}:{lineno}')
 
 
