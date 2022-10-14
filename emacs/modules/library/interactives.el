@@ -5,7 +5,7 @@
 (require 'cl)
 (require 'imenu)
 
-(defun y:block-comment (comment)
+(defun d:block-comment (comment)
   (interactive "sLabel: ")
   (cl-flet ((insert-commented (str wrapper filling)
                               (indent-according-to-mode)
@@ -78,14 +78,14 @@ the completion list."
           (goto-char (overlay-start position))
         (goto-char position)))))
 
-(defun y:open-line ()
+(defun d:open-line ()
   (interactive)
   (move-beginning-of-line nil)
   (open-line 1)
   (indent-for-tab-command))
 
-(defun y:push-filename-line ()
-  "Push the current buffer's filename:line into the kill ring."
+(defun d:copy-filename ()
+  "Copy filename:line to clipbord."
   (interactive)
   (let* ((filename (buffer-file-name))
          (line (line-number-at-pos))
@@ -94,7 +94,7 @@ the completion list."
       (insert cmd)
       (kill-ring-save (point-min) (point-max)))))
 
-(defun y:replace-last-sexp ()
+(defun d:replace-last-sexp ()
   "Evaluates the last sexp before point and replaces it with the
 result it yields.  This function uses something similar
 to (backward-kill-sexp), but *deletes* the sexp instead of
@@ -106,12 +106,12 @@ to (backward-kill-sexp), but *deletes* the sexp instead of
     (delete-region opoint (point))
     (insert (format "%s" value))))
 
-(defun y:revisit-with-sudo (prefix &optional file)
-  "If this function gets called without a prefix argument argument:
-- and a file: open that file with sudo
-- and no file: revisit the current buffer file with sudo
+(defun d:revisit-with-sudo (prefix &optional file)
+  "If there is a prefix argument, ask the user for a file to visit.
 
-If there is a prefix argument, ask the user for a file to visit."
+Without prefix argument:
+- if file is not nil, visit that file
+- otherwise revisit current buffer with SUDO."
   (interactive (list
                 current-prefix-arg
                 (when current-prefix-arg
@@ -121,14 +121,14 @@ If there is a prefix argument, ask the user for a file to visit."
       (find-file (f file))
     (find-alternate-file (f (buffer-file-name)))))
 
-;; (defun y:revisit-with-sudo (prefix &optional file)
+;; (defun d:revisit-with-sudo (prefix &optional file)
 ;;   (interactive "P\nf")
 ;;   (let ((x (or file (buffer-file-name))))
 ;;     (if x
 ;;         (find-alternate-file (format "/sudo:root@localhost:%s" x))
 ;;       (user-error "This buffer is not visiting a file"))))
 
-(defun y:toggle-window-split ()
+(defun d:toggle-window-split ()
   "https://github.com/magnars/.emacs.d/ ... /defuns/buffer-defuns.el#L42"
   (interactive)
   (if (= (count-windows) 2)
@@ -174,34 +174,33 @@ If there is a prefix argument, ask the user for a file to visit."
 ;; +---------+
 
 (defun d:parent-directories (dir)
-  (let* ((norm (y:normalize-directory dir))
-         (parent (y:parent-directory norm)))
+  (let* ((norm (d:normalize-directory dir))
+         (parent (d:parent-directory norm)))
     (if (string-equal norm parent)
         '()
       (cons norm (d:parent-directories parent)))))
 
-(defun y:normalize-directory (dir)
+(defun d:normalize-directory (dir)
   (directory-file-name (expand-file-name dir)))
 
-(defun y:parent-directory (dir)
-  (file-name-directory (y:normalize-directory dir)))
+(defun d:parent-directory (dir)
+  (file-name-directory (d:normalize-directory dir)))
 
-(defun y:locate-top-dominating-file (file name)
+(defun d:locate-top-dominating-file (file name)
   (when-let ((current (locate-dominating-file file name))
-             (parent (y:parent-directory current)))
-    (or (y:locate-top-dominating-file parent name) current)))
+             (parent (d:parent-directory current)))
+    (or (d:locate-top-dominating-file parent name) current)))
 
 (defun d:project-root ()
-  (y:locate-top-dominating-file default-directory ".git"))
+  (d:locate-top-dominating-file default-directory ".git"))
 
 
 ;; +---------+
 ;; | Project |
 ;; +---------+
 
-;; It's guaranteed to have all packages, described as (d:module)
-;; dependencies, already installed.
-(require 'helm-files)
+;; It's guaranteed to have available all packages that are described
+;; as (d:module) dependencies.
 (require 'projectile)
 
 (defun d:find-file (&optional prefix)
@@ -209,7 +208,15 @@ If there is a prefix argument, ask the user for a file to visit."
   (if (and (null prefix)
            (not (string-equal system-type "windows-nt"))
            (projectile-project-root))
-      (projectile-find-file)
-    (helm-find-files)))
+      ;; Use projectile, but use the top workspace directory, not just
+      ;; this submodule.
+      (let ((buffer (current-buffer))
+            (prev default-directory)
+            (root (d:project-root)))
+        (cd root)
+        (projectile-find-file)
+        (with-current-buffer buffer
+          (cd prev)))
+    (ido-find-file)))
 
 (provide 'd-library-interactives)

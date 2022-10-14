@@ -4,11 +4,14 @@
  '((packages cmake-mode
              dockerfile-mode
              haskell-mode
-             helm
              json-mode
              meson-mode
+             nix-mode
              pkgbuild-mode
+             yaml-mode
+
+             ;; library/interactives
              projectile
-             yaml-mode)))
+             )))
 
 (provide 'd-packages)

@@ -13,7 +13,7 @@
 
 
 (d:module
- '((packages helm))
+ '((packages smex))
 
  (require 'd-bootstrap)
  (d:load-library 'interactives)
@@ -33,12 +33,12 @@
 
  ;; Reuse system keys
  (global-set-key (kbd "C-<delete>")      #'window-swap-states)
- (global-set-key (kbd "C-<insert>")      #'y:restore-windows)
- (global-set-key (kbd "C-o")             #'y:open-line)
+ (global-set-key (kbd "C-<insert>")      #'d:restore-windows)
+ (global-set-key (kbd "C-o")             #'d:open-line)
  (global-set-key (kbd "C-x C-b")         #'bs-show)
- (global-set-key (kbd "C-x C-r")         #'y:revisit-with-sudo)
+ (global-set-key (kbd "C-x C-r")         #'d:revisit-with-sudo)
  (global-set-key (kbd "M-z")             #'zap-up-to-char)
- (global-set-key (kbd "M-x")             #'helm-M-x)
+ (global-set-key (kbd "M-x")             #'smex)
  (global-set-key (kbd "C-x C-f")         #'d:find-file)
 
  ;; New keys

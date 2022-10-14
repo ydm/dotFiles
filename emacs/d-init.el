@@ -6,7 +6,7 @@
 ;; You may delete these explanatory comments.
 ;; (package-initialize)
 ;;
-;; y: Commented out.  I think package is now automatically
+;; d: Commented out.  I think package is now automatically
 ;;    initialized.  I should double-check.
 
 
@@ -34,15 +34,17 @@
  '(gdb-many-windows t)
  '(global-display-line-numbers-mode t)
  '(global-subword-mode t)
- '(helm-mode t)
+ '(highlight-indent-guides-method 'column)
  '(hs-hide-comments-when-hiding-all nil)
+ '(ido-enable-flex-matching t)
+ '(ido-mode 'both nil (ido))
  '(image-dired-thumb-size 150)
  '(indent-tabs-mode nil)
  '(inhibit-startup-screen t)
  '(mouse-yank-at-point t)
  '(package-archives
-   '(("gnu" . "https://elpa.gnu.org/packages/")
-     ("melpa" . "http://melpa.org/packages/")))
+   '(("melpa" . "http://melpa.org/packages/")
+     ("gnu" . "https://elpa.gnu.org/packages/")))
  '(safe-local-variable-values '((git-commit-major-mode . git-commit-elisp-text-mode)))
  '(scroll-bar-mode nil)
  '(scroll-error-top-bottom t)

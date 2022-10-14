@@ -1,6 +1,6 @@
 ;; -*- lexical-binding: t; -*-
 
-(defun y:keychords/switch-to-last-buffer ()
+(defun d:keychords/switch-to-last-buffer ()
   (interactive)
   (switch-to-buffer (other-buffer)))
 
@@ -11,6 +11,6 @@
  (key-chord-define-global "ww" #'ace-window)
  (key-chord-define-global "hh" #'ace-jump-mode)
  (key-chord-define-global "vv" #'ido-switch-buffer)
- (key-chord-define-global "jj" #'y:keychords/switch-to-last-buffer))
+ (key-chord-define-global "jj" #'d:keychords/switch-to-last-buffer))
 
 (provide 'd-keychords)

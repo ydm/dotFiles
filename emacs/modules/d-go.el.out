@@ -1,6 +1,6 @@
 ;; -*- lexical-binding: t; -*-
 
-;; (y:module
+;; (d:module
 ;;  '((packages flycheck-golangci-lint lsp-mode))
 
 ;;  (require 'lsp-mode)
