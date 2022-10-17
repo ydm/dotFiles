@@ -146,7 +146,14 @@ def is_older_than(filepath: Path, **kw):
 
 
 def parse_args() -> argparse.Namespace:
-    ap = argparse.ArgumentParser(description='TODO')
+    ap = argparse.ArgumentParser(
+        # TODO: description='...'
+    )
+    ap.add_argument(
+        '--current-file',
+        default='',
+        help='originating file where this tag is mentioned',
+    )
     ap.add_argument(
         '--update', '-u',
         action='store_true',
@@ -156,11 +163,6 @@ def parse_args() -> argparse.Namespace:
         '--tag', '-t',
         required=True,
         help='tag to search for'
-    )
-    ap.add_argument(
-        '--current-file',
-        default='',
-        help='originating file where this tag is mentioned',
     )
     ap.add_argument(
         'root',
