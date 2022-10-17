@@ -171,9 +171,9 @@ def parse_args() -> argparse.Namespace:
         help='project root',
     )
     ns = ap.parse_args()
-    ns.root = Path(ns.root).expanduser().resolve()
     if ns.current_file is not None:
         ns.current_file = Path(ns.current_file)
+    ns.root = Path(ns.root).expanduser().resolve()
     return ns
 
 
