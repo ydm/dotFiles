@@ -2,6 +2,9 @@
 
 '''
 Expects ntags in $PATH.
+
+$ flake8 ntagsserver.py
+$ mypy   ntagsserver.py
 '''
 
 import argparse
