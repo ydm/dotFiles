@@ -41,6 +41,9 @@
  '(image-dired-thumb-size 150)
  '(indent-tabs-mode nil)
  '(inhibit-startup-screen t)
+ '(markdown-preview-http-port 9268)
+ ;; '(markdown-preview-stylesheets
+ ;;   '("https://thomasf.github.io/solarized-css/solarized-dark.min.css"))
  '(mouse-yank-at-point t)
  '(package-archives
    '(("melpa" . "http://melpa.org/packages/")

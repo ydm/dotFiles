@@ -160,6 +160,11 @@ Without prefix argument:
   (move-end-of-line 1)
   (insert-char closing))
 
+(defun d:terminal ()
+  (interactive)
+  (when (fboundp 'vterm-toggle)
+    (vterm-toggle)))
+
 (defun d:wrap-in-curly-braces  () (interactive) (d:wrap-in ?{  ?}  ))
 (defun d:wrap-in-double-quotes () (interactive) (d:wrap-in ?\" ?\" ))
 (defun d:wrap-in-parenthesis   () (interactive) (d:wrap-in ?\( ?\) ))
@@ -193,7 +198,6 @@ Without prefix argument:
 
 (defun d:project-root ()
   (d:locate-top-dominating-file default-directory ".git"))
-
 
 ;; +---------+
 ;; | Project |

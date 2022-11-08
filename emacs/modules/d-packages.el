@@ -3,14 +3,17 @@
 (d:module
  '((packages cmake-mode
              dockerfile-mode
+             go-mode
              haskell-mode
              json-mode
+             markdown-preview-mode
              meson-mode
              nix-mode
              pkgbuild-mode
+             solidity-mode
              yaml-mode
 
-             ;; library/interactives
+             ;; Needed by library/interactives.el
              projectile
              )))
 

@@ -1,9 +1,15 @@
 # echo 'source ~/dotFiles/shell/aliases.sh' >> ~/.bashrc
 
-# Rewrite system commands
+# Rewrite basic commands
+alias df='df -h'
+alias du='du -h'
 alias grep='grep --color=auto'
+alias less="less --use-color --color=Er --color=My --color=Nb --color=Pm -N"
 alias ls='ls --color=auto -h'
 alias make='make -j16'
+alias rg="rg --color always"
+alias tree='tree -Ca -I ".git"'
+alias xclip='xclip -selection clipboard'
 
 # Shortcuts
 alias e=emacs
@@ -11,8 +17,6 @@ alias enw='emacs -nw'
 if ! $(command -v mg 1>/dev/null) ; then
     alias mg="emacs -nw"
 fi
-
-# alias s=sudo  # conflicts with fasd
 alias spac='sudo pacman --noconfirm'
 
 # Git
@@ -22,14 +26,15 @@ alias gc='git commit -m'
 alias gca='git commit -a -m'
 alias gco='git checkout'
 alias gd='git diff'
-alias gl='git pull --rebase origin'
+alias gl='git pull --rebase $(git remote | head -n1)'
 alias glg="git log --graph --pretty=format:'%Cblue%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative"
 alias glp="git log --pretty=tformat:'%h %Cblue%cr%Creset %cn %Cgreen%s%Creset'"
-alias gp='git push origin'
+alias gp='git push $(git remote | head -n1)'
 alias gr='git restore'
 alias gs='git status'
 
 # Navigation
+alias .....='cd ../../../..'
 alias ....='cd ../../..'
 alias ...='cd ../../'
 alias ..='cd ..'
@@ -39,8 +44,5 @@ alias lal='ls -al'
 alias ll='ls -l'
 
 # Utilities
-alias hh="npx hardhat"
-alias t='tree -Ca -I ".git"'
 alias upgrade='sudo pacman -Syu --noconfirm'
-alias xclip='xclip -selection clipboard'
 # alias theia='docker run -it --init -p 3000:3000 -v "$(pwd):/home/project:cached" theiaide/theia:latest'
