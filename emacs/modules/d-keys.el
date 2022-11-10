@@ -42,7 +42,7 @@
  ;; New global keys
  (define-key prog-mode-map (kbd "C-c i") #'d:ido-imenu)
  (global-set-key (kbd "<f13>")           #'smex)
- (global-set-ket (kbd "C-'")             #'d:wrap-in-single-quotes)
+ (global-set-key (kbd "C-'")             #'d:wrap-in-single-quotes)
  (global-set-key (kbd "C-(")             #'d:wrap-in-parenthesis)
  (global-set-key (kbd "C-\"")            #'d:wrap-in-double-quotes)
  (global-set-key (kbd "C-{")             #'d:wrap-in-curly-braces)
