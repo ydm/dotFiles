@@ -17,7 +17,26 @@
              yasnippet-snippets
 
              ;; Needed by library/interactives.el
-             projectile)))
+             projectile
+
+             ;;
+             ;; Not sure if I should add them on all machines as it's
+             ;; damn painful to run vterm on NixOS:
+             ;;
+             ;; 1. Install vterm and vterm-toggle (done by this file).
+             ;;
+             ;; 2. Edit ~/.emacs.d/elpa/vterm-*/CMakeLists.txt
+             ;;
+             ;; 3. $ sed -i.bak 's/libvterm\.a/libvterm\.so/' CMakeLists.txt
+             ;;
+             ;; 4. $ mkdir build && cd build && cmake .. && make
+             ;;
+             ;; 5. $ find . -name 'libvterm.so.0'  # It's a symlink!
+             ;;
+             ;; 6. Copy libvterm.so.0 somewhere in $LD_LIBRARY_PATH.
+             ;;
+             vterm
+             vterm-toggle)))
 
 
 (provide 'd-packages)
