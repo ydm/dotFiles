@@ -1,5 +1,6 @@
 ;; -*- lexical-binding: t; -*-
 
+
 (d:module
  '((packages nim-mode))
 
@@ -34,5 +35,6 @@
 
  (require 'nim-mode)
  (define-key nim-mode-map (kbd "M-.") #'d:ntags-find-definition))
+
 
 (provide 'd-ntags)

@@ -1,16 +1,14 @@
 ;; -*- lexical-binding: t; -*-
 
-;; Here's a table of all my keys defined in OTHER files and where
-;; exactly
-;;
-;; |-----+-----------------+---------|
-;; | key | map             | file    |
-;; |-----+-----------------+---------|
-;; | "/" | vc-dir-mode-map | y-vc.el |
-;; | "/" | dired-mode-map  | y-ag.el |
-;; | "q" | ag-mode-map     | y-ag.el |
-;; |-----+-----------------+---------|
 
+;; +--------------------------------------+
+;; |     Keys defined in OTHER files      |
+;; +-----+-----------------+--------------+
+;; | key | map             | file         |
+;; |-----+-----------------+--------------|
+;; | "/" | vc-dir-mode-map | d-vc.el      |
+;; | "/" | dired-mode-map  | d-ripgrep.el |
+;; +-----+-----------------+--------------+
 
 (d:module
  '((packages smex))
@@ -52,5 +50,6 @@
  (global-set-key (kbd "M-n")             (lambda () (interactive) (next-line 5)))
  (global-set-key (kbd "M-p")             (lambda () (interactive) (previous-line 5)))
  (global-set-key (kbd "s-o")             #'forward-whitespace))
+
 
 (provide 'd-keys)

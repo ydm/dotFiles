@@ -1,5 +1,6 @@
 ;; -*- lexical-binding: t; -*-
 
+
 (d:module
  ()
 
@@ -20,5 +21,6 @@
 
  ;; Set my style as the default for C++-mode.
  (add-hook 'c++-mode-hook (lambda () (c-set-style "dcpp"))))
+
 
 (provide 'd-cc)

@@ -14,6 +14,7 @@
              rust-mode
              solidity-mode
              yaml-mode
+             yasnippet-snippets
 
              ;; Needed by library/interactives.el
              projectile)))

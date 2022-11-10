@@ -1,5 +1,6 @@
 ;; -*- lexical-binding: t; -*-
 
+
 (d:module
  '()
 
@@ -14,5 +15,6 @@
  (define-key hs-minor-mode-map (kbd "C-c C-2 C-t") #'hs-hide-all)
 
  (add-hook 'prog-mode-hook #'hs-minor-mode))
+
 
 (provide 'd-hideshow)
