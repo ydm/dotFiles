@@ -5,6 +5,7 @@
 (require 'cl)
 (require 'imenu)
 
+
 (defun d:block-comment (comment)
   (interactive "sLabel: ")
   (cl-flet ((insert-commented (str wrapper filling)
@@ -22,6 +23,18 @@
         (insert-commented rule ?+ ?-)
         (insert-commented comment ?| ? )
         (insert-commented rule ?+ ?-)))))
+
+
+(defun d:copy-filename ()
+  "Copy filename:line to clipbord."
+  (interactive)
+  (let* ((filename (buffer-file-name))
+         (line (line-number-at-pos))
+         (cmd (format "%s:%d" filename line)))
+    (with-temp-buffer
+      (insert cmd)
+      (kill-ring-save (point-min) (point-max)))))
+
 
 ;; Original taken from https://superuser.com/questions/601982/
 (defun d:ido-imenu ()
@@ -78,21 +91,24 @@ the completion list."
           (goto-char (overlay-start position))
         (goto-char position)))))
 
+
+(defun d:neotree-toggle ()
+    "Open NeoTree using the git root."
+    (interactive)
+    (let ((root (d:project-root))
+          (file (buffer-file-name)))
+      (neotree-toggle)
+      (when (neo-global--window-exists-p)
+        (if root (neotree-dir root))
+        (if file (neotree-find file)))))
+
+
 (defun d:open-line ()
   (interactive)
   (move-beginning-of-line nil)
   (open-line 1)
   (indent-for-tab-command))
 
-(defun d:copy-filename ()
-  "Copy filename:line to clipbord."
-  (interactive)
-  (let* ((filename (buffer-file-name))
-         (line (line-number-at-pos))
-         (cmd (format "%s:%d" filename line)))
-    (with-temp-buffer
-      (insert cmd)
-      (kill-ring-save (point-min) (point-max)))))
 
 (defun d:replace-last-sexp ()
   "Evaluates the last sexp before point and replaces it with the
@@ -106,10 +122,11 @@ to (backward-kill-sexp), but *deletes* the sexp instead of
     (delete-region opoint (point))
     (insert (format "%s" value))))
 
+
 (defun d:revisit-with-sudo (prefix &optional file)
   "If there is a prefix argument, ask the user for a file to visit.
 
-Without prefix argument:
+Without prefix argument:  
 - if file is not nil, visit that file
 - otherwise revisit current buffer with SUDO."
   (interactive (list
@@ -121,12 +138,12 @@ Without prefix argument:
       (find-file (f file))
     (find-alternate-file (f (buffer-file-name)))))
 
-;; (defun d:revisit-with-sudo (prefix &optional file)
-;;   (interactive "P\nf")
-;;   (let ((x (or file (buffer-file-name))))
-;;     (if x
-;;         (find-alternate-file (format "/sudo:root@localhost:%s" x))
-;;       (user-error "This buffer is not visiting a file"))))
+
+(defun d:terminal ()
+  (interactive)
+  (when (fboundp 'vterm-toggle)
+    (vterm-toggle)))
+
 
 (defun d:toggle-window-split ()
   "https://github.com/magnars/.emacs.d/ ... /defuns/buffer-defuns.el#L42"
@@ -154,29 +171,36 @@ Without prefix argument:
           (select-window first-win)
           (if this-win-2nd (other-window 1))))))
 
-;; TODO: Check if there is a region
-(defun d:wrap-in (opening closing)
-  (insert-char opening)
-  (move-end-of-line 1)
-  (insert-char closing))
 
-(defun d:terminal ()
+(defun d:wrap-in (opening closing)
   (interactive)
-  (when (fboundp 'vterm-toggle)
-    (vterm-toggle)))
+  (if (use-region-p)
+      (let ((a (region-beginning))
+            (b (region-end)))
+        (save-excursion
+          (goto-char a)
+          (insert-char opening)
+          (goto-char (1+ b))
+          (insert-char closing))
+        (unless (= a (point))
+          (goto-char (+ 2 b))))
+    (insert-char opening)
+    (move-end-of-line 1)
+    (insert-char closing)))
+
 
 (defun d:wrap-in-curly-braces  () (interactive) (d:wrap-in ?{  ?}  ))
 (defun d:wrap-in-double-quotes () (interactive) (d:wrap-in ?\" ?\" ))
 (defun d:wrap-in-parenthesis   () (interactive) (d:wrap-in ?\( ?\) ))
 (defun d:wrap-in-single-quotes () (interactive) (d:wrap-in ?'  ?'  ))
 
-;; TODO: Write a function that I can bind on C-', C-", C-(, C-{ and
-;; whatever else there is that wraps a region in quotes, double
-;; quotes, parentheses and whatever else that comes in pairs.
 
 ;; +---------+
 ;; | Helpers |
 ;; +---------+
+
+(defun d:normalize-directory (dir)
+  (directory-file-name (expand-file-name dir)))
 
 (defun d:parent-directories (dir)
   (let* ((norm (d:normalize-directory dir))
@@ -185,19 +209,23 @@ Without prefix argument:
         '()
       (cons norm (d:parent-directories parent)))))
 
-(defun d:normalize-directory (dir)
-  (directory-file-name (expand-file-name dir)))
 
 (defun d:parent-directory (dir)
   (file-name-directory (d:normalize-directory dir)))
+
+
+(defun d:project-root ()
+  (d:locate-top-dominating-file default-directory ".git"))
+
 
 (defun d:locate-top-dominating-file (file name)
   (when-let ((current (locate-dominating-file file name))
              (parent (d:parent-directory current)))
     (or (d:locate-top-dominating-file parent name) current)))
 
-(defun d:project-root ()
-  (d:locate-top-dominating-file default-directory ".git"))
+
+
+
 
 ;; +---------+
 ;; | Project |
@@ -207,11 +235,12 @@ Without prefix argument:
 ;; as (d:module) dependencies.
 (require 'projectile)
 
+
 (defun d:find-file (&optional prefix)
   (interactive "P")
   (if (and (null prefix)
            (not (string-equal system-type "windows-nt"))
-           (projectile-project-root))
+           (d:project-root))
       ;; Use projectile, but use the top workspace directory, not just
       ;; this submodule.
       (let ((buffer (current-buffer))
@@ -222,5 +251,6 @@ Without prefix argument:
         (with-current-buffer buffer
           (cd prev)))
     (ido-find-file)))
+
 
 (provide 'd-library-interactives)

@@ -1,20 +1,22 @@
 ;; -*- lexical-binding: t; -*-
 
+
 (d:module
  '((packages cmake-mode
              dockerfile-mode
-             go-mode
              haskell-mode
              json-mode
              markdown-preview-mode
              meson-mode
              nix-mode
              pkgbuild-mode
+             popwin
+             rust-mode
              solidity-mode
              yaml-mode
 
              ;; Needed by library/interactives.el
-             projectile
-             )))
+             projectile)))
+
 
 (provide 'd-packages)

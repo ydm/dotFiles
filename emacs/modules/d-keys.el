@@ -44,10 +44,11 @@
  ;; New global keys
  (define-key prog-mode-map (kbd "C-c i") #'d:ido-imenu)
  (global-set-key (kbd "<f13>")           #'smex)
+ (global-set-ket (kbd "C-'")             #'d:wrap-in-single-quotes)
  (global-set-key (kbd "C-(")             #'d:wrap-in-parenthesis)
  (global-set-key (kbd "C-\"")            #'d:wrap-in-double-quotes)
- (global-set-key (kbd "C-`")             #'d:terminal)
  (global-set-key (kbd "C-{")             #'d:wrap-in-curly-braces)
+ (global-set-key (kbd "C-`")             #'d:terminal)
  (global-set-key (kbd "M-n")             (lambda () (interactive) (next-line 5)))
  (global-set-key (kbd "M-p")             (lambda () (interactive) (previous-line 5)))
  (global-set-key (kbd "s-o")             #'forward-whitespace))

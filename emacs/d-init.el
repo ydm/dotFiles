@@ -14,6 +14,9 @@
 ;; | General |
 ;; +---------+
 
+(custom-set-faces
+ '(eglot-highlight-symbol-face ((t (:background "gray23")))))
+
 (custom-set-variables
  '(backup-directory-alist '(("." . "~/.emacs.d/backup")))
  '(calendar-week-start-day 1)
