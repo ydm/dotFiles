@@ -139,10 +139,18 @@ Without prefix argument:
     (find-alternate-file (f (buffer-file-name)))))
 
 
-(defun d:terminal ()
-  (interactive)
-  (when (fboundp 'vterm-toggle)
-    (vterm-toggle)))
+(defun d:terminal (&optional prefix)
+  (interactive "P")
+  (if (not (fboundp 'vterm-toggle))
+      (shell)
+    (and (fboundp 'vterm-toggle)
+         (vterm-toggle)
+         prefix
+         (let* ((root (d:project-root))
+                (expanded (expand-file-name root))
+                (cmd (format "cd '%s'" expanded)))
+           (vterm-send-string cmd t)
+           (vterm-send-return)))))
 
 
 (defun d:toggle-window-split ()
