@@ -25,7 +25,7 @@
              ;;
              ;; 1. Install vterm and vterm-toggle (done by this file).
              ;;
-             ;; 2. Edit ~/.emacs.d/elpa/vterm-*/CMakeLists.txt
+             ;; 2. cd ~/.emacs.d/elpa/vterm-*
              ;;
              ;; 3. $ sed -i.bak 's/libvterm\.a/libvterm\.so/' CMakeLists.txt
              ;;
