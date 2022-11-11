@@ -18,6 +18,11 @@
  (d:load-library 'windows)
 
  ;; Unset system keys
+ ;;
+ ;; TODO: See share/emacs/28.1/lisp/ido.el.gz:1567
+ ;;       and use [remap cmd]
+ ;;       e.g. (define-key map [remap find-file] 'ido-find-file)
+ ;;
  (global-unset-key (kbd "C-<delete>"))   ; kill-word
  (global-unset-key (kbd "C-<insert>"))   ; kill-ring-save
  (global-unset-key (kbd "C-o"))          ; open-line
