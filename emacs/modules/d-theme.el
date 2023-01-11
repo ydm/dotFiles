@@ -1,12 +1,15 @@
 ;; -*- lexical-binding: t; -*-
 
-
 (d:module
- '((packages doom-themes))
+ '((package autothemer
+            catppuccin-theme
+            ;; doom-themes
+            ))
 
  (when (display-graphic-p)
    (mapcar #'disable-theme custom-enabled-themes)
-   (load-theme 'doom-1337 t)))
-
+   (load-theme 'catppuccin-mocha t)
+   ;; (load-theme 'doom-1337 t)
+   ))
 
 (provide 'd-theme)

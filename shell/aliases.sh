@@ -29,7 +29,8 @@ alias gd='git diff'
 alias gl='git pull --rebase $(git remote | head -n1)'
 alias glg="git log --graph --pretty=format:'%Cblue%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative"
 alias glp="git log --pretty=tformat:'%h %Cblue%cr%Creset %cn %Cgreen%s%Creset'"
-alias gp='git push $(git remote | head -n1)'
+# alias gp="git push $(git remote | head -n1) $(git branch | grep -Pe '^\* ' | sed s/^..//)"
+
 alias gr='git restore'
 alias gs='git status'
 

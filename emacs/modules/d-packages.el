@@ -13,10 +13,11 @@
              popwin
              rust-mode
              solidity-mode
+             typescript-mode
              yaml-mode
              yasnippet-snippets
 
-             ;; Needed by library/interactives.el
+             ;; Needed by library/interactives.el .
              projectile
 
              ;;
