@@ -2,8 +2,8 @@
 
 
 (d:module
- '((packages go-mode eglot))
- ;;
+ '((packages go-mode))
+
  ;; eglot arguments:
  ;;
  ;; - VALUES:
