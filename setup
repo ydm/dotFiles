@@ -4,14 +4,17 @@ ROOT=$(readlink -f $(dirname ${BASH_SOURCE[0]}))
 COMMANDS=( config_alacritty
            config_bash
            config_emacs
+           config_firefox
            config_git
+           config_go
+           config_misc
+           config_rust
            config_sway
-           config_sway_startup
-           install_fasd
-           install_go_tools
            install_packages
            install_sway
-           install_x )
+           install_x
+           install_tools
+         )
 
 out() { printf "$1 $2\n" "${@:3}"; }
 error() { out "==> ERROR:" "$@"; } >&2
@@ -35,9 +38,12 @@ config_alacritty() {
 config_bash() {
     cat >>~/.bashrc <<EOF
 
-# ydm: config_bash
+# BEGIN config_bash
 source $ROOT/shell/aliases.sh
-PATH=\$PATH:$HOME/dotFiles/wannabin:$HOME/go/bin
+export PATH=\$PATH:$HOME/dotFiles/wannabin
+export PATH=\$PATH:$HOME/go/bin
+export PATH=\$PATH:$HOME/local/bin
+# END config_bash
 EOF
 
 }
@@ -47,15 +53,38 @@ config_emacs() {
     echo "(load \"$PATH\")" > ~/.emacs
 }
 
+config_firefox() {
+    python firefox.py
+}
+
 config_git() {
-    # TODO: This doesn't seem to work...
     git config --global pull.rebase true
-    git config --global url.git@github.com:.insteadOf https://github.com/
     git config --global user.email "yordanm@pm.me"
     git config --global user.name "Yordan Miladinov"
+}
 
-    # Needed for go get to work.  Breaks up cargo tho, but who cares.
+config_go() {
     git config --global url.git@github.com:.insteadOf https://github.com/
+}
+
+config_rust() {
+    git config --global --remove-section "url.git@github.com:"
+}
+
+config_misc() {
+    # Configure:
+    #   - direnv
+    #   - fasd
+    #
+    # direnv: https://direnv.net/docs/hook.html
+
+    cat >>~/.bashrc <<EOF
+
+# BEGIN config_misc
+eval "\$(fasd --init auto)"
+eval "\$(direnv hook bash)"
+# END config_misc
+EOF
 }
 
 config_sway() {
@@ -83,112 +112,104 @@ config_sway() {
     # TODO: Check ctrl:swapcaps
 }
 
-config_sway_startup() {
-    cat >>~/.bash_profile <<EOF
-
-if [[ -z \$DISPLAY ]] && [[ \$(tty) = /dev/tty1 ]]; then
-    XKB_DEFAULT_LAYOUT=us exec sway
-fi
-EOF
-}
-
-install_fasd() {
-
-    sudo pacman -Sy --noconfirm fasd
-
-    if [ $? -eq 0 ]  ; then
-        cat >>~/.bashrc <<EOF
-
-# install_fasd
-eval "\$(fasd --init auto)"
-EOF
-    fi
-
-}
-
-install_go_tools() {
-
-    sudo pacman -Sy --noconfirm staticcheck
-
-    go install github.com/kisielk/errcheck@latest
-    go install github.com/rogpeppe/godef@latest
-    go install github.com/tetafro/godot/cmd/godot@latest
-
-    export GO111MODULE=on
-    go install golang.org/x/tools/gopls@latest
-}
-
 install_packages() {
 
     # Some packages have to be installed during the installation
     # phase:
     #
     # $ pacstrap /mnt dhcpcd git sudo vi iwd
-    #
-    # TODO: Split in categories: system, programming, etc.
-    #
-    # TODO: If I install also chromium, I should run:
-    #
-    # $ xdg-settings set default-web-browser firefox.desktop
-    #
-    # Taken from
-    # https://growworkinghard.altervista.org/default-web-browser-in-arch-linux-how-to-change-it/
 
->>>>>>> c104fed (setup: confirm --> noconfirm, pave the road to punk, nihilism and anarchy :))
-    sudo pacman -Sy --noconfirm \
-         aspell-en \
-         base-devel \
-         chromium \
-         clang \
-         cmake \
-         delve \
+    # TODO: mkdir -p ~/.config
+
+    # System
+    #
+    # Installs the xorg-apps gorup
+    # https://archlinux.org/groups/x86_64/xorg-apps/
+    sudo pacman -Sy --noconfirm --overwrite '*' \
          dhcpcd \
-         emacs \
-         firefox \
-         gdb \
-         git \
-         gnu-free-fonts \
-         go \
+         direnv \
          iw \
          iwd \
-         keepass \
          man \
          man-pages \
-         mg \
          openssh \
          pacman-contrib \
          pavucontrol \
-         pkgconf \
          pulseaudio \
-         rustup \
          sudo \
-         the_silver_searcher \
          tmux \
-         transmission-gtk \
-         tree \
          ttf-cascadia-code \
          ttf-dejavu \
          ttf-hack \
          ttf-ubuntu-font-family \
          unzip \
-         valgrind \
          vlc \
          xclip \
-         xorg-apps
+         xorg-apps \
+         xorg-xclock
 
-    # Secondary packages
-    sudo pacman -Sy --noconfirm \
+    # Editors & fonts
+    sudo pacman -Sy --noconfirm --overwrite '*' \
+         aspell-en \
+         emacs \
+         gnu-free-fonts \
+         mg \
+         ripgrep \
+         vi
+        
+    # Programming
+    #
+    # base-devel installs: binutils, gcc, gettext libtool pkgconf
+    # https://archlinux.org/groups/x86_64/base-devel/
+    sudo pacman -Sy --noconfirm --overwrite '*' \
+         base-devel \
+         clang \
+         cmake \
+         gdb \
+         git \
+         valgrind
+
+    # Languages
+    sudo pacman -Sy --noconfirm --overwrite '*' \
+         delve \
+         go \
+         node \
+         npm \
+         rustup \
+         yarn
+
+    # Misc
+    sudo pacman -Sy --noconfirm --overwrite '*' \
+        fasd \
+        imagemagick \
+        keepass \
+        postgresql-libs \
+        tree
+
+    # Misc GUI
+    sudo pacman -Sy --noconfirm --overwrite '*' \
+         chromium \
+         firefox \
          gimp \
-         imagemagick \
-         postgresql-libs
+         transmission-gtk
 
+    # NOTE: Since I'm installing both Chromium and Firefox, the
+    # following line sets Firefox as the default browser.
     xdg-settings set default-web-browser firefox.desktop
 
 }
 
+install_x() {
+    sudo pacman -Sy --noconfirm --overwrite '*' \
+         i3 \
+         xorg \
+         xorg-xinit \
+         xterm
+}
+
 install_sway() {
 
-    sudo pacman -Sy --confirm \
+    sudo pacman -Sy --confirm --overwrite '*' \
          alacritty \
          bemenu \
          brightnessctl \
@@ -214,9 +235,15 @@ install_sway() {
 
 }
 
-install_x() {
-    sudo pacman -Sy --noconfirm i3 xorg xorg-xclock xorg-xinit xterm
+install_tools() {
+    # TODO: Install glangci-lint and gopls, that's all I need.
+    export GO111MODULE=on
+    go install golang.org/x/tools/gopls@latest
+
+    mkdir -p ~/local
+    npm install --global --prefix ~/local typescript-language-server
 }
+
 
 # TODO: AUR packages: ttf-monaco ttf-google-fonts-git ttf-courier-prime
 # ttf-ms-fonts
