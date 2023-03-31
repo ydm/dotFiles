@@ -197,6 +197,7 @@ Without prefix argument:
     (insert-char closing)))
 
 
+(defun d:wrap-in-angle-braces  () (interactive) (d:wrap-in ?<  ?>  ))
 (defun d:wrap-in-curly-braces  () (interactive) (d:wrap-in ?{  ?}  ))
 (defun d:wrap-in-double-quotes () (interactive) (d:wrap-in ?\" ?\" ))
 (defun d:wrap-in-parenthesis   () (interactive) (d:wrap-in ?\( ?\) ))

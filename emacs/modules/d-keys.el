@@ -49,6 +49,7 @@
  (global-set-key (kbd "<f13>")           #'smex)
  (global-set-key (kbd "C-'")             #'d:wrap-in-single-quotes)
  (global-set-key (kbd "C-(")             #'d:wrap-in-parenthesis)
+ (global-set-key (kbd "C-<")             #'d:wrap-in-angle-braces)
  (global-set-key (kbd "C-\"")            #'d:wrap-in-double-quotes)
  (global-set-key (kbd "C-{")             #'d:wrap-in-curly-braces)
  (global-set-key (kbd "C-`")             #'d:terminal)

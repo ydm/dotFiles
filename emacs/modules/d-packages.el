@@ -11,7 +11,6 @@
              nix-mode
              pkgbuild-mode
              popwin
-             rust-mode
              solidity-mode
              typescript-mode
              yaml-mode
