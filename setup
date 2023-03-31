@@ -11,9 +11,10 @@ COMMANDS=( config_alacritty
            config_rust
            config_sway
            install_packages
+           install_rust
            install_sway
-           install_x
            install_tools
+           install_x
          )
 
 out() { printf "$1 $2\n" "${@:3}"; }
@@ -197,6 +198,56 @@ install_packages() {
     # following line sets Firefox as the default browser.
     xdg-settings set default-web-browser firefox.desktop
 
+}
+
+install_rust() {
+
+    # $ rustup default stable
+    # info: syncing channel updates for 'stable-x86_64-unknown-linux-gnu'
+    # info: latest update on 2023-03-28, rust version 1.68.2 (9eb3afe9e 2023-03-27)
+    # info: downloading component 'cargo'     [+]
+    # info: downloading component 'clippy'    [+]
+    # info: downloading component 'rust-docs' [+]
+    # info: downloading component 'rust-std'  [+]
+    # info: downloading component 'rustc'     [+]
+    # info: downloading component 'rustfmt'   [+]
+    # info: installing component 'cargo'
+    # info: installing component 'clippy'
+    # info: installing component 'rust-docs'
+    #  19.5 MiB /  19.5 MiB (100 %)  14.3 MiB/s in  1s ETA:  0s
+    # info: installing component 'rust-std'
+    #  29.9 MiB /  29.9 MiB (100 %)  22.5 MiB/s in  1s ETA:  0s
+    # info: installing component 'rustc'
+    #  68.1 MiB /  68.1 MiB (100 %)  25.5 MiB/s in  2s ETA:  0s
+    # info: installing component 'rustfmt'
+    #
+    #   stable-x86_64-unknown-linux-gnu installed - rustc 1.68.2 (9eb3afe9e 2023-03-27)
+    #
+    # $
+
+    # Here's a list of the components:
+    # https://rust-lang.github.io/rustup/concepts/components.html
+    #
+    # Here's what's installed by default:
+    # - cargo
+    # - clippy
+    # - rust-docs
+    # - rust-stc
+    # - rustc
+    # - rustfmt
+    #
+    # Here's what's not installed:
+    # - rust-analyzer
+    # - rls
+    # - miri
+    # - rust-src
+    # - rust-analysis
+    # - rust-mingw
+    # - llvm-tools-preview
+    # - rust-dev
+
+    rustup default stable
+    rustup toolchain install stable --component rust-analyzer rust-src rust-analysis
 }
 
 install_x() {
