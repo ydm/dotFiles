@@ -157,7 +157,7 @@ install_packages() {
          mg \
          ripgrep \
          vi
-        
+
     # Programming
     #
     # base-devel installs: binutils, gcc, gettext libtool pkgconf
@@ -245,9 +245,24 @@ install_rust() {
     # - rust-mingw
     # - llvm-tools-preview
     # - rust-dev
+    #
+    # Here's the list of all the valid proxy names for rustup:
+    #   - rustc
+    #   - rustdoc
+    #   - cargo
+    #   - rust-lldb
+    #   - rust-gdb
+    #   - rust-gdbgui
+    #   - rls
+    #   - cargo-clippy
+    #   - clippy-driver
+    #   - cargo-miri
+    #   - rustfmt
+    #   - cargo-fmt
 
     rustup default stable
     rustup toolchain install stable --component rust-analyzer rust-src rust-analysis
+
 }
 
 install_x() {
@@ -287,14 +302,15 @@ install_sway() {
 }
 
 install_tools() {
-    # TODO: Install glangci-lint and gopls, that's all I need.
+    # Install gopls
     export GO111MODULE=on
     go install golang.org/x/tools/gopls@latest
+    # TODO: Also install glangci-lint!
 
+    # Install typescript-language-server.
     mkdir -p ~/local
     npm install --global --prefix ~/local typescript-language-server
 }
-
 
 # TODO: AUR packages: ttf-monaco ttf-google-fonts-git ttf-courier-prime
 # ttf-ms-fonts
