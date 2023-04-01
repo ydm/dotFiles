@@ -14,7 +14,7 @@ alias xclip='xclip -selection clipboard'
 
 # Shortcuts
 alias e=emacs
-alias enw='emacs -nw'
+alias ew='emacs -nw'
 if ! $(command -v mg 1>/dev/null) ; then
     alias mg="emacs -nw"
 fi
