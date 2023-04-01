@@ -38,3 +38,16 @@ Some notes:
 
 Some TODOs:
 - Can I use (use-package) for (d:module)?
+
+## Notes
+
+Once the
+[tree-sitter-module](https://github.com/casouri/tree-sitter-module) is
+installed and all the language modules are compiled (by running
+`batch.sh`), add this to the end of `~/.emacs`.
+
+```emacs-lisp
+(with-eval-after-load 'treesit
+  (add-to-list 'treesit-extra-load-path
+               (expand-file-name "~/local/external/tree-sitter-module/dist")))
+```
