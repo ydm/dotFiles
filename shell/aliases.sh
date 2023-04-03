@@ -27,11 +27,10 @@ alias gc='git commit -m'
 alias gca='git commit -a -m'
 alias gco='git checkout'
 alias gd='git diff'
-alias gl='git pull --rebase $(git remote | head -n1)'
+alias gl='git pull --rebase origin master'
 alias glg="git log --graph --pretty=format:'%Cblue%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative"
 alias glp="git log --pretty=tformat:'%h %Cblue%cr%Creset %cn %Cgreen%s%Creset'"
-# alias gp="git push $(git remote | head -n1) $(git branch | grep -Pe '^\* ' | sed s/^..//)"
-
+alias gp='git push origin master'
 alias gr='git restore'
 alias gs='git status'
 
@@ -40,11 +39,10 @@ alias .....='cd ../../../..'
 alias ....='cd ../../..'
 alias ...='cd ../../'
 alias ..='cd ..'
-alias l='ls'
+
+
+# Utilities
 alias la='ls -a'
 alias lal='ls -al'
 alias ll='ls -l'
-
-# Utilities
 alias upgrade='sudo pacman -Syu --noconfirm'
-# alias theia='docker run -it --init -p 3000:3000 -v "$(pwd):/home/project:cached" theiaide/theia:latest'
