@@ -1,33 +1,28 @@
-;; -*- lexical-binding: t; -*-
+;; -*- lexical-binding: t -*-
 
+(require 'advice)          ; ad-get-advice-info-field ad-remove-advice
 
-(require 'bs)
-
-
-(defun d:bs-kill-buffer-p (b)
-  "Given a buffer, return t if it should be killed and nil otherwise."
-  (let ((mode (buffer-local-value 'major-mode b))
-        (name (buffer-name b))
+(defun d:bs/kill-buffer-p (buffer)
+  "Given a buffer, return t if it should be killed and nil
+otherwise."
+  (let ((mode (buffer-local-value 'major-mode buffer))
+        (name (buffer-name buffer))
         (protected '("*Messages*" "*scratch*")))
-
-    ;; Don't kill buffer if any of the following conditions is true.
+    ;; Do not kill a buffer if any of the following is met.
     (not (or
-          ;; 1. This is the current buffer.
-          (eq b (current-buffer))
-          ;; 2. The buffer is displayed in a window.
-          (get-buffer-window b)
-          ;; 3. The buffer has an associated process.
-          (get-buffer-process b)
-          ;; 4. Buffer is protected.
-          (member name protected)
-          ;; 5. Buffer is visiting a file.
-          (buffer-file-name b)))))
+          (buffer-file-name b)        ; Buffer visits a file.
+          (eq mode 'dired-mode)       ; Buffer is in dired-mode.
+          (get-buffer-process buffer) ; Buffer has an associated proc.
+          (get-buffer-window buffer)  ; Buffer is displayed.
+          (member name protected))))) ; Buffer is protected.
 
+(when (ad-get-advice-info-field 'bs-show 'before)
+  (ad-remove-advice 'bs-show 'before 'd:bs/clean))
 
-(defadvice bs-show (before d:bs-kill-system-buffers-before-bs-show activate)
-  "Clean up buffer list before showing bs"
-  (mapc (lambda (b) (and (d:bs-kill-buffer-p b) (kill-buffer b)))
-        (buffer-list)))
-
+(defadvice bs-show (before d:bs/clean activate)
+  "Clean up the buffer list before showing bs."
+  (mapc
+   (lambda (b) (and (d:bs/kill-buffer-p b) (kill-buffer b)))
+   (buffer-list)))
 
 (provide 'd-bs)

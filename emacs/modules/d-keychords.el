@@ -1,19 +1,21 @@
-;; -*- lexical-binding: t; -*-
+;; -*- lexical-binding: t -*-
 
+(use-package use-package-chords
+  :config (key-chord-mode 1)
+  :ensure t)
 
-(defun d:keychords/switch-to-last-buffer ()
-  (interactive)
-  (switch-to-buffer (other-buffer)))
+(use-package ido :chords ("vv" . ido-switch-buffer))
 
+(use-package ace-jump-mode
+  :ensure t
+  :chords ("hh" . ace-jump-mode))
 
-(d:module
- '((packages ace-jump-mode ace-window key-chord))
+(use-package ace-window
+  :ensure t
+  :chords ("ww" . ace-window))
 
- (key-chord-mode 1)
- (key-chord-define-global "ww" #'ace-window)
- (key-chord-define-global "hh" #'ace-jump-mode)
- (key-chord-define-global "vv" #'ido-switch-buffer)
- (key-chord-define-global "jj" #'d:keychords/switch-to-last-buffer))
-
+(use-package d-interactives
+  :load-path "~/dotFiles/emacs/library"
+  :chords ("jj" . d:keychords/switch-to-last-buffer))
 
 (provide 'd-keychords)

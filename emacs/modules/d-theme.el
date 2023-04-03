@@ -1,10 +1,10 @@
-;; -*- lexical-binding: t; -*-
+;; -*- lexical-binding: t -*-
 
-(d:module
- '((packages catppuccin-theme))
-
- (when (display-graphic-p)
-   (mapcar #'disable-theme custom-enabled-themes)
-   (load-theme 'catppuccin t)))
+(use-package catppuccin-theme
+  :init
+  (when (display-graphic-p)
+    (mapcar #'disable-theme custom-enabled-themes)
+    (load-theme 'catppuccin t))
+  :ensure t)
 
 (provide 'd-theme)

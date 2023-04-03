@@ -1,42 +1,24 @@
-;; -*- lexical-binding: t; -*-
+;; -*- lexical-binding: t -*-
 
+(use-package ace-jump-mode :ensure t)
+(use-package ace-window :ensure t)
+(use-package dockerfile-mode :ensure t)
+(use-package haskell-mode :ensure t)
+(use-package json-mode :ensure t)
+(use-package meson-mode :ensure t)
+(use-package pkgbuild-mode :ensure t)
+(use-package solidity-mode :ensure t)
+(use-package typescript-mode :ensure t)
+(use-package yaml-mode :ensure t)
 
-(d:module
- '((packages cmake-mode
-             dockerfile-mode
-             haskell-mode
-             json-mode
-             markdown-preview-mode
-             meson-mode
-             nix-mode
-             pkgbuild-mode
-             popwin
-             solidity-mode
-             typescript-mode
-             yaml-mode
-             yasnippet-snippets
+(use-package vterm
+  :commands vterm-toggle
+  :custom (vterm-max-scrollback 16384)
+  :ensure t)
+(use-package vterm-toggle :ensure t)
 
-             ;; Needed by library/interactives.el .
-             projectile
-
-             ;;
-             ;; Not sure if I should add them on all machines as it's
-             ;; damn painful to run vterm on NixOS:
-             ;;
-             ;; 1. Install vterm and vterm-toggle (done by this file).
-             ;;
-             ;; 2. cd ~/.emacs.d/elpa/vterm-*
-             ;;
-             ;; 3. $ sed -i.bak 's/libvterm\.a/libvterm\.so/' CMakeLists.txt
-             ;;
-             ;; 4. $ mkdir build && cd build && cmake .. && make
-             ;;
-             ;; 5. $ find . -name 'libvterm.so.0'  # It's a symlink!
-             ;;
-             ;; 6. Copy libvterm.so.0 somewhere in $LD_LIBRARY_PATH.
-             ;;
-             vterm
-             vterm-toggle)))
-
+;; popwin && '(popwin-mode t)
+;; yasnippet-snippets && '(yas-global-mode t)
+;; projectile
 
 (provide 'd-packages)

@@ -1,21 +1,10 @@
-;; Add (load "/home/y/dotFiles/emacs/y-init.el") to the TOP of .emacs
+;; -*- lexical-binding: t -*-
 
-;; Added by Package.el.  This must come before configurations of
-;; installed packages.  Don't delete this line.  If you don't want it,
-;; just comment it out by adding a semicolon to the start of the line.
-;; You may delete these explanatory comments.
-;; (package-initialize)
-;;
-;; d: Commented out.  I think package is now automatically
-;;    initialized.  I should double-check.
-
-
-;; +---------+
-;; | General |
-;; +---------+
-
-(custom-set-faces
- '(eglot-highlight-symbol-face ((t (:background "gray23")))))
+;; Usage: add
+;; 
+;; (use-package d-init :ensure nil :load-path "~/dotFiles/emacs")
+;; 
+;; at the beginning of your .emacs config.
 
 (custom-set-variables
  ;; Pacakges
@@ -32,7 +21,7 @@
  '(delete-selection-mode t)
  '(gc-cons-threshold 33554432)
  '(gdb-many-windows t)
- '(highlight-indent-guides-method 'column)
+ '(highlight-indent-guides-method 'column) ;; TODO: highlight-indent-guides
  '(hs-hide-comments-when-hiding-all nil)
  '(image-dired-thumb-size 150)
  '(indent-tabs-mode nil)
@@ -43,14 +32,6 @@
  '(scroll-preserve-screen-position t)
  '(show-paren-mode t)
  '(truncate-lines t)
- '(vterm-max-scrollback 8192)
-
- ;; Company.
- '(company-dabbrev-code-ignore-case t)
- '(company-dabbrev-ignore-case t)
- '(company-etags-ignore-case t)
- '(company-keywords-ignore-case t)
- '(company-tooltip-align-annotations t)
 
  ;; Dired.
  '(dired-auto-revert-buffer t)
@@ -65,83 +46,47 @@
  '(column-number-mode t)
  '(global-display-line-numbers-mode t)
  '(global-subword-mode t)
- '(popwin-mode t)
  '(scroll-bar-mode nil)
  '(tool-bar-mode nil)
- '(yas-global-mode t)
 
  ;; Ido
  '(ido-enable-flex-matching t)
- '(ido-mode 'both nil (ido))
+ '(ido-mode 'both nil (ido)))
 
- ;; Markdown
- '(markdown-preview-http-port 9268)
- '(markdown-preview-stylesheets
-   '("https://thomasf.github.io/solarized-css/solarized-dark.min.css")))
+(custom-set-faces
+ '(default ((t (:family "Cascadia Mono" :foundry "SAJA" :slant normal :weight regular :height 158 :width normal)))))
 
 (defalias 'yes-or-no-p 'y-or-n-p)
 (put 'dired-find-alternate-file 'disabled nil)
 (put 'downcase-region 'disabled nil)
 
-;; +---------+
-;; | Modules |
-;; +---------+
+;; Hook to the after-init-hook before bootstrapping.  Adding this
+;; function first ensures that it is invoked *before* any other added
+;; eventually to the same hook.
+(add-hook 'after-init-hook (lambda () (run-hooks 'd:last)))
 
-(defvar *d:selected-packages* '())
-
-(defmacro d:module (assoc &rest body)
-  "Execute the module body after Emacs initializes.
-
-If there are packages needed to be installed as dependencies for this
-module to work, they may be specified in ASSOC.
-
-There's also an optional hook variable this module can specify
-that gets ran after the execution of BODY.  This way another actor may
-use this module as a dependency.
-
-ASSOC is an association list that may optionally provide the
-following keys:
-- hookvar: hook variable to run a hook on once the module body gets
-           executed
-- packages: packages to install on booting
-
-(d:module
- '((packages challenger-theme)
-   (hookvar . d-theme-hook))
-  BODY...)
-"
-  `(progn
-     ;; Add the packages prop 
-     (mapcar (lambda (x) (add-to-list '*d:selected-packages* x))
-             (cdr (assoc 'packages ,assoc)))
-     (add-hook 'after-init-hook
-               (lambda ()
-                 ,@body
-                 (let ((hookvar (cdr (assoc 'hookvar ,assoc))))
-                   (and hookvar (run-hooks hookvar)))))))
-
-(let ((dir "~/dotFiles/emacs/modules/"))
-  (mapcar (lambda (path)
-            (let ((symbol (intern (file-name-base path))))
-	      (message "[Y] Requiring %20s from %s" symbol path)
-	      (require symbol path)))
-	  (directory-files dir t "^d-.*\\.el$")))
-
-
-;; +------+
-;; | Boot |
-;; +------+
-
-(require 'package)
-
-(defun d:boot ()
-  (let ((xs (seq-remove #'package-installed-p *d:selected-packages*)))
-    (when xs
-      (package-refresh-contents)
-      (mapcar #'package-install xs)))
-  (load "~/.emacs.d/init/post" t))
-
-;; Registered last means to get executed first.
-(add-hook 'after-init-hook #'d:boot)
+;; Dynamically load modules.
+;;
+;; `use-package` cannot work (maybe because it's a macro) with
+;; variables for the :load-path option, among others. So, in order to
+;; load modules from files, I define another higher-level macro that
+;; constructs a list of dynamically built `use-package` applications.
+;;
+;; Here's what a typical expansion looks like:
+;;
+;; (progn
+;;   (use-package d-company :ensure nil :load-path "~/dotFiles/emacs/modules")
+;;   (use-package d-theme :ensure nil :load-path "~/dotFiles/emacs/modules"))
+(defmacro d:bootstrap ()
+  (let* ((root "~/dotFiles/emacs/modules")
+         (mods (directory-files root t "^d-.*\\.el$")))
+    `(progn
+       ,@(mapcar (lambda (path)
+                   (let* ((base (file-name-base path))
+                          (symbol (intern base)))
+                     (message "[Y] d:bootstrap: symbol=%20s path=%s" symbol root)
+                     `(use-package ,symbol :ensure nil :load-path ,root)))
+                 mods))))
+(d:bootstrap)
 
 (provide 'd-init)
