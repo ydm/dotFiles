@@ -3,8 +3,10 @@
 INTERFACE=$(ip link | grep -Poe '^\d+:\s+w[^:]+' | sed 's/^[[:digit:]]\+:[[:space:]]\+//')
 echo "INTERFACE=$INTERFACE"
 
-# sudo rm /dev/rfkill
-
-sudo ip link set $INTERFACE down
-sudo ip link set $INTERFACE up
-sudo iw dev $INTERFACE connect "$1"
+if [ -n "$INTERFACE" ] ; then
+    sudo ip link set $INTERFACE down
+    sudo ip link set $INTERFACE up
+    sudo iw dev $INTERFACE connect "$1"
+else
+    echo TODO
+fi

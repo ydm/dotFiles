@@ -1,3 +1,8 @@
+(defun d:locate-top-dominating-file (file name)
+  (when-let ((current (locate-dominating-file file name))
+             (parent (d:parent-directory current)))
+    (or (d:locate-top-dominating-file parent name) current)))
+
 (defun d:normalize-directory (dir)
   (directory-file-name (expand-file-name dir)))
 
@@ -6,11 +11,6 @@
 
 (defun d:project-root ()
   (d:locate-top-dominating-file default-directory ".git"))
-
-(defun d:locate-top-dominating-file (file name)
-  (when-let ((current (locate-dominating-file file name))
-             (parent (d:parent-directory current)))
-    (or (d:locate-top-dominating-file parent name) current)))
 
 (defun d:wrap-in (opening closing)
   (if (use-region-p)

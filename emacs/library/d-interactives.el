@@ -1,7 +1,39 @@
+(require 'cl-macs)                      ; cl-flet cl-labels
+(require 'imenu)
+
+(use-package ripgrep :commands ripgrep-regexp :demand :ensure t)
 (use-package d-common :load-path "~/dotFiles/emacs/library")
 
 (defun d:5-next () (interactive) (next-line 5))
 (defun d:5-prev () (interactive) (previous-line 5))
+
+(defun d:block-comment (comment)
+  (interactive "sLabel: ")
+  (cl-flet ((insert-commented (str wrapper filling)
+                              (indent-according-to-mode)
+                              (insert (comment-padright comment-start
+                                                        (comment-add nil)))
+                              (insert-char wrapper)
+                              (insert-char filling)
+                              (insert str)
+                              (insert-char filling)
+                              (insert-char wrapper)
+                              (insert-char ?\n)))
+    (let ((rule (make-string (length comment) ?-)))
+      (save-excursion
+        (insert-commented rule ?+ ?-)
+        (insert-commented comment ?| ? )
+        (insert-commented rule ?+ ?-)))))
+
+(defun d:copy-filename ()
+  "Copy filename:line to clipbord."
+  (interactive)
+  (let* ((filename (buffer-file-name))
+         (line (line-number-at-pos))
+         (cmd (format "%s:%d" filename line)))
+    (with-temp-buffer
+      (insert cmd)
+      (kill-ring-save (point-min) (point-max)))))
 
 ;; Original taken from https://superuser.com/questions/601982/ .
 (defun d:ido-imenu ()
@@ -12,8 +44,7 @@ the completion list."
   (imenu--make-index-alist)
   (let ((name-and-pos '())
         (symbol-names '()))
-    (cl-labels ((addsymbols
-                  (symbol-list)
+    (cl-labels ((addsymbols (symbol-list)
                   (when (listp symbol-list)
                     (dolist (symbol symbol-list)
                       (let ((name nil) (position nil))
@@ -68,6 +99,18 @@ the completion list."
   (open-line 1)
   (indent-for-tab-command))
 
+(defun d:replace-last-sexp ()
+  "Evaluates the last sexp before point and replaces it with the
+result it yields.  This function uses something similar
+to (backward-kill-sexp), but *deletes* the sexp instead of
+*killing* it"
+  (interactive)
+  (let ((value (eval-last-sexp nil))
+        (opoint (point)))
+    (forward-sexp -1)
+    (delete-region opoint (point))
+    (insert (format "%s" value))))
+
 (defun d:revisit-with-sudo (prefix &optional file)
   "If there is a prefix argument, ask the user for a file to visit.
 
@@ -82,6 +125,10 @@ Without prefix argument:
   (if (or prefix file)
       (find-file (f file))
     (find-alternate-file (f (buffer-file-name)))))
+
+(defun d:ripgrep (needle)
+  (interactive "sGrep for: ")
+  (ripgrep-regexp needle default-directory))
 
 (defun d:wrap-in-angle-braces  () (interactive) (d:wrap-in ?<  ?>  ))
 (defun d:wrap-in-curly-braces  () (interactive) (d:wrap-in ?{  ?}  ))

@@ -14,40 +14,33 @@
 
  ;; Misc
  '(backup-directory-alist '(("." . "~/.emacs.d/backup")))
- '(calendar-week-start-day 1)
  '(compilation-always-kill t)
  '(compilation-scroll-output 'first-error)
  '(default-input-method "bulgarian-alt-phonetic")
  '(delete-selection-mode t)
  '(gc-cons-threshold 33554432)
  '(gdb-many-windows t)
- '(highlight-indent-guides-method 'column) ;; TODO: highlight-indent-guides
- '(hs-hide-comments-when-hiding-all nil)
- '(image-dired-thumb-size 150)
- '(indent-tabs-mode nil)
  '(inhibit-startup-screen t)
  '(mouse-yank-at-point t)
  '(safe-local-variable-values '((git-commit-major-mode . git-commit-elisp-text-mode)))
  '(scroll-error-top-bottom t)
  '(scroll-preserve-screen-position t)
- '(show-paren-mode t)
  '(truncate-lines t)
-
- ;; Dired.
- '(dired-auto-revert-buffer t)
- '(dired-create-destination-dirs 'ask)
- '(dired-dwim-target t)
- '(dired-hide-details-hide-symlink-targets nil)
- '(dired-listing-switches "-alh")
- '(dired-recursive-copies 'always)
- '(dired-recursive-deletes 'top)
 
  ;; Global minor modes.
  '(column-number-mode t)
  '(global-display-line-numbers-mode t)
- '(global-subword-mode t)
+ '(line-number-mode nil)
  '(scroll-bar-mode nil)
  '(tool-bar-mode nil)
+
+ ;; Mode tweaks.
+ '(calendar-week-start-day 1)
+ '(eldoc-minor-mode-string " ed")
+ '(hs-hide-comments-when-hiding-all nil)
+ '(image-dired-thumb-size 192)
+ '(indent-tabs-mode nil)
+ '(show-paren-mode t)
 
  ;; Ido
  '(ido-enable-flex-matching t)
@@ -56,7 +49,7 @@
 (custom-set-faces
  '(default ((t (:family "Cascadia Mono" :foundry "SAJA" :slant normal :weight regular :height 158 :width normal)))))
 
-(defalias 'yes-or-no-p 'y-or-n-p)
+(defalias 'yes-or-no-p #'y-or-n-p)
 (put 'dired-find-alternate-file 'disabled nil)
 (put 'downcase-region 'disabled nil)
 

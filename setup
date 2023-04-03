@@ -59,6 +59,7 @@ config_firefox() {
 }
 
 config_git() {
+    git config --global init.defaultBranch master
     git config --global pull.rebase true
     git config --global user.email "yordanm@pm.me"
     git config --global user.name "Yordan Miladinov"

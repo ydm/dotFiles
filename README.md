@@ -1,43 +1,45 @@
 My dotFiles
 ===========
 
-These include:
-- alacritty
-- bash aliases
-- emacs config
-- some X
-- sway config
+These include configurations for:
+- Alacritty
+- Emacs
+- Firefox
+- Shell aliases
+- X and Sway
+- More
 
 
 ## Setup
+
 `$ ./setup` prints available commands
 
 ```bash
 $ ~/dotFiles/setup
-Usage: /home/y/dotFiles/setup <command>...
-
-Commands:
+Usage: ./setup <command>... 
+ 
+Commands: 
    config_alacritty
    config_bash
    config_emacs
+   config_firefox
    config_git
+   config_go
+   config_misc
+   config_rust
    config_sway
-   config_sway_startup
-   install_fasd
-   install_go_tools
    install_packages
+   install_rust
    install_sway
+   install_tools
    install_x
 ```
 
 Some notes:
-- config_git: failed last time I tried it :)
 - install_sway: config's bar{} section has to be removed manually
 - install_fasd: appends to .bashrc
 - config_bash: appends to .bashrc
 
-Some TODOs:
-- Can I use (use-package) for (d:module)?
 
 ## Notes
 
@@ -50,4 +52,10 @@ installed and all the language modules are compiled (by running
 (with-eval-after-load 'treesit
   (add-to-list 'treesit-extra-load-path
                (expand-file-name "~/local/external/tree-sitter-module/dist")))
+```
+
+Then:
+```
+$ cd ~/local/external/tree-sitter-module/dist
+$ cp libtree-sitter-go-mod.so libtree-sitter-gomod.so
 ```

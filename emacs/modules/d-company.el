@@ -7,7 +7,7 @@
   (company-dabbrev-ignore-case t)
   (company-etags-ignore-case t)
   (company-keywords-ignore-case t)
-  (company-lighter-base "cmp")
+  (company-lighter-base "cn")
   (company-tooltip-align-annotations t)
   :ensure t)
 
