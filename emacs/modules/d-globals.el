@@ -31,19 +31,15 @@
 ;; well.
 (bind-key "C-<delete>" #'window-swap-states) ; kill-word
 
-;; TODO
-;; (use-package eglot
-;;   :bind (("s-i"        . eglot-format)       ; new
-;;          ([M-f1]       . eglot-code-actions) ; new
-;;          ([M-f2]       . eglot-rename)))     ; new
+(use-package eglot
+  :bind (("s-i"        . eglot-format)       ; new
+         ([M-f1]       . eglot-code-actions) ; new
+         ([M-f2]       . eglot-rename)))     ; new
 
 (use-package flymake
   :bind (("C-<next>"   . flymake-goto-next-error)   ; scroll-left
          ("C-<prior>"  . flymake-goto-prev-error))) ; scroll-right
 
-(use-package vterm
-  :custom (vterm-max-scrollback 16384)
-  :ensure t)
 (use-package vterm-toggle
   :bind ("C-`"        . vterm-toggle)   ; new
   :demand
@@ -59,10 +55,9 @@
          ("C-'"        . d:wrap-in-single-quotes) ; new
          ("C-("        . d:wrap-in-parenthesis)   ; new
          ("C-<"        . d:wrap-in-angle-braces)  ; new
-         
          ("C-\""       . d:wrap-in-double-quotes) ; new
-         ("C-c i"      . d:ido-imenu)             ; new
          ("C-{"        . d:wrap-in-curly-braces)  ; new
+         ("C-c i"      . d:ido-imenu)             ; new
          :map dired-mode-map
          ("/"          . d:ripgrep))
   :load-path "~/dotFiles/emacs/library")

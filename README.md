@@ -43,19 +43,18 @@ Some notes:
 
 ## Notes
 
-Once the
-[tree-sitter-module](https://github.com/casouri/tree-sitter-module) is
-installed and all the language modules are compiled (by running
-`batch.sh`), add this to the end of `~/.emacs`.
+Install
+[tree-sitter-module](https://github.com/casouri/tree-sitter-module)
+and compile all language modules:
 
-```emacs-lisp
-(with-eval-after-load 'treesit
-  (add-to-list 'treesit-extra-load-path
-               (expand-file-name "~/local/external/tree-sitter-module/dist")))
 ```
-
-Then:
+mkdir -p ~/local/external
+cd ~/local/external
+git clone git@github.com:casouri/tree-sitter-module.git
+cd tree-sitter-module
+./batch.sh
+cd dist
+rm libtree-sitter-c-sharp.so # fuck c-sharp
+cp libtree-sitter-go-mod.so libtree-sitter-gomod.so
 ```
-$ cd ~/local/external/tree-sitter-module/dist
-$ cp libtree-sitter-go-mod.so libtree-sitter-gomod.so
-```
+sudo journalctl --vacuum-time=7d
