@@ -57,4 +57,3 @@ cd dist
 rm libtree-sitter-c-sharp.so # fuck c-sharp
 cp libtree-sitter-go-mod.so libtree-sitter-gomod.so
 ```
-sudo journalctl --vacuum-time=7d

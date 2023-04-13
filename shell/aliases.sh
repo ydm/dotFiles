@@ -46,6 +46,7 @@ alias ..='cd ..'
 
 
 # Utilities
+alias clearjournal='sudo journalctl --vacuum-time=7d'
 alias la='ls -a'
 alias lal='ls -al'
 alias ll='ls -l'
