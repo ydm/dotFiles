@@ -32,15 +32,13 @@
 
  ;; Enable global minor modes.
  '(column-number-mode t)
- '(global-display-line-numbers-mode t)
- '(line-number-mode nil)
  '(scroll-bar-mode nil)
  '(tool-bar-mode nil)
 
  ;; Minor mode tweaks.
  '(calendar-week-start-day 1)
  '(eldoc-echo-area-use-multiline-p nil)
- '(eldoc-minor-mode-string " ed")
+ '(eldoc-minor-mode-string nil)
  '(hs-hide-comments-when-hiding-all nil)
  '(image-dired-thumb-size 192)
  '(indent-tabs-mode nil)

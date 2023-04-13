@@ -10,12 +10,11 @@
    (lambda (x) (not (eq (cdr x) mode)))
    auto-mode-alist))
 
-(defun y:auto-mode-alist-assoc-patterns (entries mode)
-  (mapc (lambda (entry)
-          (let ((pattern (car entry)))
-            (message "[X] Associating mode %s with pattern %s" mode pattern)
-            (add-to-list 'auto-mode-alist (cons pattern mode))))
-        entries))
+(defun y:auto-mode-alist-assoc-patterns (patterns mode)
+  (mapc (lambda (pattern)
+          (message "[X] Associating mode %s with pattern %s" mode pattern)
+          (add-to-list 'auto-mode-alist (cons pattern mode)))
+        patterns))
 
 (add-to-list 'treesit-extra-load-path
              (expand-file-name "~/local/external/tree-sitter-module/dist"))
@@ -25,9 +24,11 @@
   :ensure nil)
 
 (use-package js
+  ;; Get all `auto-mode-alist' patterns that are associated with
+  ;; `javascript-mode' and re-associate them with `js-ts-mode'.
   :init (if-let ((treesit-ready-p 'json)
                  (entries (y:auto-mode-alist-entries 'javascript-mode)))
-            (y:auto-mode-alist-assoc-patterns entries 'js-ts-mode))
+            (y:auto-mode-alist-assoc-patterns (mapcar #'car entries) 'js-ts-mode))
   :ensure nil)
 
 (use-package json-ts-mode
@@ -35,7 +36,10 @@
   :ensure nil)
 
 (use-package typescript-ts-mode
-  :init   (add-hook 'typescript-ts-mode-hook #'eglot-ensure)
+  :init
+  ;; Associate cts files with `typescript-ts-mode'.
+  (add-to-list 'auto-mode-alist (cons "\\.cts\\'" 'typescript-ts-mode))
+  (add-hook 'typescript-ts-mode-hook #'eglot-ensure)
   :custom (typescript-ts-mode-indent-offset 4)
   :ensure nil)
 

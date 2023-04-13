@@ -13,6 +13,7 @@ alias tree='tree -Ca -I ".git"'
 alias xclip='xclip -selection clipboard'
 
 # Shortcuts
+alias dmesg='sudo dmesg'
 alias e=emacs
 alias ew='emacs -nw'
 if ! $(command -v mg 1>/dev/null) ; then
@@ -27,12 +28,15 @@ alias gc='git commit -m'
 alias gca='git commit -a -m'
 alias gco='git checkout'
 alias gd='git diff'
-alias gl='git pull --rebase origin master'
+alias gg='git grep'
+alias gl='git pull --rebase origin'
 alias glg="git log --graph --pretty=format:'%Cblue%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative"
+alias glm='git pull --rebase origin'
 alias glp="git log --pretty=tformat:'%h %Cblue%cr%Creset %cn %Cgreen%s%Creset'"
-alias gp='git push origin master'
+alias gp='git push origin'
+alias gpm='git push origin master'
 alias gr='git restore'
-alias gs='git status'
+alias gs='git status -s'
 
 # Navigation
 alias .....='cd ../../../..'

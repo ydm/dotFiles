@@ -36,9 +36,10 @@
          ([M-f1]       . eglot-code-actions) ; new
          ([M-f2]       . eglot-rename)))     ; new
 
-(use-package flymake
-  :bind (("C-<next>"   . flymake-goto-next-error)   ; scroll-left
-         ("C-<prior>"  . flymake-goto-prev-error))) ; scroll-right
+(use-package swiper
+  :bind ("C-c i"      . swiper)         ; new
+  :demand
+  :ensure t)
 
 (use-package vterm-toggle
   :bind ("C-`"        . vterm-toggle)   ; new
@@ -46,18 +47,19 @@
   :ensure t)
 
 (use-package d-interactives
-  :bind (("C-o"        . d:open-line)             ; open-line
-         ("C-x C-r"    . d:revisit-with-sudo)     ; find-file-read-only [!]
-         ("M-n"        . d:5-next)                ; new
-         ("M-p"        . d:5-prev)                ; new
-         ("s-o"        . forward-whitespace)      ; new
-         :map prog-mode-map                       ;
-         ("C-'"        . d:wrap-in-single-quotes) ; new
-         ("C-("        . d:wrap-in-parenthesis)   ; new
-         ("C-<"        . d:wrap-in-angle-braces)  ; new
-         ("C-\""       . d:wrap-in-double-quotes) ; new
-         ("C-{"        . d:wrap-in-curly-braces)  ; new
-         ("C-c i"      . d:ido-imenu)             ; new
+  :bind (("C-o"        . d:open-line)         ; open-line
+         ("C-x C-r"    . d:revisit-with-sudo) ; find-file-read-only [!]
+         ("M-n"        . d:5-next)            ; new
+         ("M-p"        . d:5-prev)            ; new
+         ("s-o"        . forward-whitespace)  ; new
+         :map prog-mode-map
+         ("C-<next>"   . d:flymake-goto-next-error) ; scroll-left
+         ("C-<prior>"  . d:flymake-goto-prev-error) ; scroll-right
+         ("C-'"        . d:wrap-in-single-quotes)   ; new
+         ("C-("        . d:wrap-in-parenthesis)     ; new
+         ("C-<"        . d:wrap-in-angle-braces)    ; new
+         ("C-\""       . d:wrap-in-double-quotes)   ; new
+         ("C-{"        . d:wrap-in-curly-braces)    ; new
          :map dired-mode-map
          ("/"          . d:ripgrep))
   :load-path "~/dotFiles/emacs/library")

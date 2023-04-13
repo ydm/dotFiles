@@ -1,5 +1,5 @@
-(require 'cl-macs)                      ; cl-flet cl-labels
-(require 'imenu)
+(require 'cl-macs)  ; cl-flet cl-labels
+(require 'flymake)  ; flymake-goto-next-error flymake-goto-prev-error
 
 (use-package ripgrep :commands ripgrep-regexp :demand :ensure t)
 (use-package d-common :load-path "~/dotFiles/emacs/library")
@@ -34,6 +34,21 @@
     (with-temp-buffer
       (insert cmd)
       (kill-ring-save (point-min) (point-max)))))
+
+(defun d:flymake-goto-next-error ()
+  "Calling `flymake-goto-next-error' through a proxy function like
+this one implicitly sets the optional interactive argument to
+`nil'.  In turn, this has the effect of not displaying messages
+in the minibuffer, which messes it up when the message is
+multiple lines long.  `eldoc-box' does a fine job displaying
+those messages in a dialog box."
+  (interactive)
+  (flymake-goto-next-error))
+
+(defun d:flymake-goto-prev-error ()
+  "Read the docstring of `d:flymake-goto-next-error'."
+  (interactive)
+  (flymake-goto-prev-error))
 
 (defun d:keychords/switch-to-last-buffer ()
   (interactive)
