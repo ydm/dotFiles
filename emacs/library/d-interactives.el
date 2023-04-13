@@ -112,11 +112,9 @@ to (backward-kill-sexp), but *deletes* the sexp instead of
     (insert (format "%s" value))))
 
 (defun d:revisit-with-sudo (prefix &optional file)
-  "If there is a prefix argument, ask the user for a file to visit.
-
-Without prefix argument:  
-- if file is not nil, visit that file
-- otherwise revisit current buffer with SUDO."
+  "If there is a prefix argument, ask the user for a file to
+visit.  Otherwise either visit the `file' given as an argument or
+revisit the one, associated with the current buffer."
   (interactive (list
                 current-prefix-arg
                 (when current-prefix-arg
