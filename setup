@@ -267,7 +267,9 @@ install_rust() {
 }
 
 install_x() {
-    sudo pacman -Sy --noconfirm --overwrite '*' \
+    sudo pacman -Sy
+
+    sudo pacman -S --noconfirm --overwrite '*' \
          i3 \
          xorg \
          xorg-xinit \
@@ -276,7 +278,9 @@ install_x() {
 
 install_sway() {
 
-    sudo pacman -Sy --confirm --overwrite '*' \
+    sudo pacman -Sy
+
+    sudo pacman -S --confirm --overwrite '*' \
          alacritty \
          bemenu \
          brightnessctl \
@@ -298,19 +302,19 @@ install_sway() {
     # TODO: Install polkit?
 
     # These two are needed for the fancy swaybar status.sh.
-    sudo pacman -Sy --noconfirm acpi noto-fonts-emoji
+    sudo pacman -S --noconfirm acpi noto-fonts-emoji
 
 }
 
 install_tools() {
-    # Install gopls
-    export GO111MODULE=on
-    go install golang.org/x/tools/gopls@latest
-    # TODO: Also install glangci-lint!
+    sudo pacman -S
 
-    # Install typescript-language-server.
-    mkdir -p ~/local
-    npm install --global --prefix ~/local typescript-language-server
+    # TODO: Install golangci-lint!
+
+    sudo pacman -S --noconfirm      \
+         gopls                      \
+         pyright                    \
+         typescript-language-server
 }
 
 # TODO: AUR packages: ttf-monaco ttf-google-fonts-git ttf-courier-prime

@@ -19,6 +19,8 @@
 (add-to-list 'treesit-extra-load-path
              (expand-file-name "~/local/external/tree-sitter-module/dist"))
 
+(use-package dockerfile-ts-mode :ensure nil)
+
 (use-package go-ts-mode
   :init (add-hook 'go-ts-mode-hook #'eglot-ensure)
   :ensure nil)

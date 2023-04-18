@@ -1,14 +1,13 @@
 ;; -*- lexical-binding: t -*-
 
 ;; Language modes
+(use-package csv-mode :ensure t)
 (use-package haskell-mode :ensure t)
-(use-package markdown-mode :ensure t)   ; Also improves eldoc.
+(use-package markdown-mode :ensure t)   ; Also improves eldoc-box.
 (use-package meson-mode :ensure t)
 (use-package pkgbuild-mode :ensure t)
 (use-package solidity-mode :ensure t)
 (use-package yaml-mode :ensure t)
-;; TODO: dockerfile-ts-mode
-;; TODO: json-ts-mode
 
 (use-package eldoc-box
   :init (add-hook 'eldoc-mode-hook #'eldoc-box-hover-mode)
