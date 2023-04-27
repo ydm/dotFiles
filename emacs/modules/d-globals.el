@@ -42,7 +42,10 @@
   :ensure t)
 
 (use-package vterm-toggle
-  :bind ("C-`"        . vterm-toggle)   ; new
+  :bind (("C-`"        . vterm-toggle)   ; new
+         :map vterm-mode-map
+         ("C-c C-n"    . d:switch-to-next-vterm-buffer) ; vterm-next-prompt
+         ("C-c C-p"    . d:switch-to-prev-vterm-buffer)) ; vterm-prev-prompt
   :demand
   :ensure t)
 

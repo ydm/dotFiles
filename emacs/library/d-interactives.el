@@ -80,6 +80,7 @@ revisit the one, associated with the current buffer."
                 current-prefix-arg
                 (when current-prefix-arg
                   (ido-read-file-name "[SUDO] Find file: "))))
+  ;; TODO: Use (labels)?
   (defun f (x) (format "/sudo:root@localhost:%s" x))
   (if (or prefix file)
       (find-file (f file))
@@ -88,6 +89,14 @@ revisit the one, associated with the current buffer."
 (defun d:ripgrep (needle)
   (interactive "sGrep for: ")
   (ripgrep-regexp needle default-directory))
+
+(defun d:switch-to-next-vterm-buffer ()
+  (interactive)
+  (d:switch-to-another-vterm-buffer #'d:next-in-list))
+
+(defun d:switch-to-prev-vterm-buffer ()
+  (interactive)
+  (d:switch-to-another-vterm-buffer #'d:prev-in-list))
 
 (defun d:wrap-in-angle-braces  () (interactive) (d:wrap-in ?<  ?>  ))
 (defun d:wrap-in-curly-braces  () (interactive) (d:wrap-in ?{  ?}  ))
