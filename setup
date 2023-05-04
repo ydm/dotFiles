@@ -1,5 +1,8 @@
 #!/bin/sh
 
+# TODO: Install some packages with --asdeps?
+# TODO: Install jq
+
 ROOT=$(readlink -f $(dirname ${BASH_SOURCE[0]}))
 COMMANDS=( config_alacritty
            config_bash
@@ -114,91 +117,92 @@ config_sway() {
     # TODO: Check ctrl:swapcaps
 }
 
+install_aur() {
+
+    # TODO: AUR packages:
+    # emacs-git
+    # ttf-courier-prime
+    # ttf-google-fonts-git
+    # ttf-monaco
+    # ttf-ms-fonts
+
+}
+
 install_packages() {
 
-    # Some packages have to be installed during the installation
+    # It's nice if some packages get installed during the installation
     # phase:
     #
     # $ pacstrap /mnt dhcpcd git sudo vi iwd
 
-    # TODO: mkdir -p ~/.config
-
+    #
     # System
     #
-    # Installs the xorg-apps gorup
-    # https://archlinux.org/groups/x86_64/xorg-apps/
-    sudo pacman -Sy --noconfirm --overwrite '*' \
-         dhcpcd \
-         direnv \
-         iw \
-         iwd \
-         man \
-         man-pages \
-         openssh \
-         pacman-contrib \
-         pavucontrol \
-         pulseaudio \
-         sudo \
-         tmux \
-         ttf-cascadia-code \
-         ttf-dejavu \
-         ttf-hack \
-         ttf-ubuntu-font-family \
-         unzip \
-         vlc \
-         xclip \
-         xorg-apps \
-         xorg-xclock
+    # Installs https://archlinux.org/groups/x86_64/xorg-apps/
+    sudo pacman -Sy --noconfirm --overwrite '*' --asdeps \
+        aspell-en                                        \
+        gnu-free-fonts                                   \
+        pulseaudio                                       \
+        ttf-cascadia-code                                \
+        ttf-dejavu                                       \
+        ttf-hack                                         \
+        ttf-ubuntu-font-family                           \
+        xorg-apps                                        \
+        xorg-xclock
 
-    # Editors & fonts
-    sudo pacman -Sy --noconfirm --overwrite '*' \
-         aspell-en \
-         emacs \
-         gnu-free-fonts \
-         mg \
-         ripgrep \
-         vi
+    sudo pacman -Sy --noconfirm --overwrite '*'          \
+        dhcpcd                                           \
+        direnv                                           \
+        iw                                               \
+        iwd                                              \
+        man                                              \
+        man-pages                                        \
+        openssh                                          \
+        pacman-contrib                                   \
+        pavucontrol                                      \
+        sudo                                             \
+        tmux                                             \
+        unzip                                            \
+        vi                                               \
+        vlc                                              \
+        xclip
 
     # Programming
     #
     # base-devel installs: binutils, gcc, gettext libtool pkgconf
     # https://archlinux.org/groups/x86_64/base-devel/
-    sudo pacman -Sy --noconfirm --overwrite '*' \
-         base-devel \
-         clang \
-         cmake \
-         gdb \
-         git \
+    sudo pacman -Sy --noconfirm --overwrite '*'          \
+         base-devel                                      \
+         clang                                           \
+         cmake                                           \
+         gdb                                             \
+         git                                             \
          valgrind
 
-    # Languages
-    sudo pacman -Sy --noconfirm --overwrite '*' \
-         delve \
-         go \
-         node \
-         npm \
-         rustup \
+    # Programming and tools
+    sudo pacman -Sy --noconfirm --overwrite '*'          \
+         go                                              \
+         node                                            \
+         rustup                                          \
          yarn
 
     # Misc
-    sudo pacman -Sy --noconfirm --overwrite '*' \
-        fasd \
-        imagemagick \
-        keepass \
-        postgresql-libs \
+    sudo pacman -Sy --noconfirm --overwrite '*'          \
+        fasd                                             \
+        imagemagick                                      \
+        keepass                                          \
+        postgresql                                       \
+        ripgrep                                          \
         tree
 
     # Misc GUI
-    sudo pacman -Sy --noconfirm --overwrite '*' \
-         chromium \
-         firefox \
-         gimp \
+    sudo pacman -Sy --noconfirm --overwrite '*'          \
+         firefox                                         \
+         gimp                                            \
          transmission-gtk
 
-    # NOTE: Since I'm installing both Chromium and Firefox, the
-    # following line sets Firefox as the default browser.
+    # Set Firefox as the default web browser.
     xdg-settings set default-web-browser firefox.desktop
-
 }
 
 install_rust() {
@@ -278,47 +282,47 @@ install_x() {
 
 install_sway() {
 
-    sudo pacman -Sy
+    sudo pacman -S --noconfirm --overwrite '*' --asdeps \
+        bemenu                                          \
+        dmenu                                           \
+        i3status                                        \
+        mako                                            \
+        slurp                                           \
+        swaybg                                          \
+        swayidle                                        \
+        swaylock                                        \
+        wallutils                                       \
+        waybar                                          \
+        wayland                                         \
+        xorg-wayland
 
-    sudo pacman -S --confirm --overwrite '*' \
-         alacritty \
-         bemenu \
-         brightnessctl \
-         dmenu \
-         foot \
-         grim \
-         i3status \
-         mako \
-         slurp \
-         sway \
-         swaybg \
-         swayidle \
-         swaylock \
-         wallutils \
-         waybar \
-         wayland \
-         xorg-xwayland
+    sudo pacman -S --noconfirm --overwrite '*'          \
+        alacritty                                       \
+        brightnessctl                                   \
+        foot                                            \
+        grim                                            \
+        sway
 
     # TODO: Install polkit?
 
-    # These two are needed for the fancy swaybar status.sh.
-    sudo pacman -S --noconfirm acpi noto-fonts-emoji
+    # These two are needed for my fancy swaybar status.sh.
+    sudo pacman -S --noconfirm --overwrite '*' --asdeps \
+        acpi noto-fonts-emoji
 
 }
 
 install_tools() {
-    sudo pacman -S
 
-    # TODO: Install golangci-lint!
+    # TODO: Install golangci-lint?
 
-    sudo pacman -S --noconfirm      \
-         gopls                      \
-         pyright                    \
-         typescript-language-server
+    sudo pacman -Sy --noconfirm  --overwrite '*' \
+        delve                                    \
+        gopls                                    \
+        npm                                      \
+        pyright                                  \
+        typescript-language-server
+
 }
-
-# TODO: AUR packages: ttf-monaco ttf-google-fonts-git ttf-courier-prime
-# ttf-ms-fonts
 
 if [ $# -eq 0 ] || [ $1 = "help" ] ; then
     usage
