@@ -36,6 +36,13 @@
          ([M-f1]       . eglot-code-actions) ; new
          ([M-f2]       . eglot-rename)))     ; new
 
+(use-package markdown-mode
+  :bind (:map markdown-mode-map
+              ("M-n" . d:5-next)        ; markdown-next-link
+              ("M-p" . d:5-prev))       ; markdown-previous-link
+  :demand
+  :ensure t)
+
 (use-package swiper
   :bind ("C-c i"      . swiper)         ; new
   :demand

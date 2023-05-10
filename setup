@@ -143,6 +143,7 @@ install_packages() {
         aspell-en                                        \
         gnu-free-fonts                                   \
         pulseaudio                                       \
+        qt                                               \
         ttf-cascadia-code                                \
         ttf-dejavu                                       \
         ttf-hack                                         \
