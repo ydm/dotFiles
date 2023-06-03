@@ -46,8 +46,9 @@ config_bash() {
 # BEGIN config_bash
 source $ROOT/shell/aliases.sh
 export PATH=\$PATH:$HOME/dotFiles/wannabin
-export PATH=\$PATH:$HOME/go/bin
 export PATH=\$PATH:$HOME/local/bin
+export PATH=\$PATH:$HOME/.cargo/bin
+export PATH=\$PATH:$HOME/go/bin
 # END config_bash
 EOF
 
@@ -186,13 +187,12 @@ install_packages() {
          clang                                           \
          cmake                                           \
          gdb                                             \
-         git                                             \
          valgrind
 
     # Programming and tools
     sudo pacman -Sy --noconfirm --overwrite '*'          \
          go                                              \
-         node                                            \
+         nodejs                                          \
          rustup                                          \
          yarn
 
