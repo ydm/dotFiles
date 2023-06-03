@@ -27,7 +27,7 @@
  '(safe-local-variable-values '((git-commit-major-mode . git-commit-elisp-text-mode)))
  '(scroll-error-top-bottom t)
  '(scroll-preserve-screen-position t)
- '(tab-width 4)
+ '(tab-width 8)
  '(truncate-lines t)
 
  ;; Enable global minor modes.

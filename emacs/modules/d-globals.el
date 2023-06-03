@@ -36,6 +36,18 @@
          ([M-f1]       . eglot-code-actions) ; new
          ([M-f2]       . eglot-rename)))     ; new
 
+(use-package hideshow
+  :init (add-hook 'prog-mode-hook #'hs-minor-mode)
+  :bind (:map prog-mode-map
+              ("C-c C-2 C-a" . hs-show-all)      ; new
+              ("C-c C-2 C-c" . hs-toggle-hiding) ; new
+              ("C-c C-2 C-d" . hs-hide-block)    ; new
+              ("C-c C-2 C-e" . hs-toggle-hiding) ; new
+              ("C-c C-2 C-h" . hs-hide-block)    ; new
+              ("C-c C-2 C-l" . hs-hide-level)    ; new
+              ("C-c C-2 C-s" . hs-show-block)    ; new
+              ("C-c C-2 C-t" . hs-hide-all)))    ; new
+
 (use-package markdown-mode
   :bind (:map markdown-mode-map
               ("M-n" . d:5-next)        ; markdown-next-link

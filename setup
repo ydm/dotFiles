@@ -134,8 +134,17 @@ install_packages() {
     # phase:
     #
     # $ pacstrap /mnt dhcpcd git sudo vi iwd
-
+    # - or, after arch-chroot -
+    # $ pacman -S dhcpcd git sudo vi iwd
     #
+    # Adding a user: useradd -m -G wheel,input -s /bin/bash <handle>
+
+<<<<<<< HEAD
+    #
+=======
+    mkdir -p ~/.config
+
+>>>>>>> 5cb97a4 (stuff)
     # System
     #
     # Installs https://archlinux.org/groups/x86_64/xorg-apps/
@@ -313,6 +322,10 @@ install_sway() {
 }
 
 install_tools() {
+<<<<<<< HEAD
+=======
+    sudo pacman -Sy
+>>>>>>> 5cb97a4 (stuff)
 
     # TODO: Install golangci-lint?
 
@@ -323,6 +336,16 @@ install_tools() {
         pyright                                  \
         typescript-language-server
 
+<<<<<<< HEAD
+=======
+    sudo pacman -S --noconfirm      \
+         gopls                      \
+         pyright                    \
+         typescript-language-server
+
+    sudo pacman -S --noconfirm \
+         iotop
+>>>>>>> 5cb97a4 (stuff)
 }
 
 if [ $# -eq 0 ] || [ $1 = "help" ] ; then

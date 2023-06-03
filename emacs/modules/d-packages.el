@@ -1,6 +1,6 @@
 ;; -*- lexical-binding: t -*-
 
-;; Language modes
+;; Install additional language modes.
 (use-package csv-mode :ensure t)
 (use-package haskell-mode :ensure t)
 (use-package markdown-mode :ensure t)   ; Also improves eldoc-box.
