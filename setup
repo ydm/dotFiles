@@ -13,6 +13,7 @@ COMMANDS=( config_alacritty
            config_misc
            config_rust
            config_sway
+           install_aur
            install_packages
            install_rust
            install_sway
@@ -121,14 +122,51 @@ config_sway() {
 
 install_aur() {
 
+    # Install dependencies of emacs
+    sudo pacman -Sy --noconfirm --overwrite '*' --asdeps \
+           acl                                           \
+           alsa-lib                                      \
+           dbus                                          \
+           fontconfig                                    \
+           freetype2                                     \
+           gdk-pixbuf2                                   \
+           giflib                                        \
+           glib2                                         \
+           gmp                                           \
+           gnutls                                        \
+           gpm                                           \
+           gtk3                                          \
+           harfbuzz                                      \
+           jansson                                       \
+           lcms2                                         \
+           libgccjit                                     \
+           libice                                        \
+           libjpeg-turbo                                 \
+           libotf                                        \
+           libpng                                        \
+           librsvg                                       \
+           libsm                                         \
+           libtiff                                       \
+           libxfixes                                     \
+           libxml2                                       \
+           m17n-lib                                      \
+           ncurses                                       \
+           pango                                         \
+           zlib
+
     mkdir -p ~/local/aur
-    cd ~/local/aur
-    https://aur.archlinux.org/cgit/aur.git/snapshot/emacs-git.tar.gz
+    (
+        cd ~/local/aur
+        wget https://aur.archlinux.org/cgit/aur.git/snapshot/emacs-git.tar.gz
+        tar xf emacs-git.tar.gz
+        (
+            cd emacs-git
+            makepkg
+            sudo makepkg -i
+        )
+    )
 
-    echo
-
-    # TODO: AUR packages:
-    # emacs-git
+    # TODO: Install these packages too!
     # ttf-courier-prime
     # ttf-google-fonts-git
     # ttf-monaco
