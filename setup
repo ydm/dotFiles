@@ -9,9 +9,8 @@ COMMANDS=( config_alacritty
            config_emacs
            config_firefox
            config_git
-           config_go
-           config_misc
-           config_rust
+           config_git_go
+           config_git_rust
            config_sway
            install_aur
            install_packages
@@ -42,6 +41,9 @@ config_alacritty() {
 }
 
 config_bash() {
+
+    # direnv: https://direnv.net/docs/hook.html
+
     cat >>~/.bashrc <<EOF
 
 # BEGIN config_bash
@@ -50,6 +52,9 @@ export PATH=\$PATH:$HOME/dotFiles/wannabin
 export PATH=\$PATH:$HOME/local/bin
 export PATH=\$PATH:$HOME/.cargo/bin
 export PATH=\$PATH:$HOME/go/bin
+
+eval "\$(fasd --init auto)"
+eval "\$(direnv hook bash)"
 # END config_bash
 EOF
 
@@ -71,28 +76,12 @@ config_git() {
     git config --global user.name "Yordan Miladinov"
 }
 
-config_go() {
+config_git_go() {
     git config --global url.git@github.com:.insteadOf https://github.com/
 }
 
-config_rust() {
+config_git_rust() {
     git config --global --remove-section "url.git@github.com:"
-}
-
-config_misc() {
-    # Configure:
-    #   - direnv
-    #   - fasd
-    #
-    # direnv: https://direnv.net/docs/hook.html
-
-    cat >>~/.bashrc <<EOF
-
-# BEGIN config_misc
-eval "\$(fasd --init auto)"
-eval "\$(direnv hook bash)"
-# END config_misc
-EOF
 }
 
 config_sway() {
@@ -191,15 +180,11 @@ install_packages() {
     # System
     #
     # Installs https://archlinux.org/groups/x86_64/xorg-apps/
-    sudo pacman -Sy --noconfirm --overwrite '*' --asdeps \
+    sudo pacman -Sy --noconfirm --overwrite '*'          \
+        alacritty                                        \
         aspell-en                                        \
-        gnu-free-fonts                                   \
         pulseaudio                                       \
         qt                                               \
-        ttf-cascadia-code                                \
-        ttf-dejavu                                       \
-        ttf-hack                                         \
-        ttf-ubuntu-font-family                           \
         xorg-apps                                        \
         xorg-xclock
 
@@ -214,7 +199,7 @@ install_packages() {
         pavucontrol                                      \
         tmux
 
-    # Programming
+    # Programming.
     #
     # base-devel installs: binutils, gcc, gettext libtool pkgconf
     # https://archlinux.org/groups/x86_64/base-devel/
@@ -225,18 +210,18 @@ install_packages() {
          gdb                                             \
          valgrind
 
-    # Programming and tools
+    # Programming languages.
     sudo pacman -Sy --noconfirm --overwrite '*'          \
          go                                              \
          nodejs                                          \
-         rustup                                          \
-         yarn
+         rustup
 
-    # Misc
+    # Misc.
     sudo pacman -Sy --noconfirm --overwrite '*'          \
         direnv                                           \
         fasd                                             \
         imagemagick                                      \
+        iotop                                            \
         keepass                                          \
         p7zip                                            \
         postgresql                                       \
@@ -247,7 +232,15 @@ install_packages() {
         wget                                             \
         xclip
 
-    # Misc GUI
+    # Install fonts.
+    sudo pacman -Sy --noconfirm --overwrite '*'          \
+        gnu-free-fonts                                   \
+        ttf-cascadia-code                                \
+        ttf-dejavu                                       \
+        ttf-hack                                         \
+        ttf-ubuntu-font-family
+    
+    # Misc GUI.
     sudo pacman -Sy --noconfirm --overwrite '*'          \
          firefox                                         \
          gimp                                            \
@@ -336,7 +329,6 @@ install_sway() {
         xorg-wayland
 
     sudo pacman -S --noconfirm --overwrite '*'          \
-        alacritty                                       \
         brightnessctl                                   \
         foot                                            \
         grim                                            \
@@ -354,21 +346,16 @@ install_tools() {
     sudo pacman -Sy
 
     # TODO: Install golangci-lint?
+    # TODO: Install multisol from cargo?
 
     sudo pacman -Sy --noconfirm  --overwrite '*' \
         delve                                    \
         gopls                                    \
+        yarn                                     \
         npm                                      \
         pyright                                  \
         typescript-language-server
 
-    sudo pacman -S --noconfirm      \
-         gopls                      \
-         pyright                    \
-         typescript-language-server
-
-    sudo pacman -S --noconfirm \
-         iotop
 }
 
 if [ $# -eq 0 ] || [ "$1" = "help" ] ; then
