@@ -121,6 +121,10 @@ config_sway() {
 
 install_aur() {
 
+    mkdir -p ~/local/aur
+    cd ~/local/aur
+    https://aur.archlinux.org/cgit/aur.git/snapshot/emacs-git.tar.gz
+
     echo
 
     # TODO: AUR packages:
@@ -161,22 +165,16 @@ install_packages() {
         xorg-apps                                        \
         xorg-xclock
 
+    # System misc
     sudo pacman -Sy --noconfirm --overwrite '*'          \
         dhcpcd                                           \
-        direnv                                           \
         iw                                               \
-        iwd                                              \
         man                                              \
         man-pages                                        \
         openssh                                          \
         pacman-contrib                                   \
         pavucontrol                                      \
-        sudo                                             \
-        tmux                                             \
-        unzip                                            \
-        vi                                               \
-        vlc                                              \
-        xclip
+        tmux
 
     # Programming
     #
@@ -198,12 +196,18 @@ install_packages() {
 
     # Misc
     sudo pacman -Sy --noconfirm --overwrite '*'          \
+        direnv                                           \
         fasd                                             \
         imagemagick                                      \
         keepass                                          \
+        p7zip                                            \
         postgresql                                       \
         ripgrep                                          \
-        tree
+        tree                                             \
+        unzip                                            \
+        vlc                                              \
+        wget                                             \
+        xclip
 
     # Misc GUI
     sudo pacman -Sy --noconfirm --overwrite '*'          \
@@ -219,26 +223,13 @@ install_rust() {
 
     # $ rustup default stable
     # info: syncing channel updates for 'stable-x86_64-unknown-linux-gnu'
-    # info: latest update on 2023-03-28, rust version 1.68.2 (9eb3afe9e 2023-03-27)
-    # info: downloading component 'cargo'     [+]
-    # info: downloading component 'clippy'    [+]
-    # info: downloading component 'rust-docs' [+]
-    # info: downloading component 'rust-std'  [+]
-    # info: downloading component 'rustc'     [+]
-    # info: downloading component 'rustfmt'   [+]
     # info: installing component 'cargo'
     # info: installing component 'clippy'
     # info: installing component 'rust-docs'
-    #  19.5 MiB /  19.5 MiB (100 %)  14.3 MiB/s in  1s ETA:  0s
     # info: installing component 'rust-std'
-    #  29.9 MiB /  29.9 MiB (100 %)  22.5 MiB/s in  1s ETA:  0s
     # info: installing component 'rustc'
-    #  68.1 MiB /  68.1 MiB (100 %)  25.5 MiB/s in  2s ETA:  0s
     # info: installing component 'rustfmt'
-    #
-    #   stable-x86_64-unknown-linux-gnu installed - rustc 1.68.2 (9eb3afe9e 2023-03-27)
-    #
-    # $
+    # stable-x86_64-unknown-linux-gnu installed
 
     # Here's a list of the components:
     # https://rust-lang.github.io/rustup/concepts/components.html
@@ -262,18 +253,18 @@ install_rust() {
     # - rust-dev
     #
     # Here's the list of all the valid proxy names for rustup:
-    #   - rustc
-    #   - rustdoc
-    #   - cargo
+    #   - rustc         [+]
+    #   - rustdoc       [+ rust-docs]
+    #   - cargo         [+]
     #   - rust-lldb
     #   - rust-gdb
     #   - rust-gdbgui
-    #   - rls
-    #   - cargo-clippy
-    #   - clippy-driver
-    #   - cargo-miri
-    #   - rustfmt
-    #   - cargo-fmt
+    #   - rls           [-]
+    #   - cargo-clippy  [+ clippy]
+    #   - clippy-driver [+ clippy}
+    #   - cargo-miri    [+ cargo]
+    #   - rustfmt       [+]
+    #   - cargo-fmt     [+ cargo]
 
     rustup default stable
     rustup toolchain install stable --component rust-analyzer rust-src rust-analysis
