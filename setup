@@ -3,7 +3,7 @@
 # TODO: Install some packages with --asdeps?
 # TODO: Install jq
 
-ROOT=$(readlink -f $(dirname ${BASH_SOURCE[0]}))
+ROOT=$(readlink -f "$(dirname "${BASH_SOURCE[0]}")")
 COMMANDS=( config_alacritty
            config_bash
            config_emacs
@@ -20,7 +20,8 @@ COMMANDS=( config_alacritty
            install_x
          )
 
-out() { printf "$1 $2\n" "${@:3}"; }
+# out() { printf "$1 $2\n" "${@:3}"; }
+out() { printf "%s %s\n" "$1" "$2"; }
 error() { out "==> ERROR:" "$@"; } >&2
 die() { error "$@"; exit 1; }
 
@@ -28,15 +29,15 @@ usage() {
     out "Usage: $0 <command>..."
     out
     out "Commands:"
-    for c in ${COMMANDS[@]} ; do
-        out '  ' $c
+    for c in "${COMMANDS[@]}" ; do
+        out '  ' "$c"
     done
 }
 
 config_alacritty() {
     rm -rf ~/.config/alacritty
     mkdir -p ~/.config/alacritty
-    cp $ROOT/alacritty/alacritty.yml ~/.config/alacritty/
+    cp "$ROOT/alacritty/alacritty.yml" ~/.config/alacritty/
 }
 
 config_bash() {
@@ -53,8 +54,8 @@ EOF
 }
 
 config_emacs() {
-    PATH="$ROOT"/emacs/d-init.el
-    echo "(load \"$PATH\")" > ~/.emacs
+    INIT="$ROOT/emacs/d-init.el"
+    echo "(load \"$INIT\")" > ~/.emacs
 }
 
 config_firefox() {
@@ -93,26 +94,26 @@ EOF
 }
 
 config_sway() {
-    SWAY=$HOME/.config/sway
+    SWAY="$HOME/.config/sway"
 
     # Make a backup
-    if [ -d $SWAY ] ; then
+    if [ -d "$SWAY" ] ; then
         BACKUP=$HOME/.config/sway.backup
-        rm -rf $BACKUP
-        cp -r $SWAY $BACKUP
+        rm -rf "$BACKUP"
+        cp -r "$SWAY" "$BACKUP"
     fi
 
     # Make sure ~/.config/sway exists.
-    mkdir -p $SWAY
+    mkdir -p "$SWAY"
 
     # Copy example config.
-    cp -f /etc/sway/config $SWAY/
+    cp -f /etc/sway/config "$SWAY/"
 
     # Make it load additional config files.
-    echo "include $HOME/.config/sway/*.conf" >> $SWAY/config
+    echo "include $HOME/.config/sway/*.conf" >> "$SWAY/config"
 
     # Copy additional config files.
-    cp -t $SWAY $ROOT/sway/*.conf
+    cp -t "$SWAY" "$ROOT"/sway/*.conf
 
     # TODO: Check ctrl:swapcaps
 }
@@ -341,11 +342,11 @@ install_tools() {
          iotop
 }
 
-if [ $# -eq 0 ] || [ $1 = "help" ] ; then
+if [ $# -eq 0 ] || [ "$1" = "help" ] ; then
     usage
 else
-    for arg in $@ ; do
-        if [[ "${COMMANDS[*]}" =~ "$arg" ]]; then
+    for arg in "$@" ; do
+        if [[ "${COMMANDS[*]}" =~ $arg ]]; then
             $arg
         else
             die "unrecognized command: %s" "$arg"
