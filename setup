@@ -365,7 +365,7 @@ else
         if [[ "${COMMANDS[*]}" =~ $arg ]]; then
             $arg
         else
-            die "unrecognized command: %s" "$arg"
+            die "unrecognized command:" "$arg"
         fi
     done
 fi
