@@ -141,6 +141,7 @@ install_aur() {
            m17n-lib                                      \
            ncurses                                       \
            pango                                         \
+           tree-sitter                                   \
            zlib
 
     mkdir -p ~/local/aur
@@ -150,8 +151,7 @@ install_aur() {
         tar xf emacs-git.tar.gz
         (
             cd emacs-git
-            makepkg
-            sudo makepkg -i
+            makepkg -i
         )
     )
 
@@ -196,7 +196,6 @@ install_packages() {
         man-pages                                        \
         openssh                                          \
         pacman-contrib                                   \
-        pavucontrol                                      \
         tmux
 
     # Programming.
@@ -218,12 +217,15 @@ install_packages() {
 
     # Misc.
     sudo pacman -Sy --noconfirm --overwrite '*'          \
+        btop                                             \
         direnv                                           \
         fasd                                             \
+        htop                                             \
         imagemagick                                      \
         iotop                                            \
         keepass                                          \
         p7zip                                            \
+        pavucontrol                                      \
         postgresql                                       \
         ripgrep                                          \
         tree                                             \
