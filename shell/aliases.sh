@@ -1,6 +1,6 @@
 # echo 'source ~/dotFiles/shell/aliases.sh' >> ~/.bashrc
 
-# Rewrite basic commands
+# Rewrite base commands
 alias df='df -h'
 alias du='du -h'
 alias grep='grep --color=auto'
@@ -12,14 +12,24 @@ alias rg="rg --color always"
 alias tree='tree -Ca -I ".git"'
 alias xclip='xclip -selection clipboard'
 
-# Shortcuts
-alias dmesg='sudo dmesg'
+# Build on base commands
+alias la='ls -a'
+alias lal='ls -al'
+alias ll='ls -l'
+
+# Emacs
 alias e=emacs
+alias eh='emacs . &'
 alias ew='emacs -nw'
 if ! $(command -v mg 1>/dev/null) ; then
     alias mg="emacs -nw"
 fi
+
+# System
+alias dmesg='sudo dmesg'
 alias spac='sudo pacman --noconfirm'
+alias clearjournal='sudo journalctl --vacuum-time=7d'
+alias upgrade='sudo pacman -Syu --noconfirm'
 
 # Git
 alias ga='git add'
@@ -43,11 +53,3 @@ alias .....='cd ../../../..'
 alias ....='cd ../../..'
 alias ...='cd ../../'
 alias ..='cd ..'
-
-
-# Utilities
-alias clearjournal='sudo journalctl --vacuum-time=7d'
-alias la='ls -a'
-alias lal='ls -al'
-alias ll='ls -l'
-alias upgrade='sudo pacman -Syu --noconfirm'
