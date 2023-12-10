@@ -7,7 +7,7 @@ alias grep='grep --color=auto'
 alias less="less --use-color --color=Er --color=My --color=Nb --color=Pm -N"
 alias ls='ls --color=auto -h'
 alias make='make -j16'
-alias pipp='python -m pip'
+alias pip='python -m pip'
 alias rg="rg --color always"
 alias tree='tree -Ca -I ".git"'
 alias xclip='xclip -selection clipboard'
