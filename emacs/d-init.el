@@ -67,9 +67,9 @@
 ;; Dynamically load modules.
 ;;
 ;; `use-package' cannot work (maybe because it's a macro) with
-;; variables for the :load-path option, among others. So, in order to
-;; load modules from files, I define another higher-level macro that
-;; constructs a list of dynamically built `use-package' applications.
+;; variables for the :load-path option. So, in order to load modules
+;; from files, I define another higher-level macro that constructs a
+;; list of dynamically built `use-package' applications.
 ;;
 ;; Here's what a typical expanded form looks like:
 ;;

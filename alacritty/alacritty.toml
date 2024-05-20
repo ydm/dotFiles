@@ -1,0 +1,24 @@
+[colors.primary]
+background = "0x2c2c2c"
+
+[font]
+size = 18.0
+
+[font.bold]
+family = "Cascadia Code"
+style = "Bold"
+
+[font.bold_italic]
+family = "Cascadia Code"
+style = "Bold Italic"
+
+[font.italic]
+family = "Cascadia Code"
+style = "Italic"
+
+[font.normal]
+family = "Cascadia Code"
+style = "Regular"
+
+[window]
+opacity = 0.85

@@ -1,0 +1,6 @@
+#!/bin/bash
+
+# Needs the `python-pygments` package, but it's installed with
+# `ipython`, so perhaps it's already installed.
+
+pygmentize "$1" | less -R

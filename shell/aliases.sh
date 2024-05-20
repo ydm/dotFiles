@@ -1,18 +1,20 @@
 # echo 'source ~/dotFiles/shell/aliases.sh' >> ~/.bashrc
 
-# Rewrite base commands
+# Base commands ++
 alias df='df -h'
 alias du='du -h'
 alias grep='grep --color=auto'
-alias less="less --use-color --color=Er --color=My --color=Nb --color=Pm -N"
+alias less='less --use-color --color=Er --color=My --color=Nb --color=Pm -N'
 alias ls='ls --color=auto -h'
-alias make='make -j16'
-alias pip='python -m pip'
-alias rg="rg --color always"
-alias tree='tree -Ca -I ".git"'
+alias rg='rg --color always'
+alias tree="tree -Ca -I '.git'"
 alias xclip='xclip -selection clipboard'
 
 # Build on base commands
+alias .....='cd ../../../..'
+alias ....='cd ../../..'
+alias ...='cd ../../'
+alias ..='cd ..'
 alias la='ls -a'
 alias lal='ls -al'
 alias ll='ls -l'
@@ -24,12 +26,6 @@ alias ew='emacs -nw'
 if ! $(command -v mg 1>/dev/null) ; then
     alias mg="emacs -nw"
 fi
-
-# System
-alias dmesg='sudo dmesg'
-alias spac='sudo pacman --noconfirm'
-alias clearjournal='sudo journalctl --vacuum-time=7d'
-alias upgrade='sudo pacman -Syu --noconfirm'
 
 # Git
 alias ga='git add'
@@ -48,8 +44,14 @@ alias gpm='git push origin master'
 alias gr='git restore'
 alias gs='git status -s'
 
-# Navigation
-alias .....='cd ../../../..'
-alias ....='cd ../../..'
-alias ...='cd ../../'
-alias ..='cd ..'
+# Programming
+alias make='make -j16'
+alias pip='python -m pip'
+alias venv='python -m venv'
+alias shellcheck='shellcheck -xa'
+
+# System
+alias dmesg='sudo dmesg'
+alias spac='sudo pacman --noconfirm'
+alias clearjournal='sudo journalctl --vacuum-time=7d'
+alias upgrade='sudo pacman -Syu --noconfirm'

@@ -16,6 +16,7 @@
 ;;           (add-to-list 'auto-mode-alist (cons pattern mode)))
 ;;         patterns))
 
+;; https://github.com/casouri/tree-sitter-module
 (add-to-list 'treesit-extra-load-path
              (expand-file-name "~/local/external/tree-sitter-module/dist"))
 
@@ -34,7 +35,8 @@
   :ensure nil)
 
 (use-package go-ts-mode
-  :init (add-hook 'go-ts-mode-hook #'eglot-ensure)
+  :init (progn (add-hook 'go-ts-mode-hook #'eglot-ensure)
+               (add-hook 'go-ts-mode-hook (lambda () (setq tab-width 8))))
   :ensure nil)
 
 ;; (use-package js
@@ -58,10 +60,10 @@
   :custom (typescript-ts-mode-indent-offset 4)
   :ensure nil)
 
-;; TODO: elisp
-;; TODO: check gomod
-;; TODO: python + pyright, ruby, sql, yaml, js, make, dockerfile
-;; clojure?
 ;; TODO: c! cpp?
+;; TODO: check gomod
+;; TODO: clojure?
+;; TODO: elisp
+;; TODO: ruby, sql, yaml, js, make, dockerfile
 
 (provide 'd-treesit)
