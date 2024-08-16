@@ -3,8 +3,10 @@
 # TODO: Install some packages with --asdeps?
 # TODO: Install jq
 
-ROOT=$(readlink -f "$(dirname "${BASH_SOURCE[0]}")")
-COMMANDS=( config_alacritty
+# ROOT=$(readlink -f "$(dirname "${BASH_SOURCE[0]}")")
+
+COMMANDS=( create_user
+           config_alacritty
            config_bash
            config_emacs
            config_firefox
@@ -34,10 +36,16 @@ usage() {
     done
 }
 
+create_user() {
+    # local username=${1:-d}
+    local username=d
+    useradd -m -G wheel,input -s /bin/bash "$username"
+}
+
 config_alacritty() {
     rm -rf ~/.config/alacritty
     mkdir -p ~/.config/alacritty
-    cp "$ROOT/alacritty/alacritty.yml" ~/.config/alacritty/
+    cp "$HOME/dotFiles/alacritty/alacritty.yml" ~/.config/alacritty/ # TODO: USE TOML!
 }
 
 config_bash() {
@@ -47,11 +55,14 @@ config_bash() {
     cat >>~/.bashrc <<EOF
 
 # BEGIN config_bash
-source $ROOT/shell/aliases.sh
+source $HOME/dotFiles/shell/aliases.sh
 export PATH=\$PATH:$HOME/dotFiles/wannabin
 export PATH=\$PATH:$HOME/local/bin
 export PATH=\$PATH:$HOME/.cargo/bin
 export PATH=\$PATH:$HOME/go/bin
+
+export EDITOR=emacs
+export TERMINAL=alacritty
 
 eval "\$(fasd --init auto)"
 eval "\$(direnv hook bash)"
@@ -61,7 +72,7 @@ EOF
 }
 
 config_emacs() {
-    INIT="$ROOT/emacs/d-init.el"
+    INIT="$HOME/dotFiles/emacs/d-init.el"
     echo "(load \"$INIT\")" > ~/.emacs
 }
 
@@ -104,7 +115,7 @@ config_sway() {
     echo "include $HOME/.config/sway/*.conf" >> "$SWAY/config"
 
     # Copy additional config files.
-    cp -t "$SWAY" "$ROOT"/sway/*.conf
+    cp -t "$SWAY" "$HOME/dotFiles"/sway/*.conf # fix the star
 
     # TODO: Check ctrl:swapcaps
 }
@@ -184,9 +195,10 @@ install_packages() {
         alacritty                                        \
         aspell-en                                        \
         pulseaudio                                       \
-        qt                                               \
         xorg-apps                                        \
         xorg-xclock
+    echo $?
+    exit 0
 
     # System misc
     sudo pacman -Sy --noconfirm --overwrite '*'          \
@@ -223,11 +235,13 @@ install_packages() {
         htop                                             \
         imagemagick                                      \
         iotop                                            \
+        jq                                               \
         keepass                                          \
         p7zip                                            \
         pavucontrol                                      \
         postgresql                                       \
         ripgrep                                          \
+        shellcheck                                       \
         tree                                             \
         unzip                                            \
         vlc                                              \
@@ -328,7 +342,7 @@ install_sway() {
         wallutils                                       \
         waybar                                          \
         wayland                                         \
-        xorg-wayland
+        xorg-xwayland
 
     sudo pacman -S --noconfirm --overwrite '*'          \
         brightnessctl                                   \
@@ -351,13 +365,18 @@ install_tools() {
     # TODO: Install multisol from cargo?
 
     sudo pacman -Sy --noconfirm  --overwrite '*' \
+        bash-language-server                     \
         delve                                    \
         gopls                                    \
-        yarn                                     \
+        haskell-language-server                  \
+        jedi-language-server                     \
         npm                                      \
         pyright                                  \
-        typescript-language-server
-
+        python-lsp-server                        \
+        texlab                                   \
+        typescript-language-server               \
+        yaml-language-server                     \
+        yarn
 }
 
 if [ $# -eq 0 ] || [ "$1" = "help" ] ; then

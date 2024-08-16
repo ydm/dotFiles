@@ -48,12 +48,20 @@ Install
 and compile all language modules:
 
 ```
-mkdir -p ~/local/external
-cd ~/local/external
+mkdir -p ~/local/ext
+cd ~/local/ext
 git clone git@github.com:casouri/tree-sitter-module.git
 cd tree-sitter-module
 ./batch.sh
-cd dist
-rm libtree-sitter-c-sharp.so # fuck c-sharp
-cp libtree-sitter-go-mod.so libtree-sitter-gomod.so
+rm dist/libtree-sitter-c-sharp.so # fuck c-sharp
 ```
+spac -S pkgfile
+spac -S multilib/lib32-gnutls
+spac -S multilib/lib32-vulkan-icd-loader
+spac -S multilib/lib32-libglvnd
+spac -S python-protobuf
+spac -S extra/vulkan-tools
+spac -Ss lib32-nvidia-utils
+spac -S feh
+
+bazel

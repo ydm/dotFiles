@@ -37,6 +37,9 @@ def create_userchrome(profile: Path):
 
 def update_pref(profile: Path):
     prefs: Path = profile / 'prefs.js'
+    if not prefs.exists():
+        print(f'WARNING: {prefs} does not exist')
+        return
     with open(prefs, 'r', encoding='utf-8') as f:
         lines = list(map(str.strip, f.readlines()))
     pattern = (PREF_LEGACY

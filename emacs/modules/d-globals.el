@@ -84,10 +84,10 @@
          ("C-{"        . d:wrap-in-curly-braces)    ; new
          :map dired-mode-map
          ("/"          . d:ripgrep))
-  :load-path "~/dotFiles/emacs/library")
+  :load-path "~/dotFiles/emacs/libraries")
 
 (use-package d-windows
   :bind ("C-<insert>" . d:windows/restore) ; kill-ring-save
-  :load-path "~/dotFiles/emacs/library")
+  :load-path "~/dotFiles/emacs/libraries")
 
 (provide 'd-globals)

@@ -18,7 +18,7 @@
 
 ;; https://github.com/casouri/tree-sitter-module
 (add-to-list 'treesit-extra-load-path
-             (expand-file-name "~/local/external/tree-sitter-module/dist"))
+             (expand-file-name "~/local/ext/tree-sitter-module/dist"))
 
 ;; Simplest cases first
 (require 'dockerfile-ts-mode)           ; modifies auto-mode-alist
