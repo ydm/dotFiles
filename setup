@@ -2,6 +2,7 @@
 
 # TODO: Install some packages with --asdeps?
 # TODO: Install jq
+# TODO: install polkit pkgfile
 
 # ROOT=$(readlink -f "$(dirname "${BASH_SOURCE[0]}")")
 
@@ -14,7 +15,7 @@ COMMANDS=( create_user
            config_git_go
            config_git_rust
            config_sway
-           install_aur
+           install_emacs
            install_packages
            install_rust
            install_sway
@@ -45,7 +46,7 @@ create_user() {
 config_alacritty() {
     rm -rf ~/.config/alacritty
     mkdir -p ~/.config/alacritty
-    cp "$HOME/dotFiles/alacritty/alacritty.yml" ~/.config/alacritty/ # TODO: USE TOML!
+    cp "$HOME/dotFiles/alacritty/alacritty.toml" ~/.config/alacritty/
 }
 
 config_bash() {
@@ -83,7 +84,7 @@ config_firefox() {
 config_git() {
     git config --global init.defaultBranch master
     git config --global pull.rebase true
-    git config --global user.email "yordanm@pm.me"
+    git config --global user.email "yordanm@proton.me"
     git config --global user.name "Yordan Miladinov"
 }
 
@@ -120,7 +121,7 @@ config_sway() {
     # TODO: Check ctrl:swapcaps
 }
 
-install_aur() {
+install_emacs() {
 
     # Install dependencies of emacs
     sudo pacman -Sy --noconfirm --overwrite '*' --asdeps \
@@ -155,23 +156,36 @@ install_aur() {
            tree-sitter                                   \
            zlib
 
+    # Now download emacs-git from AUR, build and install.
     mkdir -p ~/local/aur
     (
         cd ~/local/aur
-        wget https://aur.archlinux.org/cgit/aur.git/snapshot/emacs-git.tar.gz
+        curl -O https://aur.archlinux.org/cgit/aur.git/snapshot/emacs-git.tar.gz
         tar xf emacs-git.tar.gz
         (
             cd emacs-git
-            makepkg -i
+            makepkg -i --noconfirm
         )
     )
+
+    # Compile tree-sitter modules.
+    mkdir -p ~/local/ext
+    (
+        cd ~/local/ext || exit
+        git clone http://github.com/casouri/tree-sitter-module.git
+
+        (
+            cd tree-sitter-module || exit
+            ./batch.sh
+            rm dist/libtree-sitter-c-sharp.so # fuck c-sharp
+        )
+    )   
 
     # TODO: Install these packages too!
     # ttf-courier-prime
     # ttf-google-fonts-git
     # ttf-monaco
     # ttf-ms-fonts
-
 }
 
 install_packages() {
@@ -198,7 +212,6 @@ install_packages() {
         xorg-apps                                        \
         xorg-xclock
     echo $?
-    exit 0
 
     # System misc
     sudo pacman -Sy --noconfirm --overwrite '*'          \
@@ -221,7 +234,7 @@ install_packages() {
          gdb                                             \
          valgrind
 
-    # Programming languages.
+    # Programming languages and package managers.
     sudo pacman -Sy --noconfirm --overwrite '*'          \
          go                                              \
          nodejs                                          \
@@ -347,6 +360,7 @@ install_sway() {
     sudo pacman -S --noconfirm --overwrite '*'          \
         brightnessctl                                   \
         foot                                            \
+        wmenu                                           \
         grim                                            \
         sway
 

@@ -65,3 +65,11 @@ spac -Ss lib32-nvidia-utils
 spac -S feh
 
 bazel
+
+IF FIREFOX IS TOO BIG
+layout.css.devPixelsPerPx=0.5
+
+```
+export GDK_DPI_SCALE=0.5
+# export GDK_SCALE=0.5
+```
