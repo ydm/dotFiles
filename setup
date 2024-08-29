@@ -1,28 +1,28 @@
 #!/bin/bash
 
-# TODO: Install some packages with --asdeps?
-# TODO: Install jq
-# TODO: install polkit pkgfile
-
 # ROOT=$(readlink -f "$(dirname "${BASH_SOURCE[0]}")")
+EMAIL=yordanm@proton.me
+NAME='Yordan Miladinov'
+USER=d
 
-COMMANDS=( config_alacritty
-           config_bash
-           config_emacs
-           config_firefox
-           config_git
-           config_git_go
-           config_git_rust
-           config_sway
-           initial
-           install_emacs
-           install_fonts
-           install_packages
-           install_rust
-           install_sway
-           install_tools
-           install_x
-         )
+COMMANDS=(
+    config_alacritty
+    config_bash
+    config_emacs
+    config_firefox
+    config_git
+    config_git_go
+    config_git_rust
+    config_sway
+    initial
+    install_base
+    install_emacs
+    install_fonts
+    install_i3
+    install_rust
+    install_sway
+    install_tools
+)
 
 # out() { printf "$1 $2\n" "${@:3}"; }
 out() { printf "%s %s\n" "$1" "$2"; }
@@ -41,7 +41,7 @@ usage() {
 config_alacritty() {
     rm -rf ~/.config/alacritty
     mkdir -p ~/.config/alacritty
-    cp "$HOME/dotFiles/alacritty/alacritty.toml" ~/.config/alacritty/
+    cp "${HOME}/dotFiles/alacritty/alacritty.toml" ~/.config/alacritty/
 }
 
 config_bash() {
@@ -77,8 +77,8 @@ config_firefox() {
 config_git() {
     git config --global init.defaultBranch master
     git config --global pull.rebase true
-    git config --global user.email "yordanm@proton.me"
-    git config --global user.name "Yordan Miladinov"
+    git config --global user.email "$EMAIL"
+    git config --global user.name "$NAME"
 }
 
 config_git_go() {
@@ -106,32 +106,40 @@ config_sway() {
     cp -f /etc/sway/config "$SWAY/"
 
     # Make it load additional config files.
-    echo "include $HOME/.config/sway/*.conf" >> "$SWAY/config"
+    echo "include $SWAY/custom/*.conf" >> "$SWAY/config"
 
     # Copy additional config files.
-    cp -t "$SWAY" "$HOME/dotFiles"/sway/*.conf # fix the star
+    mkdir -p "$SWAY/custom"
+    cp -t "$SWAY/custom" "$HOME/dotFiles/sway/*.conf"
 
     # TODO: Check ctrl:swapcaps
+    # TODO: Delete the original bar line from the ~/.config/sway/config
 }
 
 initial() {
+    local opa=kurec
     cat <<EOF
-[0] After arch-chroot:
+[0] [sudo] After arch-chroot:
 
-    # pacman -S dhcpcd git iwd sudo vi
+    # pacman -S dhcpcd git iw iwd sudo vi
 
 
-[1] On freshly installed system:
+[1] [sudo] On freshly installed system:
 
     # echo '%wheel ALL=(ALL:ALL) NOPASSWD: ALL' >/etc/sudoers.d/custom
     # chmod 0440 /etc/sudoers.d/custom
 
-    # useradd -m -G wheel,input -s /bin/bash d
+    # useradd -m -G wheel,input -s /bin/bash $USER
 
+    
+[2] [user]:
 
-[2] As user:
+    $ git clone https://github.com/ydm/dotFiles.git && cd dotFiles
+    $ git remote remove origin
+    $ git remote add origin git@github.com:ydm/dotFiles.git
 
-    $ ssh-keygen -t rsa -b 4096 -C 'yordanm@proton.me'
+    $ ./setup install_base
+    $ ssh-keygen -t rsa -b 4096 -C '$EMAIL'
 EOF
 }
 
@@ -149,6 +157,100 @@ _install_aur() {
             makepkg -is --noconfirm
         )
     )
+}
+
+install_base() {
+    # TODO: Check if packages from initial() are installed!
+
+    mkdir -p ~/.config
+
+    # System packages
+    #
+    # NB: Installs https://archlinux.org/groups/x86_64/xorg/ and more.
+    #
+    #     The only package that's part of xorg-apps, but not xorg, is
+    #     xorg-xkbprint, but I'm still going to install xorg-apps,
+    #     because it might get changed in the future.
+    sudo pacman -Sy --noconfirm --overwrite '*'          \
+        openssh                                          \
+        polkit                                           \
+        pulseaudio                                       \
+        xorg                                             \
+        xorg-apps                                        \
+        xorg-xclock                                      \
+        xorg-xinit                                       \
+        xterm                                            \
+        || die 'install_packages: failed to install step 0'
+
+    # System misc
+    sudo pacman -Sy --noconfirm --overwrite '*'          \
+        alacritty                                        \
+        aspell-en                                        \
+        man                                              \
+        man-pages                                        \
+        openssh                                          \
+        pacman-contrib                                   \
+        pkgfile                                          \
+        tmux                                             \
+        || die 'install_packages: failed to install step 1'
+
+    # Programming.
+    #
+    # base-devel installs: binutils, gcc, gettext libtool pkgconf
+    # https://archlinux.org/groups/x86_64/base-devel/
+    sudo pacman -Sy --noconfirm --overwrite '*'          \
+         base-devel                                      \
+         clang                                           \
+         cmake                                           \
+         gdb                                             \
+         valgrind                                        \
+         || die 'install_packages: failed to install step 2'
+
+    # Programming languages and package managers.
+    sudo pacman -Sy --noconfirm --overwrite '*'          \
+         go                                              \
+         nodejs                                          \
+         rustup                                          \
+         || die 'install_packages: failed to install step 3'
+
+    # Misc.
+    sudo pacman -Sy --noconfirm --overwrite '*'          \
+        btop                                             \
+        direnv                                           \
+        fasd                                             \
+        htop                                             \
+        imagemagick                                      \
+        iotop                                            \
+        jq                                               \
+        keepass                                          \
+        p7zip                                            \
+        pavucontrol                                      \
+        postgresql                                       \
+        ripgrep                                          \
+        tree                                             \
+        unzip                                            \
+        vlc                                              \
+        wget                                             \
+        xclip                                            \
+        || die 'install_packages: failed to install step 4'
+
+    # Install base fonts.  Additional fonts can be installed with the
+    # install_fonts command.
+    sudo pacman -Sy --noconfirm --overwrite '*'          \
+        gnu-free-fonts                                   \
+        ttf-cascadia-code                                \
+        ttf-dejavu                                       \
+        || die 'install_packages: failed to install step 5'
+
+    # Misc GUI.
+    sudo pacman -Sy --noconfirm --overwrite '*'          \
+         firefox                                         \
+         gimp                                            \
+         transmission-gtk                                \
+         || die 'install_packages: failed to install step 6'
+
+    # Set Firefox as the default web browser.
+    xdg-settings set default-web-browser firefox.desktop
 }
 
 install_emacs() {
@@ -224,97 +326,11 @@ install_fonts() {
     _install_aur ttf-google-fonts-git
 }
 
-install_packages() {
-    # It's nice if some packages get installed during the installation
-    # phase:
-    #
-    # $ pacstrap /mnt dhcpcd git iwd sudo vi
-    # - or, after arch-chroot -
-    # $ pacman -S dhcpcd git iwd sudo vi
-
-    # We'd need that.
-    mkdir -p ~/.config
-
-    # System
-    #
-    # NB: Installs https://archlinux.org/groups/x86_64/xorg-apps/
-    sudo pacman -Sy --noconfirm --overwrite '*'          \
-        alacritty                                        \
-        aspell-en                                        \
-        pulseaudio                                       \
-        xorg-apps                                        \
-        xorg-xclock                                      \
-        || die 'install_packages: failed to install step 0'
-
-    # System misc
-    sudo pacman -Sy --noconfirm --overwrite '*'          \
-        dhcpcd                                           \
-        iw                                               \
-        man                                              \
-        man-pages                                        \
-        openssh                                          \
-        pacman-contrib                                   \
-        tmux                                             \
-        || die 'install_packages: failed to install step 1'
-
-    # Programming.
-    #
-    # base-devel installs: binutils, gcc, gettext libtool pkgconf
-    # https://archlinux.org/groups/x86_64/base-devel/
-    sudo pacman -Sy --noconfirm --overwrite '*'          \
-         base-devel                                      \
-         clang                                           \
-         cmake                                           \
-         gdb                                             \
-         valgrind                                        \
-         || die 'install_packages: failed to install step 2'
-
-    # Programming languages and package managers.
-    sudo pacman -Sy --noconfirm --overwrite '*'          \
-         go                                              \
-         nodejs                                          \
-         rustup                                          \
-         || die 'install_packages: failed to install step 3'
-
-    # Misc.
-    sudo pacman -Sy --noconfirm --overwrite '*'          \
-        btop                                             \
-        direnv                                           \
-        fasd                                             \
-        htop                                             \
-        imagemagick                                      \
-        iotop                                            \
-        jq                                               \
-        keepass                                          \
-        p7zip                                            \
-        pavucontrol                                      \
-        postgresql                                       \
-        ripgrep                                          \
-        shellcheck                                       \
-        tree                                             \
-        unzip                                            \
-        vlc                                              \
-        wget                                             \
-        xclip                                            \
-        || die 'install_packages: failed to install step 4'
-
-    # Install base fonts.  Additional can be installed with the
-    # install_fonts command.
-    sudo pacman -Sy --noconfirm --overwrite '*'          \
-        gnu-free-fonts                                   \
-        ttf-cascadia-code                                \
-        ttf-dejavu                                       \
-        || die 'install_packages: failed to install step 5'
-
-    # Misc GUI.
-    sudo pacman -Sy --noconfirm --overwrite '*'          \
-         firefox                                         \
-         gimp                                            \
-         transmission-gtk                                \
-         || die 'install_packages: failed to install step 6'
-
-    # Set Firefox as the default web browser.
-    xdg-settings set default-web-browser firefox.desktop
+install_i3() {
+    sudo pacman -S --noconfirm --overwrite '*' \
+         i3                                    \
+         i3status                              \
+         || die 'install_i3: failed to install pkgs'
 }
 
 install_rust() {
@@ -358,7 +374,7 @@ install_rust() {
     #   - rust-gdbgui
     #   - rls           [-]
     #   - cargo-clippy  [+ clippy]
-    #   - clippy-driver [+ clippy}
+    #   - clippy-driver [+ clippy]
     #   - cargo-miri    [+ cargo]
     #   - rustfmt       [+]
     #   - cargo-fmt     [+ cargo]
@@ -367,22 +383,12 @@ install_rust() {
     rustup toolchain install stable --component rust-analyzer rust-src rust-analysis
 }
 
-install_x() {
-    sudo pacman -Sy
-
-    sudo pacman -S --noconfirm --overwrite '*' \
-         i3 \
-         xorg \
-         xorg-xinit \
-         xterm
-}
-
 install_sway() {
 
     sudo pacman -S --noconfirm --overwrite '*' --asdeps \
         bemenu                                          \
         dmenu                                           \
-        i3status                                        \
+        wmenu                                           \
         mako                                            \
         slurp                                           \
         swaybg                                          \
@@ -391,21 +397,20 @@ install_sway() {
         wallutils                                       \
         waybar                                          \
         wayland                                         \
-        xorg-xwayland
+        || die 'install_sway: failed to install deps'
 
     sudo pacman -S --noconfirm --overwrite '*'          \
         brightnessctl                                   \
         foot                                            \
-        wmenu                                           \
         grim                                            \
-        sway
-
-    # TODO: Install polkit?
+        sway                                            \
+        || die 'install_sway: failed to install main pkgs'
 
     # These two are needed for my fancy swaybar status.sh.
     sudo pacman -S --noconfirm --overwrite '*' --asdeps \
-        acpi noto-fonts-emoji
-
+         acpi                                           \
+         noto-fonts-emoji                               \
+         || die 'install_sway: failed to install swaybar deps'
 }
 
 install_tools() {
@@ -417,16 +422,19 @@ install_tools() {
     sudo pacman -Sy --noconfirm  --overwrite '*' \
         bash-language-server                     \
         delve                                    \
+        golangci-lint                            \
         gopls                                    \
         haskell-language-server                  \
         jedi-language-server                     \
         npm                                      \
         pyright                                  \
         python-lsp-server                        \
+        shellcheck                               \
         texlab                                   \
         typescript-language-server               \
         yaml-language-server                     \
-        yarn
+        yarn                                     \
+        || die 'install_tools: failure'
 }
 
 if [ $# -eq 0 ] || [ "$1" = "help" ] ; then
