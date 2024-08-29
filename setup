@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # TODO: Install some packages with --asdeps?
 # TODO: Install jq
@@ -6,8 +6,7 @@
 
 # ROOT=$(readlink -f "$(dirname "${BASH_SOURCE[0]}")")
 
-COMMANDS=( create_user
-           config_alacritty
+COMMANDS=( config_alacritty
            config_bash
            config_emacs
            config_firefox
@@ -15,7 +14,9 @@ COMMANDS=( create_user
            config_git_go
            config_git_rust
            config_sway
+           initial
            install_emacs
+           install_fonts
            install_packages
            install_rust
            install_sway
@@ -29,18 +30,12 @@ error() { out "==> ERROR:" "$@"; } >&2
 die() { error "$@"; exit 1; }
 
 usage() {
-    out "Usage: $0 <command>..."
+    out "Usage: $0 <commands>"
     out
     out "Commands:"
     for c in "${COMMANDS[@]}" ; do
         out '  ' "$c"
     done
-}
-
-create_user() {
-    # local username=${1:-d}
-    local username=d
-    useradd -m -G wheel,input -s /bin/bash "$username"
 }
 
 config_alacritty() {
@@ -50,7 +45,6 @@ config_alacritty() {
 }
 
 config_bash() {
-
     # direnv: https://direnv.net/docs/hook.html
 
     cat >>~/.bashrc <<EOF
@@ -69,7 +63,6 @@ eval "\$(fasd --init auto)"
 eval "\$(direnv hook bash)"
 # END config_bash
 EOF
-
 }
 
 config_emacs() {
@@ -121,8 +114,44 @@ config_sway() {
     # TODO: Check ctrl:swapcaps
 }
 
-install_emacs() {
+initial() {
+    cat <<EOF
+[0] After arch-chroot:
 
+    # pacman -S dhcpcd git iwd sudo vi
+
+
+[1] On freshly installed system:
+
+    # echo '%wheel ALL=(ALL:ALL) NOPASSWD: ALL' >/etc/sudoers.d/custom
+    # chmod 0440 /etc/sudoers.d/custom
+
+    # useradd -m -G wheel,input -s /bin/bash d
+
+
+[2] As user:
+
+    $ ssh-keygen -t rsa -b 4096 -C 'yordanm@proton.me'
+EOF
+}
+
+_install_aur() {
+    local package="$1"
+
+    mkdir -p ~/local/aur
+    (
+        cd ~/local/aur || die
+        local url="https://aur.archlinux.org/cgit/aur.git/snapshot/${package}.tar.gz"
+        curl -O "$url" || die "curl: failed to fetch $url"
+        tar xf "${package}.tar.gz"
+        (
+            cd "$package" || die
+            makepkg -is --noconfirm
+        )
+    )
+}
+
+install_emacs() {
     # Install dependencies of emacs
     sudo pacman -Sy --noconfirm --overwrite '*' --asdeps \
            acl                                           \
@@ -154,64 +183,68 @@ install_emacs() {
            ncurses                                       \
            pango                                         \
            tree-sitter                                   \
-           zlib
+           zlib                                          \
+           || die 'install_emacs: failed to install dependencies'
 
     # Now download emacs-git from AUR, build and install.
-    mkdir -p ~/local/aur
-    (
-        cd ~/local/aur
-        curl -O https://aur.archlinux.org/cgit/aur.git/snapshot/emacs-git.tar.gz
-        tar xf emacs-git.tar.gz
-        (
-            cd emacs-git
-            makepkg -i --noconfirm
-        )
-    )
+    _install_aur emacs-git
 
     # Compile tree-sitter modules.
     mkdir -p ~/local/ext
     (
-        cd ~/local/ext || exit
+        cd ~/local/ext || die
         git clone http://github.com/casouri/tree-sitter-module.git
 
         (
-            cd tree-sitter-module || exit
+            cd tree-sitter-module || die
             ./batch.sh
             rm dist/libtree-sitter-c-sharp.so # fuck c-sharp
         )
-    )   
+    )
+}
 
-    # TODO: Install these packages too!
-    # ttf-courier-prime
-    # ttf-google-fonts-git
-    # ttf-monaco
-    # ttf-ms-fonts
+install_fonts() {
+    sudo pacman -Sy --noconfirm --overwrite '*'          \
+         nerd-fonts                                      \
+         ttf-hack                                        \
+         ttf-ubuntu-font-family                          \
+         || die "install_fonts: failed"
+
+    # Install fonts from AUR.
+    _install_aur ttf-monaco
+    _install_aur ttf-ms-fonts
+    _install_aur ttf-courier-prime
+
+    # Install dependencies and ttf-google-fonts-git from AUR.
+    _install_aur ttf-signika
+    _install_aur ttf-merriweather
+    _install_aur ttf-merriweather-sans
+    _install_aur ttf-oswald
+    _install_aur ttf-quintessential
+    _install_aur ttf-google-fonts-git
 }
 
 install_packages() {
-
     # It's nice if some packages get installed during the installation
     # phase:
     #
-    # $ pacstrap /mnt dhcpcd git sudo vi iwd
+    # $ pacstrap /mnt dhcpcd git iwd sudo vi
     # - or, after arch-chroot -
-    # $ pacman -S dhcpcd git sudo vi iwd
-    #
-    # Adding a user: useradd -m -G wheel,input -s /bin/bash <handle>
+    # $ pacman -S dhcpcd git iwd sudo vi
 
-    #
+    # We'd need that.
     mkdir -p ~/.config
 
     # System
     #
-    # Installs https://archlinux.org/groups/x86_64/xorg-apps/
+    # NB: Installs https://archlinux.org/groups/x86_64/xorg-apps/
     sudo pacman -Sy --noconfirm --overwrite '*'          \
         alacritty                                        \
         aspell-en                                        \
         pulseaudio                                       \
         xorg-apps                                        \
-        xorg-xclock
-    echo $?
+        xorg-xclock                                      \
+        || die 'install_packages: failed to install step 0'
 
     # System misc
     sudo pacman -Sy --noconfirm --overwrite '*'          \
@@ -221,7 +254,8 @@ install_packages() {
         man-pages                                        \
         openssh                                          \
         pacman-contrib                                   \
-        tmux
+        tmux                                             \
+        || die 'install_packages: failed to install step 1'
 
     # Programming.
     #
@@ -232,13 +266,15 @@ install_packages() {
          clang                                           \
          cmake                                           \
          gdb                                             \
-         valgrind
+         valgrind                                        \
+         || die 'install_packages: failed to install step 2'
 
     # Programming languages and package managers.
     sudo pacman -Sy --noconfirm --overwrite '*'          \
          go                                              \
          nodejs                                          \
-         rustup
+         rustup                                          \
+         || die 'install_packages: failed to install step 3'
 
     # Misc.
     sudo pacman -Sy --noconfirm --overwrite '*'          \
@@ -259,28 +295,29 @@ install_packages() {
         unzip                                            \
         vlc                                              \
         wget                                             \
-        xclip
+        xclip                                            \
+        || die 'install_packages: failed to install step 4'
 
-    # Install fonts.
+    # Install base fonts.  Additional can be installed with the
+    # install_fonts command.
     sudo pacman -Sy --noconfirm --overwrite '*'          \
         gnu-free-fonts                                   \
         ttf-cascadia-code                                \
         ttf-dejavu                                       \
-        ttf-hack                                         \
-        ttf-ubuntu-font-family
-    
+        || die 'install_packages: failed to install step 5'
+
     # Misc GUI.
     sudo pacman -Sy --noconfirm --overwrite '*'          \
          firefox                                         \
          gimp                                            \
-         transmission-gtk
+         transmission-gtk                                \
+         || die 'install_packages: failed to install step 6'
 
     # Set Firefox as the default web browser.
     xdg-settings set default-web-browser firefox.desktop
 }
 
 install_rust() {
-
     # $ rustup default stable
     # info: syncing channel updates for 'stable-x86_64-unknown-linux-gnu'
     # info: installing component 'cargo'
@@ -328,7 +365,6 @@ install_rust() {
 
     rustup default stable
     rustup toolchain install stable --component rust-analyzer rust-src rust-analysis
-
 }
 
 install_x() {
