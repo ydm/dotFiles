@@ -13,6 +13,7 @@ COMMANDS=(
     config_git
     config_git_go
     config_git_rust
+    config_solidity
     config_sway
     initial
     install_base
@@ -41,7 +42,7 @@ usage() {
 config_alacritty() {
     rm -rf ~/.config/alacritty
     mkdir -p ~/.config/alacritty
-    cp "${HOME}/dotFiles/alacritty/alacritty.toml" ~/.config/alacritty/
+    cp ~/dotFiles/alacritty/alacritty.toml ~/.config/alacritty/
 }
 
 config_bash() {
@@ -66,8 +67,8 @@ EOF
 }
 
 config_emacs() {
-    INIT="$HOME/dotFiles/emacs/d-init.el"
-    echo "(load \"$INIT\")" > ~/.emacs
+    local init="$HOME/dotFiles/emacs/d-init.el"
+    echo "(load \"$init\")" > ~/.emacs
 }
 
 config_firefox() {
@@ -87,6 +88,11 @@ config_git_go() {
 
 config_git_rust() {
     git config --global --remove-section "url.git@github.com:"
+}
+
+config_solidity() {
+    mkdir -p ~/.ctags.d
+    cp ~/dotFiles/solidity/solidity.ctags ~/.ctags.d/
 }
 
 config_sway() {

@@ -1,0 +1,45 @@
+# Modification of https://github.com/whonore/solidity.ctags
+
+--langdef=Solidity
+--map-Solidity=+.sol
+
+--kinddef-Solidity=c,contract,Contract
+--kinddef-Solidity=i,interface,Interface
+--kinddef-Solidity=l,library,Library
+--kinddef-Solidity=s,struct,Struct
+--kinddef-Solidity=e,enum,Enum
+--kinddef-Solidity=E,event,Event
+--kinddef-Solidity=r,error,Error
+--kinddef-Solidity=f,function,Function
+--kinddef-Solidity=m,modifier,Modifier
+--kinddef-Solidity=n,enumerator,Enum value
+--kinddef-Solidity=M,member,Struct member
+
+--_tabledef-Solidity=top
+--_tabledef-Solidity=comment
+--_tabledef-Solidity=struct
+--_tabledef-Solidity=enum
+
+--_mtable-regex-Solidity=top/\/\*//{tenter=comment}
+--_mtable-regex-Solidity=top/\/\/[^\n]*//
+--_mtable-regex-Solidity=top/contract\s+(\w+)/\1/c/
+--_mtable-regex-Solidity=top/interface\s+(\w+)/\1/i/
+--_mtable-regex-Solidity=top/library\s+(\w+)/\1/l/
+--_mtable-regex-Solidity=top/struct\s+(\w+)/\1/s/{tenter=struct}{scope=push}
+--_mtable-regex-Solidity=top/enum\s+(\w+)/\1/e/{tenter=enum}{scope=push}
+--_mtable-regex-Solidity=top/event\s+(\w+)/\1/E/
+--_mtable-regex-Solidity=top/error\s+(\w+)/\1/r/
+--_mtable-regex-Solidity=top/function\s+(\w+)/\1/f/
+--_mtable-regex-Solidity=top/modifier\s+(\w+)/\1/f/
+--_mtable-regex-Solidity=top/.//
+
+--_mtable-regex-Solidity=comment/\*\///{tleave}
+--_mtable-regex-Solidity=comment/.//
+
+--_mtable-regex-Solidity=struct/}//{tleave}{scope=pop}
+--_mtable-regex-Solidity=struct/(\w+)\s*;/\1/M/{scope=ref}
+--_mtable-regex-Solidity=struct/.//
+
+--_mtable-regex-Solidity=enum/}//{tleave}{scope=pop}
+--_mtable-regex-Solidity=enum/(\w+)/\1/n/{scope=ref}
+--_mtable-regex-Solidity=enum/.//
