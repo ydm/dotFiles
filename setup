@@ -232,6 +232,7 @@ install_base() {
         p7zip                                            \
         pavucontrol                                      \
         postgresql                                       \
+        python-pygments                                  \
         ripgrep                                          \
         tree                                             \
         unzip                                            \
