@@ -60,7 +60,5 @@ rm libtree-sitter-c-sharp.* # fuck c-sharp
 If I have the fucking misfortune to have to use a MacOSX:
 
 ```
-brew install cmake
-brew install libtool
-brew install ripgrep
+brew install cmake libtool ripgrep brew install pyright typescript-language-server
 ```
