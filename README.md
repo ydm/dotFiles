@@ -54,12 +54,13 @@ git clone git@github.com:casouri/tree-sitter-module.git
 cd tree-sitter-module
 ./batch.sh
 cd dist
-rm libtree-sitter-c-sharp.so # fuck c-sharp
-cp libtree-sitter-go-mod.so libtree-sitter-gomod.so
+rm libtree-sitter-c-sharp.* # fuck c-sharp
 ```
 
 If I have the fucking misfortune to have to use a MacOSX:
-`brew install cmake`
-`brew install libtool`
 
-That's needed by `emacs` when it compiles the `vterm` modules.
+```
+brew install cmake
+brew install libtool
+brew install ripgrep
+```
