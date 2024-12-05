@@ -58,4 +58,8 @@ rm libtree-sitter-c-sharp.so # fuck c-sharp
 cp libtree-sitter-go-mod.so libtree-sitter-gomod.so
 ```
 
-`emacs`: `vterm` compilation needs `gcc` and `cmake`
+If I have the fucking misfortune to have to use a MacOSX:
+`brew install cmake`
+`brew install libtool`
+
+That's needed by `emacs` when it compiles the `vterm` modules.
