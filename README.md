@@ -61,4 +61,6 @@ If I have the fucking misfortune to have to use a MacOSX:
 
 ```
 brew install cmake libtool ripgrep brew install pyright typescript-language-server
+
+go gopls node
 ```
