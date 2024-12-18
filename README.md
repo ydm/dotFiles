@@ -66,4 +66,5 @@ go gopls node
 
 jq
 solc-select
+shellcheck
 ```
