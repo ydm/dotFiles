@@ -12,7 +12,6 @@
 
 (use-package eldoc-box
   :init (add-hook 'eldoc-mode-hook #'eldoc-box-hover-mode)
-  :load-path "~/dev/emacs/eldoc-box"
   :custom ((eldoc-box-clear-with-C-g t)
            (eldoc-box-lighter " eb")
            (eldoc-box-offset '(16 24 16)))

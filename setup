@@ -4,21 +4,23 @@
 # TODO: Install jq
 
 ROOT=$(readlink -f "$(dirname "${BASH_SOURCE[0]}")")
-COMMANDS=( config_alacritty
-           config_bash
-           config_emacs
-           config_firefox
-           config_git
-           config_git_go
-           config_git_rust
-           config_sway
-           install_aur
-           install_packages
-           install_rust
-           install_sway
-           install_tools
-           install_x
-         )
+COMMANDS=(
+    config_alacritty
+    config_bash
+    config_emacs
+    config_firefox
+    config_git
+    config_git_go
+    config_git_rust
+    config_sway
+    install_aur
+    install_macos
+    install_packages
+    install_rust
+    install_sway
+    install_tools
+    install_x
+)
 
 # out() { printf "$1 $2\n" "${@:3}"; }
 out() { printf "%s %s\n" "$1" "$2"; }
@@ -161,6 +163,24 @@ install_aur() {
     # ttf-monaco
     # ttf-ms-fonts
 
+}
+
+install_macos() {
+    brew install \
+         cmake \
+         libtool \
+         ripgrep \
+         go \
+         node \
+         solc-select
+    
+    brew install \
+         pyright \
+         typescript-language-server \
+         gopls \
+         shellcheck
+
+    brew install jq
 }
 
 install_packages() {
