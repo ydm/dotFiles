@@ -178,6 +178,7 @@ install_macos() {
          pyright \
          typescript-language-server \
          gopls \
+         rustup \
          shellcheck
 
     brew install jq
