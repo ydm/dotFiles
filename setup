@@ -24,7 +24,6 @@ COMMANDS=(
     install_fonts
     install_i3
     install_macos
-    install_packages
     install_rust
     install_sway
     install_tools
@@ -129,7 +128,6 @@ config_sway() {
 }
 
 initial() {
-    local opa=kurec
     cat <<EOF
 [0] [sudo] After arch-chroot:
 
@@ -143,7 +141,7 @@ initial() {
 
     # useradd -m -G wheel,input -s /bin/bash $USER
 
-    
+
 [2] [user]:
 
     $ git clone https://github.com/ydm/dotFiles.git && cd dotFiles
@@ -192,7 +190,7 @@ install_base() {
         xorg-xclock                                      \
         xorg-xinit                                       \
         xterm                                            \
-        || die 'install_packages: failed to install step 0'
+        || die 'install_base: failed to install step 0'
 
     # System misc
     sudo pacman -Sy --noconfirm --overwrite '*'          \
@@ -204,7 +202,7 @@ install_base() {
         pacman-contrib                                   \
         pkgfile                                          \
         tmux                                             \
-        || die 'install_packages: failed to install step 1'
+        || die 'install_base: failed to install step 1'
 
     # Programming.
     #
@@ -216,14 +214,14 @@ install_base() {
          cmake                                           \
          gdb                                             \
          valgrind                                        \
-         || die 'install_packages: failed to install step 2'
+         || die 'install_base: failed to install step 2'
 
     # Programming languages and package managers.
     sudo pacman -Sy --noconfirm --overwrite '*'          \
          go                                              \
          nodejs                                          \
          rustup                                          \
-         || die 'install_packages: failed to install step 3'
+         || die 'install_base: failed to install step 3'
 
     # Misc.
     sudo pacman -Sy --noconfirm --overwrite '*'          \
@@ -245,7 +243,7 @@ install_base() {
         vlc                                              \
         wget                                             \
         xclip                                            \
-        || die 'install_packages: failed to install step 4'
+        || die 'install_base: failed to install step 4'
 
     # Install base fonts.  Additional fonts can be installed with the
     # install_fonts command.
@@ -253,14 +251,14 @@ install_base() {
         gnu-free-fonts                                   \
         ttf-cascadia-code                                \
         ttf-dejavu                                       \
-        || die 'install_packages: failed to install step 5'
+        || die 'install_base: failed to install step 5'
 
     # Misc GUI.
     sudo pacman -Sy --noconfirm --overwrite '*'          \
          firefox                                         \
          gimp                                            \
          transmission-gtk                                \
-         || die 'install_packages: failed to install step 6'
+         || die 'install_base: failed to install step 6'
 
     # Set Firefox as the default web browser.
     xdg-settings set default-web-browser firefox.desktop
@@ -326,7 +324,7 @@ install_macos() {
          go \
          node \
          solc-select
-    
+
     brew install \
          pyright \
          typescript-language-server \
@@ -336,24 +334,6 @@ install_macos() {
 
     brew install jq
 }
-
-install_packages() {
-
-    # It's nice if some packages get installed during the installation
-    # phase:
-    #
-    # $ pacstrap /mnt dhcpcd git sudo vi iwd
-    # - or, after arch-chroot -
-    # $ pacman -S dhcpcd git sudo vi iwd
-    #
-    # Adding a user: useradd -m -G wheel,input -s /bin/bash <handle>
-
-    #
-    mkdir -p ~/.config
-
-    # System
-    #
-    # Installs https://archlinux.org/groups/x86_64/xorg-apps/
 
 install_fonts() {
     sudo pacman -Sy --noconfirm --overwrite '*'          \
