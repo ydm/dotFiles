@@ -1,6 +1,6 @@
 # echo 'source ~/dotFiles/shell/aliases.sh' >> ~/.bashrc
 
-# Base commands ++
+# Extended base commands
 alias df='df -h'
 alias du='du -h'
 alias grep='grep --color=auto'
@@ -10,7 +10,7 @@ alias rg='rg --color always'
 alias tree="tree -Ca -I '.git'"
 alias xclip='xclip -selection clipboard'
 
-# Build on base commands
+# Custom
 alias .....='cd ../../../..'
 alias ....='cd ../../..'
 alias ...='cd ../../'
@@ -49,6 +49,9 @@ alias make='make -j16'
 alias pip='python -m pip'
 alias venv='python -m venv'
 alias shellcheck='shellcheck -xa'
+
+# Docker
+alias docker-ps='docker ps -a --format "table {{.ID}}\t{{.Names}}\t{{.Image}}\t{{.Mounts}}"'
 
 # System
 alias dmesg='sudo dmesg'

@@ -32,9 +32,10 @@
 (bind-key "C-<delete>" #'window-swap-states) ; kill-word
 
 (use-package eglot
-  :bind (("s-i"        . eglot-format)       ; new
-         ([M-f1]       . eglot-code-actions) ; new
-         ([M-f2]       . eglot-rename)))     ; new
+  :bind (("s-i"  . eglot-format)
+         ([M-f1] . eglot-code-action-organize-imports)
+         ([M-f2] . eglot-rename)
+         ([M-f3] . eglot-code-actions)))
 
 (use-package hideshow
   :init (add-hook 'prog-mode-hook #'hs-minor-mode)
