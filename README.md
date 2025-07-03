@@ -48,11 +48,12 @@ Install
 and compile all language modules:
 
 ```
-mkdir -p ~/local/external
-cd ~/local/external
+mkdir -p ~/local/ext
+cd ~/local/ext
 git clone git@github.com:casouri/tree-sitter-module.git
 cd tree-sitter-module
 ./batch.sh
+
 cd dist
 rm libtree-sitter-c-sharp.* # fuck c-sharp
 ```
@@ -60,4 +61,25 @@ rm libtree-sitter-c-sharp.* # fuck c-sharp
 ```elisp
 ;; Needed for 'catppuccin-theme and 'eldoc-box
 (package-generate-autoloads 'catppuccin-theme "~/.emacs.d/elpa/catppuccin-theme-20250309.2135/catppuccin-definitions.el")
+```
+
+```
+spac -S pkgfile
+spac -S multilib/lib32-gnutls
+spac -S multilib/lib32-vulkan-icd-loader
+spac -S multilib/lib32-libglvnd
+spac -S python-protobuf
+spac -S extra/vulkan-tools
+spac -Ss lib32-nvidia-utils
+spac -S feh
+
+bazel
+
+IF FIREFOX IS TOO BIG
+layout.css.devPixelsPerPx=0.5
+```
+
+```
+export GDK_DPI_SCALE=0.5
+# export GDK_SCALE=0.5
 ```

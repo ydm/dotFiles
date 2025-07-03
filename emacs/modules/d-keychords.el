@@ -23,7 +23,7 @@
 (use-package d-interactives
   :demand
   :after use-package-chords
-  :load-path "~/dotFiles/emacs/library"
+  :load-path "~/dotFiles/emacs/libraries"
   :chords ("jj" . d:keychords/switch-to-last-buffer))
 
 (provide 'd-keychords)

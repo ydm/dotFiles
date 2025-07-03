@@ -12,17 +12,29 @@ uptime_formatted=$(uptime | cut -d ',' -f1  | cut -d ' ' -f4,5)
 date_formatted=$(date "+%a %F %H:%M")
 
 # Get the Linux version but remove the "-1-ARCH" part
-linux_version=$(uname -r | cut -d '-' -f1)
+# linux_version=$(uname -r | cut -d '-' -f1)
 
 # Returns the battery status: "Full", "Discharging", or "Charging".
 # battery_status=$(cat /sys/class/power_supply/BAT0/status)
-battery_status=$(acpi | cut -d: -f2 | cut -d, -f1,2 | sed s'/^ //')
 
 # Emojis and characters for the status bar
-# 💎 💻 💡 🔌 ⚡ 📁 \|
+# ↑
+# ⚡
+# 💎
+# 💡
+# 💻
+# 📁
+# 🔋
+# 🔌
+# 🕚
 
 if [ "$(acpi 2>&1)" != "No support for device type: power_supply" ] ; then
-    echo "$uptime_formatted ↑ | $battery_status 🔋 | $date_formatted 🕚"
+    status=$(acpi | cut -d: -f2 | cut -d, -f1,2 | sed s'/^ //')
+    icon='🔋'
+    if [ "${status#Charging}" != "$status" ] ; then
+        icon='⚡'
+    fi
+    echo "↑ $uptime_formatted · $icon $status · 🕚 $date_formatted"
 else
-    echo "$uptime_formatted ↑ | $date_formatted 🕚"
+    echo "↑ $uptime_formatted · 🕚 $date_formatted"
 fi

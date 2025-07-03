@@ -1,6 +1,6 @@
 ;; -*- lexical-binding: t; -*-
 
-(use-package d-common :load-path "~/dotFiles/emacs/library") ; d:project-root
+(use-package d-common :load-path "~/dotFiles/emacs/libraries") ; d:project-root
 
 (defun d:nim-ntags-find-definition (&optional prefix)
   (interactive "P")

@@ -2,7 +2,7 @@
 (require 'flymake)  ; flymake-goto-next-error flymake-goto-prev-error
 
 (use-package ripgrep :commands ripgrep-regexp :demand :ensure t)
-(use-package d-common :load-path "~/dotFiles/emacs/library")
+(use-package d-common :load-path "~/dotFiles/emacs/libraries")
 
 (defun d:5-next () (interactive) (next-line 5))
 (defun d:5-prev () (interactive) (previous-line 5))

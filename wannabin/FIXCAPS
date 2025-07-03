@@ -1,0 +1,4 @@
+#!/bin/bash
+
+sudo pacman -S --noconfirm xdotool >/dev/null 2>/dev/null
+xdotool key Caps_Lock
