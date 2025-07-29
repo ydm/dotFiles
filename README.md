@@ -83,3 +83,5 @@ layout.css.devPixelsPerPx=0.5
 export GDK_DPI_SCALE=0.5
 # export GDK_SCALE=0.5
 ```
+
+TODO: `sudo su - postgres && echo 'export PAGER=less' >> .bash_login`
