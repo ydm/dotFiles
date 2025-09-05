@@ -1,0 +1,16 @@
+#!/bin/bash
+
+set -euo pipefail
+
+if [ $# -eq 0 ] ; then
+    echo "usage: $(basename "$0") <solidity event definition>" >&2
+    exit 1
+fi
+
+event=$(
+    echo "$*"                |
+    tr -d '\n'               |
+    sed 's/;[[:space:]]*$//'
+)
+
+cast sig-event "$event"
